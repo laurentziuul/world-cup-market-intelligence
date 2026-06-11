@@ -201,6 +201,21 @@
       color: var(--bad);
     }
 
+    .badge-strong {
+      border-color: var(--good);
+      color: var(--good);
+    }
+
+    .badge-emerging {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .badge-weak {
+      border-color: var(--warn);
+      color: var(--warn);
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -399,6 +414,203 @@
     </section>
 
     <section class="section">
+      <h2>Historical Trend Summary</h2>
+      <p class="section-description">
+        Multi-snapshot trend analysis generated from the local historical snapshot archive.
+      </p>
+
+      {% if has_trends %}
+      <section class="grid">
+        <div class="card">
+          <div class="card-label">Tracked Outcomes</div>
+          <div class="card-value">{{ tracked_trends_count }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Strongest Uptrend</div>
+          <div class="card-value">{{ strongest_uptrend }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Strongest Downtrend</div>
+          <div class="card-value">{{ strongest_downtrend }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Max Observations</div>
+          <div class="card-value">{{ max_observations }}</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <div class="card-label">Strong Trends</div>
+          <div class="card-value">{{ strong_trends_count }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Emerging Trends</div>
+          <div class="card-value">{{ emerging_trends_count }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Weak Trends</div>
+          <div class="card-value">{{ weak_trends_count }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Trend Source</div>
+          <div class="card-value">snapshots</div>
+        </div>
+      </section>
+      {% else %}
+      <p class="section-description">
+        No trend file found. Run <code>python scripts/generate_trends.py</code> to generate historical trend data.
+      </p>
+      {% endif %}
+    </section>
+
+    <section class="section">
+      <h2>Historical Trends</h2>
+      <p class="section-description">
+        Outcomes with persistent multi-snapshot movement. This separates one-day moves from longer-running directional drift.
+      </p>
+
+      {% if has_trends %}
+      <div class="two-col">
+        <div class="card">
+          <h3>Top Uptrends</h3>
+
+          {% if top_uptrends %}
+          <table>
+            <thead>
+              <tr>
+                <th>Outcome</th>
+                <th>First</th>
+                <th>Latest</th>
+                <th>Total</th>
+                <th>Quality</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for row in top_uptrends %}
+              <tr>
+                <td>{{ row.outcome }}</td>
+                <td>{{ row.first_price_display }}</td>
+                <td class="price">{{ row.latest_price_display }}</td>
+                <td class="move-up">{{ row.total_change_display }}</td>
+                <td>
+                  <span class="badge badge-{{ row.trend_quality | lower }}">
+                    {{ row.trend_quality }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="section-description">No historical uptrends detected.</p>
+          {% endif %}
+        </div>
+
+        <div class="card">
+          <h3>Top Downtrends</h3>
+
+          {% if top_downtrends %}
+          <table>
+            <thead>
+              <tr>
+                <th>Outcome</th>
+                <th>First</th>
+                <th>Latest</th>
+                <th>Total</th>
+                <th>Quality</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for row in top_downtrends %}
+              <tr>
+                <td>{{ row.outcome }}</td>
+                <td>{{ row.first_price_display }}</td>
+                <td class="price">{{ row.latest_price_display }}</td>
+                <td class="move-down">{{ row.total_change_display }}</td>
+                <td>
+                  <span class="badge badge-{{ row.trend_quality | lower }}">
+                    {{ row.trend_quality }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="section-description">No historical downtrends detected.</p>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <p class="section-description">
+        Historical trend table unavailable until trends are generated.
+      </p>
+      {% endif %}
+    </section>
+
+    <section class="section">
+      <h2>All Historical Trends</h2>
+      <p class="section-description">
+        Full trend table across all tracked outcomes.
+      </p>
+
+      {% if has_trends %}
+      <table>
+        <thead>
+          <tr>
+            <th>Outcome</th>
+            <th>First</th>
+            <th>Latest</th>
+            <th>Total Change</th>
+            <th>Observations</th>
+            <th>Direction</th>
+            <th>Quality</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for row in trend_rows %}
+          <tr>
+            <td>{{ row.outcome }}</td>
+            <td>{{ row.first_price_display }}</td>
+            <td class="price">{{ row.latest_price_display }}</td>
+
+            {% if row.total_change > 0 %}
+            <td class="move-up">{{ row.total_change_display }}</td>
+            {% elif row.total_change < 0 %}
+            <td class="move-down">{{ row.total_change_display }}</td>
+            {% else %}
+            <td class="move-flat">{{ row.total_change_display }}</td>
+            {% endif %}
+
+            <td>{{ row.observations }}</td>
+            <td>{{ row.trend_direction }}</td>
+            <td>
+              <span class="badge badge-{{ row.trend_quality | lower }}">
+                {{ row.trend_quality }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="section-description">
+        No trend rows available.
+      </p>
+      {% endif %}
+    </section>
+
+    <section class="section">
       <h2>Market Structure Snapshot</h2>
       <p class="section-description">
         Highest implied probabilities from the latest normalized snapshot.
@@ -513,12 +725,13 @@
         <li>Which narratives persist after new data arrives?</li>
         <li>Which signals survive red-team analysis?</li>
         <li>How do prices change after catalysts such as injuries, lineups, match results or news?</li>
+        <li>Which trends persist across multiple snapshots instead of appearing as one-off moves?</li>
       </ul>
     </section>
 
     <footer class="footer">
       Generated at {{ generated_at }} from <code>{{ snapshot_path }}</code>.  
-      Static dashboard generated by World Cup Market Intelligence v0.3.1.
+      Static dashboard generated by World Cup Market Intelligence v0.3.3.
     </footer>
   </main>
 </body>

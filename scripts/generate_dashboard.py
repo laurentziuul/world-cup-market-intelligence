@@ -10,6 +10,8 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 ROOT = Path(__file__).resolve().parents[1]
 
 SNAPSHOT_PATH = ROOT / "data" / "processed" / "snapshot_latest.csv"
+TRENDS_PATH = ROOT / "data" / "processed" / "trends_latest.csv"
+
 TEMPLATE_DIR = ROOT / "templates"
 TEMPLATE_NAME = "dashboard.html.j2"
 
@@ -164,11 +166,143 @@ def build_movers_context(df: pd.DataFrame) -> dict:
     }
 
 
+def load_trends() -> pd.DataFrame | None:
+    if not TRENDS_PATH.exists():
+        return None
+
+    try:
+        trends = pd.read_csv(TRENDS_PATH)
+    except Exception:
+        return None
+
+    if trends.empty:
+        return None
+
+    return trends
+
+
+def normalize_trends(trends: pd.DataFrame | None) -> pd.DataFrame:
+    if trends is None or trends.empty:
+        return pd.DataFrame()
+
+    trends = trends.copy()
+
+    required_defaults = {
+        "market_id": "",
+        "market_title": "",
+        "outcome": "",
+        "first_price": 0,
+        "latest_price": 0,
+        "total_change": 0,
+        "max_price": 0,
+        "min_price": 0,
+        "observations": 0,
+        "trend_direction": "flat",
+        "trend_quality": "weak",
+        "latest_narrative": "",
+        "latest_catalyst": "",
+    }
+
+    for column, default in required_defaults.items():
+        if column not in trends.columns:
+            trends[column] = default
+
+    numeric_columns = [
+        "first_price",
+        "latest_price",
+        "total_change",
+        "max_price",
+        "min_price",
+        "observations",
+    ]
+
+    for column in numeric_columns:
+        trends[column] = pd.to_numeric(trends[column], errors="coerce").fillna(0)
+
+    trends["first_price_display"] = trends["first_price"].apply(format_probability)
+    trends["latest_price_display"] = trends["latest_price"].apply(format_probability)
+    trends["total_change_display"] = trends["total_change"].apply(format_change)
+    trends["max_price_display"] = trends["max_price"].apply(format_probability)
+    trends["min_price_display"] = trends["min_price"].apply(format_probability)
+
+    return trends
+
+
+def build_trends_context() -> dict:
+    trends = normalize_trends(load_trends())
+
+    if trends.empty:
+        return {
+            "has_trends": False,
+            "trend_rows": [],
+            "top_uptrends": [],
+            "top_downtrends": [],
+            "tracked_trends_count": 0,
+            "strong_trends_count": 0,
+            "emerging_trends_count": 0,
+            "weak_trends_count": 0,
+            "strongest_uptrend": "N/A",
+            "strongest_downtrend": "N/A",
+            "max_observations": 0,
+        }
+
+    top_uptrends_df = trends[trends["total_change"] > 0].sort_values(
+        "total_change",
+        ascending=False,
+    )
+
+    top_downtrends_df = trends[trends["total_change"] < 0].sort_values(
+        "total_change",
+        ascending=True,
+    )
+
+    top_uptrends = top_uptrends_df.head(5).to_dict("records")
+    top_downtrends = top_downtrends_df.head(5).to_dict("records")
+
+    strongest_uptrend = (
+        f"{top_uptrends[0].get('outcome', 'N/A')} "
+        f"{top_uptrends[0].get('total_change_display', '')}"
+        if top_uptrends
+        else "N/A"
+    )
+
+    strongest_downtrend = (
+        f"{top_downtrends[0].get('outcome', 'N/A')} "
+        f"{top_downtrends[0].get('total_change_display', '')}"
+        if top_downtrends
+        else "N/A"
+    )
+
+    strong_trends_count = int((trends["trend_quality"] == "strong").sum())
+    emerging_trends_count = int((trends["trend_quality"] == "emerging").sum())
+    weak_trends_count = int((trends["trend_quality"] == "weak").sum())
+
+    trends_sorted = trends.sort_values(
+        ["trend_quality", "total_change"],
+        ascending=[True, False],
+    )
+
+    return {
+        "has_trends": True,
+        "trend_rows": trends_sorted.to_dict("records"),
+        "top_uptrends": top_uptrends,
+        "top_downtrends": top_downtrends,
+        "tracked_trends_count": len(trends),
+        "strong_trends_count": strong_trends_count,
+        "emerging_trends_count": emerging_trends_count,
+        "weak_trends_count": weak_trends_count,
+        "strongest_uptrend": strongest_uptrend,
+        "strongest_downtrend": strongest_downtrend,
+        "max_observations": int(trends["observations"].max()),
+    }
+
+
 def build_context(df: pd.DataFrame) -> dict:
     df = normalize_snapshot(df)
 
     rows = df.to_dict("records")
     movers_context = build_movers_context(df)
+    trends_context = build_trends_context()
 
     provider = str(df["provider"].iloc[0]) if len(df) else "unknown"
     snapshot_time = str(df["snapshot_time_utc"].iloc[0]) if len(df) else ""
@@ -193,7 +327,7 @@ def build_context(df: pd.DataFrame) -> dict:
         "Manual data may not reflect live market prices.",
         "Zero liquidity means the current snapshot should not be interpreted as a tradable signal.",
         "High implied probability can reflect reputation, public bias or stale assumptions.",
-        "Without historical snapshots, static prices cannot yet be separated from real probability moves.",
+        "Without enough historical snapshots, static prices cannot yet be separated from persistent trends.",
         "Without multiple providers, there is no cross-market confirmation.",
     ]
 
@@ -213,6 +347,7 @@ def build_context(df: pd.DataFrame) -> dict:
     }
 
     context.update(movers_context)
+    context.update(trends_context)
 
     return context
 

@@ -201,6 +201,21 @@
       color: var(--bad);
     }
 
+    .badge-strong {
+      border-color: var(--good);
+      color: var(--good);
+    }
+
+    .badge-emerging {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .badge-weak {
+      border-color: var(--warn);
+      color: var(--warn);
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -301,22 +316,22 @@
       <section class="grid">
         <div class="card">
           <div class="card-label">Biggest Up Move</div>
-          <div class="card-value">Spain +1.0 pp</div>
+          <div class="card-value">N/A</div>
         </div>
 
         <div class="card">
           <div class="card-label">Biggest Down Move</div>
-          <div class="card-value">France -1.0 pp</div>
+          <div class="card-value">N/A</div>
         </div>
 
         <div class="card">
           <div class="card-label">Active Movers</div>
-          <div class="card-value">2</div>
+          <div class="card-value">0</div>
         </div>
 
         <div class="card">
           <div class="card-label">Static Markets</div>
-          <div class="card-value">3</div>
+          <div class="card-value">5</div>
         </div>
       </section>
     </section>
@@ -331,24 +346,98 @@
         <div class="card">
           <h3>Top Positive Movers</h3>
 
+          <p class="section-description">No positive movers detected in the latest snapshot.</p>
+        </div>
+
+        <div class="card">
+          <h3>Top Negative Movers</h3>
+
+          <p class="section-description">No negative movers detected in the latest snapshot.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Historical Trend Summary</h2>
+      <p class="section-description">
+        Multi-snapshot trend analysis generated from the local historical snapshot archive.
+      </p>
+
+      <section class="grid">
+        <div class="card">
+          <div class="card-label">Tracked Outcomes</div>
+          <div class="card-value">5</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Strongest Uptrend</div>
+          <div class="card-value">Spain +1.0 pp</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Strongest Downtrend</div>
+          <div class="card-value">France -1.0 pp</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Max Observations</div>
+          <div class="card-value">4</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <div class="card-label">Strong Trends</div>
+          <div class="card-value">0</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Emerging Trends</div>
+          <div class="card-value">2</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Weak Trends</div>
+          <div class="card-value">3</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Trend Source</div>
+          <div class="card-value">snapshots</div>
+        </div>
+      </section>
+    </section>
+
+    <section class="section">
+      <h2>Historical Trends</h2>
+      <p class="section-description">
+        Outcomes with persistent multi-snapshot movement. This separates one-day moves from longer-running directional drift.
+      </p>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Top Uptrends</h3>
+
           <table>
             <thead>
               <tr>
                 <th>Outcome</th>
-                <th>Price</th>
-                <th>24h Move</th>
-                <th>Signal</th>
+                <th>First</th>
+                <th>Latest</th>
+                <th>Total</th>
+                <th>Quality</th>
               </tr>
             </thead>
 
             <tbody>
               <tr>
                 <td>Spain</td>
+                <td>18.0%</td>
                 <td class="price">19.0%</td>
                 <td class="move-up">+1.0 pp</td>
                 <td>
-                  <span class="badge badge-speculative">
-                    Speculative
+                  <span class="badge badge-emerging">
+                    emerging
                   </span>
                 </td>
               </tr>
@@ -357,26 +446,28 @@
         </div>
 
         <div class="card">
-          <h3>Top Negative Movers</h3>
+          <h3>Top Downtrends</h3>
 
           <table>
             <thead>
               <tr>
                 <th>Outcome</th>
-                <th>Price</th>
-                <th>24h Move</th>
-                <th>Signal</th>
+                <th>First</th>
+                <th>Latest</th>
+                <th>Total</th>
+                <th>Quality</th>
               </tr>
             </thead>
 
             <tbody>
               <tr>
                 <td>France</td>
+                <td>16.0%</td>
                 <td class="price">15.0%</td>
                 <td class="move-down">-1.0 pp</td>
                 <td>
-                  <span class="badge badge-speculative">
-                    Speculative
+                  <span class="badge badge-emerging">
+                    emerging
                   </span>
                 </td>
               </tr>
@@ -384,6 +475,105 @@
           </table>
         </div>
       </div>
+    </section>
+
+    <section class="section">
+      <h2>All Historical Trends</h2>
+      <p class="section-description">
+        Full trend table across all tracked outcomes.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Outcome</th>
+            <th>First</th>
+            <th>Latest</th>
+            <th>Total Change</th>
+            <th>Observations</th>
+            <th>Direction</th>
+            <th>Quality</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Spain</td>
+            <td>18.0%</td>
+            <td class="price">19.0%</td>
+
+            <td class="move-up">+1.0 pp</td>
+
+            <td>4</td>
+            <td>up</td>
+            <td>
+              <span class="badge badge-emerging">
+                emerging
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>France</td>
+            <td>16.0%</td>
+            <td class="price">15.0%</td>
+
+            <td class="move-down">-1.0 pp</td>
+
+            <td>4</td>
+            <td>down</td>
+            <td>
+              <span class="badge badge-emerging">
+                emerging
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>England</td>
+            <td>11.0%</td>
+            <td class="price">11.0%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>4</td>
+            <td>flat</td>
+            <td>
+              <span class="badge badge-weak">
+                weak
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Portugal</td>
+            <td>10.0%</td>
+            <td class="price">10.0%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>4</td>
+            <td>flat</td>
+            <td>
+              <span class="badge badge-weak">
+                weak
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Brazil</td>
+            <td>9.0%</td>
+            <td class="price">9.0%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>4</td>
+            <td>flat</td>
+            <td>
+              <span class="badge badge-weak">
+                weak
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="section">
@@ -411,7 +601,7 @@
             <td>Spain</td>
             <td class="price">19.0%</td>
 
-            <td class="move-up">+1.0 pp</td>
+            <td class="move-flat">+0.0 pp</td>
 
             <td>0</td>
             <td>0</td>
@@ -426,7 +616,7 @@
             <td>France</td>
             <td class="price">15.0%</td>
 
-            <td class="move-down">-1.0 pp</td>
+            <td class="move-flat">+0.0 pp</td>
 
             <td>0</td>
             <td>0</td>
@@ -564,7 +754,7 @@
         <li>Manual data may not reflect live market prices.</li>
         <li>Zero liquidity means the current snapshot should not be interpreted as a tradable signal.</li>
         <li>High implied probability can reflect reputation, public bias or stale assumptions.</li>
-        <li>Without historical snapshots, static prices cannot yet be separated from real probability moves.</li>
+        <li>Without enough historical snapshots, static prices cannot yet be separated from persistent trends.</li>
         <li>Without multiple providers, there is no cross-market confirmation.</li>
       </ul>
     </section>
@@ -577,12 +767,13 @@
         <li>Which narratives persist after new data arrives?</li>
         <li>Which signals survive red-team analysis?</li>
         <li>How do prices change after catalysts such as injuries, lineups, match results or news?</li>
+        <li>Which trends persist across multiple snapshots instead of appearing as one-off moves?</li>
       </ul>
     </section>
 
     <footer class="footer">
-      Generated at 2026-06-11T22:34:27.237374+00:00 from <code>data\processed\snapshot_latest.csv</code>.  
-      Static dashboard generated by World Cup Market Intelligence v0.3.1.
+      Generated at 2026-06-11T22:50:51.413867+00:00 from <code>data\processed\snapshot_latest.csv</code>.  
+      Static dashboard generated by World Cup Market Intelligence v0.3.3.
     </footer>
   </main>
 </body>

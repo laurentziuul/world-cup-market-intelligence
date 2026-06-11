@@ -7,3 +7,5 @@ briefs/
 data/raw/*.json
 data/raw/*.csv
 data/processed/*.csv
+*.egg-info/
+src/*.egg-info/

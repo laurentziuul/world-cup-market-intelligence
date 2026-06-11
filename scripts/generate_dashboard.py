@@ -8,11 +8,14 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
 SNAPSHOT_PATH = ROOT / "data" / "processed" / "snapshot_latest.csv"
 TEMPLATE_DIR = ROOT / "templates"
 TEMPLATE_NAME = "dashboard.html.j2"
+
 OUTPUT_DIR = ROOT / "docs" / "dashboard"
 OUTPUT_PATH = OUTPUT_DIR / "index.html"
+
 
 def format_probability(value) -> str:
     try:
@@ -80,6 +83,7 @@ def normalize_snapshot(df: pd.DataFrame) -> pd.DataFrame:
         "liquidity": 0,
         "price_change_24h": 0,
         "volume_change_24h": 0,
+        "liquidity_change_24h": 0,
         "narrative": "",
         "catalyst": "",
         "source_url": "",
@@ -98,6 +102,7 @@ def normalize_snapshot(df: pd.DataFrame) -> pd.DataFrame:
         "liquidity",
         "price_change_24h",
         "volume_change_24h",
+        "liquidity_change_24h",
     ]
 
     for column in numeric_columns:
@@ -105,10 +110,12 @@ def normalize_snapshot(df: pd.DataFrame) -> pd.DataFrame:
 
     df["market_display"] = df["market_title"].fillna("")
     df["price_numeric"] = df["price"]
+
     df["price_display"] = df["price"].apply(format_probability)
     df["volume_display"] = df["volume"].apply(format_number)
     df["liquidity_display"] = df["liquidity"].apply(format_number)
     df["price_change_display"] = df["price_change_24h"].apply(format_change)
+
     df["signal_class"] = df.apply(classify_signal, axis=1)
 
     df = df.sort_values("price_numeric", ascending=False)
@@ -116,10 +123,52 @@ def normalize_snapshot(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def build_movers_context(df: pd.DataFrame) -> dict:
+    positive_movers_df = df[df["price_change_24h"] > 0].sort_values(
+        "price_change_24h",
+        ascending=False,
+    )
+
+    negative_movers_df = df[df["price_change_24h"] < 0].sort_values(
+        "price_change_24h",
+        ascending=True,
+    )
+
+    top_positive_movers = positive_movers_df.head(5).to_dict("records")
+    top_negative_movers = negative_movers_df.head(5).to_dict("records")
+
+    active_movers_count = int((df["price_change_24h"].abs() > 0).sum())
+    static_markets_count = int((df["price_change_24h"].abs() == 0).sum())
+
+    biggest_up_move = (
+        f"{top_positive_movers[0].get('outcome', 'N/A')} "
+        f"{top_positive_movers[0].get('price_change_display', '')}"
+        if top_positive_movers
+        else "N/A"
+    )
+
+    biggest_down_move = (
+        f"{top_negative_movers[0].get('outcome', 'N/A')} "
+        f"{top_negative_movers[0].get('price_change_display', '')}"
+        if top_negative_movers
+        else "N/A"
+    )
+
+    return {
+        "top_positive_movers": top_positive_movers,
+        "top_negative_movers": top_negative_movers,
+        "active_movers_count": active_movers_count,
+        "static_markets_count": static_markets_count,
+        "biggest_up_move": biggest_up_move,
+        "biggest_down_move": biggest_down_move,
+    }
+
+
 def build_context(df: pd.DataFrame) -> dict:
     df = normalize_snapshot(df)
 
     rows = df.to_dict("records")
+    movers_context = build_movers_context(df)
 
     provider = str(df["provider"].iloc[0]) if len(df) else "unknown"
     snapshot_time = str(df["snapshot_time_utc"].iloc[0]) if len(df) else ""
@@ -148,7 +197,7 @@ def build_context(df: pd.DataFrame) -> dict:
         "Without multiple providers, there is no cross-market confirmation.",
     ]
 
-    return {
+    context = {
         "provider": provider,
         "row_count": len(df),
         "snapshot_time": snapshot_time,
@@ -162,6 +211,10 @@ def build_context(df: pd.DataFrame) -> dict:
         "red_team_notes": red_team_notes,
         "rows": rows,
     }
+
+    context.update(movers_context)
+
+    return context
 
 
 def render_dashboard(context: dict) -> str:

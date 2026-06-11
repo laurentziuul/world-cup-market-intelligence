@@ -54,6 +54,17 @@
       line-height: 1.15;
     }
 
+    h2 {
+      margin: 0 0 14px;
+      font-size: 22px;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 17px;
+    }
+
     .subtitle {
       color: var(--muted);
       max-width: 820px;
@@ -92,6 +103,7 @@
     .card-value {
       font-size: 24px;
       font-weight: 700;
+      word-break: break-word;
     }
 
     .section {
@@ -100,11 +112,6 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 20px;
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: 22px;
     }
 
     .section-description {
@@ -145,6 +152,23 @@
       white-space: nowrap;
     }
 
+    .move-up {
+      color: var(--good);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .move-down {
+      color: var(--bad);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .move-flat {
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
     .badge {
       display: inline-block;
       padding: 4px 8px;
@@ -154,6 +178,7 @@
       border: 1px solid var(--border);
       color: var(--text);
       background: var(--panel-2);
+      white-space: nowrap;
     }
 
     .badge-structural {
@@ -197,6 +222,10 @@
       font-size: 13px;
     }
 
+    code {
+      color: var(--accent);
+    }
+
     @media (max-width: 850px) {
       .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -226,6 +255,7 @@
     }
   </style>
 </head>
+
 <body>
   <main class="container">
     <header class="header">
@@ -245,17 +275,126 @@
         <div class="card-label">Provider</div>
         <div class="card-value">{{ provider }}</div>
       </div>
+
       <div class="card">
         <div class="card-label">Rows</div>
         <div class="card-value">{{ row_count }}</div>
       </div>
+
       <div class="card">
         <div class="card-label">Total Volume</div>
         <div class="card-value">{{ total_volume_display }}</div>
       </div>
+
       <div class="card">
         <div class="card-label">Total Liquidity</div>
         <div class="card-value">{{ total_liquidity_display }}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Market Change Summary</h2>
+      <p class="section-description">
+        Automatic summary of 24h probability changes from the latest snapshot comparison.
+      </p>
+
+      <section class="grid">
+        <div class="card">
+          <div class="card-label">Biggest Up Move</div>
+          <div class="card-value">{{ biggest_up_move }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Biggest Down Move</div>
+          <div class="card-value">{{ biggest_down_move }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Active Movers</div>
+          <div class="card-value">{{ active_movers_count }}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-label">Static Markets</div>
+          <div class="card-value">{{ static_markets_count }}</div>
+        </div>
+      </section>
+    </section>
+
+    <section class="section">
+      <h2>Biggest Probability Movers</h2>
+      <p class="section-description">
+        Outcomes with the largest positive and negative 24h probability changes.
+      </p>
+
+      <div class="two-col">
+        <div class="card">
+          <h3>Top Positive Movers</h3>
+
+          {% if top_positive_movers %}
+          <table>
+            <thead>
+              <tr>
+                <th>Outcome</th>
+                <th>Price</th>
+                <th>24h Move</th>
+                <th>Signal</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for row in top_positive_movers %}
+              <tr>
+                <td>{{ row.outcome }}</td>
+                <td class="price">{{ row.price_display }}</td>
+                <td class="move-up">{{ row.price_change_display }}</td>
+                <td>
+                  <span class="badge badge-{{ row.signal_class | lower }}">
+                    {{ row.signal_class }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="section-description">No positive movers detected in the latest snapshot.</p>
+          {% endif %}
+        </div>
+
+        <div class="card">
+          <h3>Top Negative Movers</h3>
+
+          {% if top_negative_movers %}
+          <table>
+            <thead>
+              <tr>
+                <th>Outcome</th>
+                <th>Price</th>
+                <th>24h Move</th>
+                <th>Signal</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for row in top_negative_movers %}
+              <tr>
+                <td>{{ row.outcome }}</td>
+                <td class="price">{{ row.price_display }}</td>
+                <td class="move-down">{{ row.price_change_display }}</td>
+                <td>
+                  <span class="badge badge-{{ row.signal_class | lower }}">
+                    {{ row.signal_class }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="section-description">No negative movers detected in the latest snapshot.</p>
+          {% endif %}
+        </div>
       </div>
     </section>
 
@@ -277,13 +416,22 @@
             <th>Signal</th>
           </tr>
         </thead>
+
         <tbody>
           {% for row in rows %}
           <tr>
             <td>{{ row.market_display }}</td>
             <td>{{ row.outcome }}</td>
             <td class="price">{{ row.price_display }}</td>
-            <td>{{ row.price_change_display }}</td>
+
+            {% if row.price_change_24h > 0 %}
+            <td class="move-up">{{ row.price_change_display }}</td>
+            {% elif row.price_change_24h < 0 %}
+            <td class="move-down">{{ row.price_change_display }}</td>
+            {% else %}
+            <td class="move-flat">{{ row.price_change_display }}</td>
+            {% endif %}
+
             <td>{{ row.volume_display }}</td>
             <td>{{ row.liquidity_display }}</td>
             <td>
@@ -312,6 +460,7 @@
             <th>Notes</th>
           </tr>
         </thead>
+
         <tbody>
           {% for row in rows %}
           <tr>
@@ -369,7 +518,7 @@
 
     <footer class="footer">
       Generated at {{ generated_at }} from <code>{{ snapshot_path }}</code>.  
-      Static dashboard generated by World Cup Market Intelligence v0.2.
+      Static dashboard generated by World Cup Market Intelligence v0.3.1.
     </footer>
   </main>
 </body>

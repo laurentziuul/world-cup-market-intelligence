@@ -1,92 +1,159 @@
-# World Cup Market Intelligence Brief — {{ brief_date }}
+# World Cup Market Brief — {{ brief_date }}
 
-> This is a market-intelligence note, not a betting tip. The goal is to study how crowds price uncertainty around FIFA World Cup 2026.
+Generated at: `{{ generated_at }}`  
+Snapshot source: `{{ snapshot_path }}`  
+Trend source: `{{ trends_path }}`  
+Provider: `{{ provider }}`
 
-## 0. Dataset status
-
-| Field | Value |
-|---|---:|
-| Provider | {{ provider }} |
-| Rows | {{ row_count }} |
-
-## 1. Market structure snapshot
-
-### Highest implied probability
-
-| Market | Outcome | Price | Narrative |
-|---|---:|---:|---|
-{% for row in top_probability -%}
-| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('narrative', '') }} |
-{% endfor %}
-
-### Highest-volume markets
-
-| Market | Outcome | Price | Volume | Liquidity |
-|---|---:|---:|---:|---:|
-{% for row in top_volume -%}
-| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('volume_display', '') }} | {{ row.get('liquidity_display', '') }} |
-{% endfor %}
-
-### Highest-liquidity markets
-
-| Market | Outcome | Price | Volume | Liquidity |
-|---|---:|---:|---:|---:|
-{% for row in top_liquidity -%}
-| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('volume_display', '') }} | {{ row.get('liquidity_display', '') }} |
-{% endfor %}
-
-## 2. Biggest probability move
-
-| Field | Value |
-|---|---|
-| Market | {{ biggest_move.get('market_display', 'N/A') }} |
-| Outcome | {{ biggest_move.get('outcome', 'N/A') }} |
-| 24h move | {{ biggest_move.get('price_change_display', 'N/A') }} |
-| Possible catalyst | {{ biggest_move.get('catalyst', 'N/A') }} |
-| Signal type | speculative until confirmed with non-zero volume/liquidity |
-
-## 3. Crowded trade watch
-
-| Field | Value |
-|---|---|
-| Market | {{ crowded_trade.get('market_display', 'N/A') }} |
-| Outcome | {{ crowded_trade.get('outcome', 'N/A') }} |
-| Price | {{ crowded_trade.get('price_display', 'N/A') }} |
-| Narrative | {{ crowded_trade.get('narrative', 'N/A') }} |
-
-**Interpretation:**  
-The highest-priced outcome is not automatically the best signal. In this framework, a crowded trade becomes interesting only when price, liquidity, catalyst quality and narrative pressure are analyzed together.
-
-## 4. Narrative vs price gap
-
-Current v0 observation:
-
-- Public narrative: {{ crowded_trade.get('narrative', 'N/A') }}
-- Market-implied probability: {{ crowded_trade.get('price_display', 'N/A') }}
-- Confidence: low
-- Reason: this snapshot uses manual placeholder data and does not yet include live liquidity, order-book depth, injury news or multi-provider odds comparison.
-
-## 5. Liquidity anomaly
-
-{{ liquidity_note }}
-
-## 6. Red-team
-
-Why the current interpretation can be wrong:
-
-1. The dataset is manually entered and may not reflect live market prices.
-2. Volume and liquidity are currently not informative if they remain zero.
-3. A high implied probability may reflect reputation or public bias, not true edge.
-4. Without historical snapshots, we cannot yet distinguish a real probability move from a static baseline.
-
-## Bottom line
-
-{{ bottom_line }}
+> Research and education only. This is not a betting tip, financial advice or investment advice.
 
 ---
 
-## Internal notes
+## 1. Executive Summary
 
-{% for note in manual_notes -%}
+- **Tracked outcomes:** {{ row_count }}
+- **Current leading outcome:** {{ leading_outcome }} at {{ leading_price }}
+- **Biggest 24h up move:** {{ biggest_up_move }}
+- **Biggest 24h down move:** {{ biggest_down_move }}
+- **Active 24h movers:** {{ active_movers_count }}
+- **Static markets:** {{ static_markets_count }}
+- **Historical strongest uptrend:** {{ strongest_uptrend }}
+- **Historical strongest downtrend:** {{ strongest_downtrend }}
+- **Max trend observations:** {{ max_observations }}
+
+{% if has_trends %}
+The brief now combines short-term snapshot movement with multi-snapshot historical trend analysis.
+{% else %}
+Historical trend analysis is not available yet. Run `python scripts/generate_trends.py` before generating the brief.
+{% endif %}
+
+---
+
+## 2. Current Market Structure
+
+| Outcome | Price | 24h Move | Volume | Liquidity | Signal |
+|---|---:|---:|---:|---:|---|
+{% for row in rows -%}
+| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.volume_display }} | {{ row.liquidity_display }} | {{ row.signal_class }} |
+{% endfor %}
+
+---
+
+## 3. Biggest 24h Movers
+
+### Top Positive Movers
+
+{% if top_positive_movers %}
+| Outcome | Price | 24h Move | Signal |
+|---|---:|---:|---|
+{% for row in top_positive_movers -%}
+| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.signal_class }} |
+{% endfor %}
+{% else %}
+No positive movers detected in the latest snapshot.
+{% endif %}
+
+### Top Negative Movers
+
+{% if top_negative_movers %}
+| Outcome | Price | 24h Move | Signal |
+|---|---:|---:|---|
+{% for row in top_negative_movers -%}
+| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.signal_class }} |
+{% endfor %}
+{% else %}
+No negative movers detected in the latest snapshot.
+{% endif %}
+
+---
+
+## 4. Historical Trend Summary
+
+{% if has_trends %}
+| Metric | Value |
+|---|---:|
+| Tracked trends | {{ tracked_trends_count }} |
+| Strong trends | {{ strong_trends_count }} |
+| Emerging trends | {{ emerging_trends_count }} |
+| Weak trends | {{ weak_trends_count }} |
+| Max observations | {{ max_observations }} |
+
+### Top Historical Uptrends
+
+{% if top_uptrends %}
+| Outcome | First | Latest | Total Change | Observations | Quality |
+|---|---:|---:|---:|---:|---|
+{% for row in top_uptrends -%}
+| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_quality }} |
+{% endfor %}
+{% else %}
+No historical uptrends detected.
+{% endif %}
+
+### Top Historical Downtrends
+
+{% if top_downtrends %}
+| Outcome | First | Latest | Total Change | Observations | Quality |
+|---|---:|---:|---:|---:|---|
+{% for row in top_downtrends -%}
+| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_quality }} |
+{% endfor %}
+{% else %}
+No historical downtrends detected.
+{% endif %}
+
+### Full Historical Trend Table
+
+| Outcome | First | Latest | Total Change | Observations | Direction | Quality |
+|---|---:|---:|---:|---:|---|---|
+{% for row in trend_rows -%}
+| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_direction }} | {{ row.trend_quality }} |
+{% endfor %}
+{% else %}
+Historical trend table unavailable.
+{% endif %}
+
+---
+
+## 5. Narrative Map
+
+| Outcome | Narrative | Catalyst | Notes |
+|---|---|---|---|
+{% for row in rows -%}
+| {{ row.outcome }} | {{ row.narrative }} | {{ row.catalyst }} | {{ row.notes }} |
+{% endfor %}
+
+---
+
+## 6. Interpretation Layer
+
+**Current strongest market:** {{ leading_outcome }} at {{ leading_price }}
+
+{{ liquidity_note }}
+
+{% for note in interpretation_notes %}
 - {{ note }}
 {% endfor %}
+
+---
+
+## 7. Red-Team Notes
+
+{% for note in red_team_notes %}
+- {{ note }}
+{% endfor %}
+
+---
+
+## 8. Next Research Questions
+
+- Which outcomes are priced by reputation rather than current information?
+- Which 24h movers are just one-off noise?
+- Which trends persist across multiple snapshots?
+- Where does liquidity appear first once live markets become active?
+- Which narratives survive after injuries, lineups, match results or news?
+- Which signals are confirmed by multiple providers?
+
+---
+
+Generated by **World Cup Market Intelligence v0.3.4**.

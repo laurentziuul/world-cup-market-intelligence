@@ -140,24 +140,26 @@ def calculate_changes(current: pd.DataFrame, previous: pd.DataFrame | None) -> p
     return merged
 
 
-def add_metadata(df: pd.DataFrame) -> pd.DataFrame:
+def add_metadata(df: pd.DataFrame, snapshot_time: datetime) -> pd.DataFrame:
     df = df.copy()
 
-    now = datetime.now(timezone.utc)
-
-    df["snapshot_time_utc"] = now.isoformat()
-    df["snapshot_date_utc"] = now.date().isoformat()
+    df["snapshot_time_utc"] = snapshot_time.isoformat()
+    df["snapshot_date_utc"] = snapshot_time.date().isoformat()
     df["provider"] = "manual_csv"
 
     return df
 
 
-def write_outputs(df: pd.DataFrame) -> tuple[Path, Path]:
+def build_archive_filename(snapshot_time: datetime) -> str:
+    return snapshot_time.strftime("%Y-%m-%dT%H-%M-%SZ.csv")
+
+
+def write_outputs(df: pd.DataFrame, snapshot_time: datetime) -> tuple[Path, Path]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     SNAPSHOT_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
 
-    snapshot_date = df["snapshot_date_utc"].iloc[0]
-    archive_path = SNAPSHOT_ARCHIVE_DIR / f"{snapshot_date}.csv"
+    archive_filename = build_archive_filename(snapshot_time)
+    archive_path = SNAPSHOT_ARCHIVE_DIR / archive_filename
 
     df.to_csv(LATEST_PATH, index=False)
     df.to_csv(archive_path, index=False)
@@ -166,17 +168,19 @@ def write_outputs(df: pd.DataFrame) -> tuple[Path, Path]:
 
 
 def main():
+    snapshot_time = datetime.now(timezone.utc)
+
     current = load_manual_data()
     current = normalize_numeric_columns(current)
 
     previous = load_previous_snapshot()
     current = calculate_changes(current, previous)
-    current = add_metadata(current)
+    current = add_metadata(current, snapshot_time)
 
-    latest_path, archive_path = write_outputs(current)
+    latest_path, archive_path = write_outputs(current, snapshot_time)
 
     print(f"Created latest snapshot: {latest_path}")
-    print(f"Archived daily snapshot: {archive_path}")
+    print(f"Archived timestamped snapshot: {archive_path}")
     print(f"Rows: {len(current)}")
     print("")
 

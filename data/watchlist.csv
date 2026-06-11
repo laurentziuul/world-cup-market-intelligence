@@ -1,0 +1,4 @@
+watchlist_id,source,event_slug,market_slug,market_type,question,outcome_focus,priority,why_track,signal_bucket,notes
+wc26-outright-001,polymarket,world-cup-winner,world-cup-winner,outright,Who will win the 2026 FIFA World Cup?,favorites + dark horses,high,Benchmark market for global narrative and crowd positioning.,structural,Replace slug after fetching live Gamma event data if needed.
+wc26-group-001,polymarket,,,group_advancement,Group winner / team advancement markets,second-tier teams,medium,Potentially less efficient than outright winner markets.,tactical,Populate after final market discovery.
+wc26-props-001,polymarket,,,player_props,Golden Boot / Golden Ball / player-specific props,thin liquidity markets,low,"Useful for studying liquidity fragility, but higher noise.",speculative,Do not publish as pick without strong data.

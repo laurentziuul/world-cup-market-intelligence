@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/wcmi/__init__.py
+src/wcmi/brief.py
+src/wcmi/config.py
+src/wcmi/models.py
+src/wcmi/polymarket.py
+src/wcmi/scoring.py
+src/world_cup_market_intelligence.egg-info/PKG-INFO
+src/world_cup_market_intelligence.egg-info/SOURCES.txt
+src/world_cup_market_intelligence.egg-info/dependency_links.txt
+src/world_cup_market_intelligence.egg-info/requires.txt
+src/world_cup_market_intelligence.egg-info/top_level.txt
+tests/test_scoring.py

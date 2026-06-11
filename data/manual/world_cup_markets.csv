@@ -1,0 +1,6 @@
+market_id,market_title,outcome,price,volume,liquidity,price_change_24h,volume_change_24h,narrative,catalyst,source_url,notes
+manual-001,2026 FIFA World Cup Winner,France,0.16,0,0,0,0,Consensus favorite,Pre-tournament baseline,manual,Manual placeholder
+manual-002,2026 FIFA World Cup Winner,Spain,0.16,0,0,0,0,Consensus favorite,Pre-tournament baseline,manual,Manual placeholder
+manual-003,2026 FIFA World Cup Winner,England,0.11,0,0,0,0,Public favorite with reputation premium,Pre-tournament baseline,manual,Manual placeholder
+manual-004,2026 FIFA World Cup Winner,Portugal,0.10,0,0,0,0,Star-player narrative,Pre-tournament baseline,manual,Manual placeholder
+manual-005,2026 FIFA World Cup Winner,Brazil,0.09,0,0,0,0,Historical reputation premium,Pre-tournament baseline,manual,Manual placeholder

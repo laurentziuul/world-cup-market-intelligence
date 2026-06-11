@@ -1,0 +1,95 @@
+Metadata-Version: 2.4
+Name: world-cup-market-intelligence
+Version: 0.1.0
+Summary: Open-source market intelligence framework for FIFA World Cup 2026 prediction markets
+Author: Iorgulescu Laurentiu
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.31.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: jinja2>=3.1.0
+Requires-Dist: pydantic>=2.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: ruff>=0.5.0; extra == "dev"
+Dynamic: license-file
+
+# World Cup Market Intelligence v0
+
+Open-source framework for tracking prediction-market dynamics around FIFA World Cup 2026.
+
+This project is not a betting tip service. It is a reusable market-intelligence system for studying how prices, liquidity, narratives and catalysts evolve around a scheduled global event.
+
+## Core idea
+
+The FIFA World Cup 2026 is a fixed-window global attention event: 48 teams, 104 matches, June 11 to July 19, 2026. The system treats it as a live laboratory for prediction-market analysis.
+
+```text
+Polymarket / event schedule / news notes
+        ↓
+market snapshots
+        ↓
+scoring + narrative classification
+        ↓
+daily market intelligence brief
+        ↓
+X / Substack / research archive
+```
+
+## What v0 does
+
+- Tracks a curated watchlist of prediction markets
+- Pulls public Polymarket market/event data where available
+- Stores daily snapshots as CSV/JSON
+- Scores markets using a transparent heuristic model
+- Classifies signals as structural / tactical / speculative
+- Generates a daily Markdown brief
+- Keeps the system portable for future events: elections, FOMC, Olympics, crypto launches, AI conferences, token unlocks
+
+## What v0 does not do
+
+- It does not place trades
+- It does not provide betting picks
+- It does not guarantee edge
+- It does not scrape copyrighted match footage
+- It does not rely on private APIs
+
+## Quick start
+
+```bash
+git clone https://github.com/YOUR_USERNAME/world-cup-market-intelligence.git
+cd world-cup-market-intelligence
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -e .
+cp .env.example .env
+python scripts/init_watchlist.py
+python scripts/update_snapshot.py
+python scripts/generate_brief.py
+```
+
+Generated output:
+
+```text
+data/processed/snapshot_latest.csv
+briefs/YYYY-MM-DD-world-cup-market-brief.md
+```
+
+## Repository structure
+
+```text
+src/wcmi/                 Core package
+scripts/                  Runnable scripts
+data/raw/                 Raw API outputs / manual inputs
+data/processed/           Cleaned snapshots
+templates/                Markdown brief templates
+docs/                     Architecture and methodology
+tests/                    Basic tests
+```
+
+## License
+
+MIT License. See `LICENSE`.

@@ -1,0 +1,92 @@
+# World Cup Market Intelligence Brief — {{ brief_date }}
+
+> This is a market-intelligence note, not a betting tip. The goal is to study how crowds price uncertainty around FIFA World Cup 2026.
+
+## 0. Dataset status
+
+| Field | Value |
+|---|---:|
+| Provider | {{ provider }} |
+| Rows | {{ row_count }} |
+
+## 1. Market structure snapshot
+
+### Highest implied probability
+
+| Market | Outcome | Price | Narrative |
+|---|---:|---:|---|
+{% for row in top_probability -%}
+| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('narrative', '') }} |
+{% endfor %}
+
+### Highest-volume markets
+
+| Market | Outcome | Price | Volume | Liquidity |
+|---|---:|---:|---:|---:|
+{% for row in top_volume -%}
+| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('volume_display', '') }} | {{ row.get('liquidity_display', '') }} |
+{% endfor %}
+
+### Highest-liquidity markets
+
+| Market | Outcome | Price | Volume | Liquidity |
+|---|---:|---:|---:|---:|
+{% for row in top_liquidity -%}
+| {{ row.get('market_display', '') }} | {{ row.get('outcome', '') }} | {{ row.get('price_display', '') }} | {{ row.get('volume_display', '') }} | {{ row.get('liquidity_display', '') }} |
+{% endfor %}
+
+## 2. Biggest probability move
+
+| Field | Value |
+|---|---|
+| Market | {{ biggest_move.get('market_display', 'N/A') }} |
+| Outcome | {{ biggest_move.get('outcome', 'N/A') }} |
+| 24h move | {{ biggest_move.get('price_change_display', 'N/A') }} |
+| Possible catalyst | {{ biggest_move.get('catalyst', 'N/A') }} |
+| Signal type | speculative until confirmed with non-zero volume/liquidity |
+
+## 3. Crowded trade watch
+
+| Field | Value |
+|---|---|
+| Market | {{ crowded_trade.get('market_display', 'N/A') }} |
+| Outcome | {{ crowded_trade.get('outcome', 'N/A') }} |
+| Price | {{ crowded_trade.get('price_display', 'N/A') }} |
+| Narrative | {{ crowded_trade.get('narrative', 'N/A') }} |
+
+**Interpretation:**  
+The highest-priced outcome is not automatically the best signal. In this framework, a crowded trade becomes interesting only when price, liquidity, catalyst quality and narrative pressure are analyzed together.
+
+## 4. Narrative vs price gap
+
+Current v0 observation:
+
+- Public narrative: {{ crowded_trade.get('narrative', 'N/A') }}
+- Market-implied probability: {{ crowded_trade.get('price_display', 'N/A') }}
+- Confidence: low
+- Reason: this snapshot uses manual placeholder data and does not yet include live liquidity, order-book depth, injury news or multi-provider odds comparison.
+
+## 5. Liquidity anomaly
+
+{{ liquidity_note }}
+
+## 6. Red-team
+
+Why the current interpretation can be wrong:
+
+1. The dataset is manually entered and may not reflect live market prices.
+2. Volume and liquidity are currently not informative if they remain zero.
+3. A high implied probability may reflect reputation or public bias, not true edge.
+4. Without historical snapshots, we cannot yet distinguish a real probability move from a static baseline.
+
+## Bottom line
+
+{{ bottom_line }}
+
+---
+
+## Internal notes
+
+{% for note in manual_notes -%}
+- {{ note }}
+{% endfor %}

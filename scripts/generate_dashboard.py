@@ -11,9 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT_PATH = ROOT / "data" / "processed" / "snapshot_latest.csv"
 TEMPLATE_DIR = ROOT / "templates"
 TEMPLATE_NAME = "dashboard.html.j2"
-OUTPUT_DIR = ROOT / "dashboard"
+OUTPUT_DIR = ROOT / "docs" / "dashboard"
 OUTPUT_PATH = OUTPUT_DIR / "index.html"
-
 
 def format_probability(value) -> str:
     try:

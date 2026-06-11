@@ -9,3 +9,5 @@ data/raw/*.csv
 data/processed/*.csv
 *.egg-info/
 src/*.egg-info/
+data/processed/snapshots/*.csv
+!data/processed/snapshots/.gitkeep

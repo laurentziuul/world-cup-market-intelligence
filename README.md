@@ -508,3 +508,72 @@ It does not make the project predictive.
 
 It does not provide betting advice or investment advice.
 
+
+
+## Final project status
+
+Current public MVP release target:
+
+- v1.2.0 — Final Polish and Portfolio-Ready MVP
+
+Current status:
+
+- stable dashboard available
+- experimental Polymarket dashboard available
+- historical trends dashboard available
+- catalyst notes layer available
+- narrative intelligence documentation available
+- team intelligence layer available
+- dashboard trust layer available
+- project validation script available
+- project health report available
+- public demo guide available
+- final project summary available
+
+Public dashboards:
+
+- https://laurentziuul.github.io/world-cup-market-intelligence/
+- https://laurentziuul.github.io/world-cup-market-intelligence/dashboard/
+- https://laurentziuul.github.io/world-cup-market-intelligence/polymarket-dashboard/
+- https://laurentziuul.github.io/world-cup-market-intelligence/trends-dashboard/
+
+Recommended validation command:
+
+- python scripts/validate_project.py
+
+Recommended health check:
+
+- python scripts/project_health.py
+
+Recommended freshness check:
+
+- python scripts/check_data_freshness.py
+
+Best project description:
+
+World Cup Market Intelligence is an open-source, static-dashboard MVP for FIFA World Cup 2026 prediction-market intelligence.
+
+It combines market data, historical movement, signal classification, catalyst notes, team intelligence and dashboard trust indicators into a transparent public research product.
+
+Final positioning:
+
+- open-source market-intelligence MVP
+- World Cup 2026 prediction-market research project
+- transparent static dashboard system
+- catalyst and narrative intelligence experiment
+- team-level intelligence layer
+- dashboard freshness and trust layer
+- Mayior Capital proof-of-work project
+
+This project is not:
+
+- betting advice
+- investment advice
+- financial advice
+- a prediction engine
+- a trading bot
+- a guaranteed signal system
+- a black-box AI model
+
+Powered by Mayior Capital.
+

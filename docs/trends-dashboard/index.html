@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>World Cup Market Intelligence — Historical Trends</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        .label {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 34px;
+        }
+
+        h2 {
+            margin: 30px 0 10px 0;
+            font-size: 24px;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            max-width: 820px;
+            line-height: 1.5;
+        }
+
+        .notice {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 14px;
+            padding: 16px;
+            margin: 22px 0;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #334155;
+            text-align: left;
+            vertical-align: top;
+            font-size: 14px;
+        }
+
+        th {
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        tr:hover {
+            background: #172033;
+        }
+
+        a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        code {
+            color: #93c5fd;
+        }
+
+        .team {
+            font-weight: 700;
+        }
+
+        .change {
+            font-weight: 700;
+            color: #facc15;
+        }
+
+        .reason {
+            color: #94a3b8;
+            max-width: 380px;
+        }
+
+        .status-ok {
+            color: #86efac;
+            font-weight: 700;
+        }
+
+        .status-missing {
+            color: #fdba74;
+            font-weight: 700;
+        }
+
+        .footer {
+            margin-top: 28px;
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section>
+            <div class="label">Experimental historical trends</div>
+            <h1>World Cup Market Intelligence — Historical Trends</h1>
+            <p class="subtitle">
+                Experimental preview of probability movement, top movers and signal classification
+                generated from historical prediction-market snapshots.
+            </p>
+        </section>
+
+        <section class="notice">
+            Generated at <strong>2026-06-16 14:35:39</strong> UTC.
+            These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
+            The trend system is experimental and should not be treated as betting or investment advice.
+        </section>
+
+        <section>
+            <h2>Trend output status</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Output</th>
+                        <th>Status</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr>
+                <td>Probability deltas</td>
+                <td class="status-missing">missing</td>
+                <td><code>data\processed\probability_deltas_latest.csv</code></td>
+            </tr>
+            
+
+            <tr>
+                <td>Top movers</td>
+                <td class="status-missing">missing</td>
+                <td><code>data\processed\top_movers_latest.csv</code></td>
+            </tr>
+            
+
+            <tr>
+                <td>Signal summary</td>
+                <td class="status-missing">missing</td>
+                <td><code>data\processed\signal_summary_latest.csv</code></td>
+            </tr>
+            
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Top movers</h2>
+            <p class="subtitle">
+                Largest positive and negative probability moves, plus volume and liquidity movers,
+                when available.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Rank</th>
+                        <th>Team</th>
+                        <th>Outcome</th>
+                        <th>Change</th>
+                        <th>Direction</th>
+                        <th>Current liquidity</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td colspan="8">No top movers output found yet. Run the historical trends workflow first.</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Signal summary</h2>
+            <p class="subtitle">
+                Transparent rule-based signal classification. This is not a black-box model.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Outcome</th>
+                        <th>Change</th>
+                        <th>Signal</th>
+                        <th>Strength</th>
+                        <th>Liquidity label</th>
+                        <th>Reason</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td colspan="8">No signal summary output found yet. Run the historical trends workflow first.</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </section>
+
+        <section class="footer">
+            <p>
+                Main page:
+                <a href="../">World Cup Market Intelligence</a>.
+                Stable dashboard:
+                <a href="../dashboard/">manual_csv dashboard</a>.
+                Polymarket dashboard:
+                <a href="../polymarket-dashboard/">Polymarket live dashboard</a>.
+            </p>
+            <p>
+                Powered by <strong>Mayior Capital</strong>.
+            </p>
+            <p>
+                This page is experimental and for research and education only.
+            </p>
+        </section>
+    </main>
+</body>
+</html>

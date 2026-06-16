@@ -779,3 +779,42 @@ It does not automatically scrape news or invent explanations.
 
 Catalyst notes do not prove causality. They provide transparent research context that may help explain probability movement.
 
+
+
+## v0.9.0 roadmap and team intelligence
+
+v0.9.0 focuses on making the project more usable as an intelligence product.
+
+The main direction is team-level intelligence, dashboard usability and clearer manual review workflows.
+
+Key v0.9.0 documents:
+
+- docs/v0.9.0_roadmap.md
+- docs/team_intelligence.md
+
+New team intelligence layer:
+
+- scripts/generate_team_intelligence.py
+- data/processed/team_intelligence_latest.csv
+- docs/team_intelligence.md
+
+The team intelligence layer aggregates generated signal rows and catalyst matches by team.
+
+It helps answer:
+
+- Which teams have signal activity?
+- Which teams have positive or negative movement?
+- Which teams have matched catalyst context?
+- Which teams have unmatched signals?
+- Which teams deserve manual review first?
+
+The trends dashboard now includes a Team intelligence section.
+
+Public trends dashboard:
+
+- https://laurentziuul.github.io/world-cup-market-intelligence/trends-dashboard/
+
+The team intelligence layer is experimental, transparent and rule-based.
+
+It is not a betting model, investment system or black-box prediction engine.
+

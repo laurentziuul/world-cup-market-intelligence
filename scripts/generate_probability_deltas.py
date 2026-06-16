@@ -29,6 +29,12 @@ OUTPUT_COLUMNS = [
     "current_probability_display",
     "probability_change_display",
     "direction",
+    "previous_volume",
+    "current_volume",
+    "volume_change",
+    "previous_liquidity",
+    "current_liquidity",
+    "liquidity_change",
     "source_url",
 ]
 
@@ -83,6 +89,16 @@ def require_columns(dataframe: pd.DataFrame, columns: list[str]) -> None:
             "Missing required columns in comparison CSV: "
             + ", ".join(missing)
         )
+
+
+def ensure_numeric_column(dataframe: pd.DataFrame, column: str) -> pd.Series:
+    if column not in dataframe.columns:
+        return pd.Series([0.0] * len(dataframe), index=dataframe.index)
+
+    return pd.to_numeric(
+        dataframe[column],
+        errors="coerce",
+    ).fillna(0.0)
 
 
 def format_probability(value: float) -> str:
@@ -148,25 +164,48 @@ def build_probability_deltas(
             == status_filter.lower()
         ].copy()
 
-    working["previous_probability"] = pd.to_numeric(
-        working["previous_probability"],
-        errors="coerce",
-    ).fillna(0.0)
+    working["previous_probability"] = ensure_numeric_column(
+        working,
+        "previous_probability",
+    )
+    working["current_probability"] = ensure_numeric_column(
+        working,
+        "current_probability",
+    )
+    working["probability_change"] = ensure_numeric_column(
+        working,
+        "probability_change",
+    )
+    working["probability_change_pp"] = ensure_numeric_column(
+        working,
+        "probability_change_pp",
+    )
 
-    working["current_probability"] = pd.to_numeric(
-        working["current_probability"],
-        errors="coerce",
-    ).fillna(0.0)
+    working["previous_volume"] = ensure_numeric_column(
+        working,
+        "previous_volume",
+    )
+    working["current_volume"] = ensure_numeric_column(
+        working,
+        "current_volume",
+    )
+    working["volume_change"] = ensure_numeric_column(
+        working,
+        "volume_change",
+    )
 
-    working["probability_change"] = pd.to_numeric(
-        working["probability_change"],
-        errors="coerce",
-    ).fillna(0.0)
-
-    working["probability_change_pp"] = pd.to_numeric(
-        working["probability_change_pp"],
-        errors="coerce",
-    ).fillna(0.0)
+    working["previous_liquidity"] = ensure_numeric_column(
+        working,
+        "previous_liquidity",
+    )
+    working["current_liquidity"] = ensure_numeric_column(
+        working,
+        "current_liquidity",
+    )
+    working["liquidity_change"] = ensure_numeric_column(
+        working,
+        "liquidity_change",
+    )
 
     if min_abs_change_pp > 0:
         working = working[

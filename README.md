@@ -1,6 +1,6 @@
 # World Cup Market Intelligence v0
 
-Open-source market-intelligence framework for tracking prediction-market prices, liquidity, narratives and catalysts around FIFA World Cup 2026.
+Open-source market-intelligence framework for tracking prediction-market prices, liquidity, narratives, catalysts and historical probability trends around FIFA World Cup 2026.
 
 This project is not a betting system and does not provide betting tips.
 The goal is to study how crowds price uncertainty during a scheduled global attention event.
@@ -21,24 +21,35 @@ The long-term goal is to build a reusable event-intelligence framework that can 
 
 ## What v0 does
 
-The current version supports a simple offline/manual pipeline:
+The current version supports an offline/manual-first intelligence pipeline:
 
 ```text
-manual CSV data
-        ↓
+provider
+    ↓
 normalized snapshot
-        ↓
+    ↓
+timestamped snapshot archive
+    ↓
+historical trend engine
+    ↓
 daily Markdown brief
+    ↓
+static dashboard
 ```
 
 Current capabilities:
 
 * ingest a manual CSV watchlist;
 * normalize market data into a standard snapshot;
+* archive timestamped snapshots;
+* calculate snapshot-to-snapshot price, volume and liquidity changes;
+* generate historical trend summaries;
 * generate a daily Markdown intelligence brief;
+* generate a static HTML dashboard;
 * separate market data from narrative interpretation;
-* classify early signals as structural, tactical or speculative;
-* red-team the strongest signal before publishing.
+* classify early signals as structural, tactical, speculative or noise;
+* red-team the strongest signals before publishing;
+* use a provider abstraction layer so new data sources can be added later.
 
 ## Current data provider
 
@@ -50,16 +61,34 @@ Input file:
 data/manual/world_cup_markets.csv
 ```
 
-Generated snapshot:
+Generated latest snapshot:
 
 ```text
 data/processed/snapshot_latest.csv
+```
+
+Generated timestamped snapshot archive:
+
+```text
+data/processed/snapshots/
+```
+
+Generated trend file:
+
+```text
+data/processed/trends_latest.csv
 ```
 
 Generated brief:
 
 ```text
 briefs/YYYY-MM-DD-world-cup-market-brief.md
+```
+
+Generated dashboard:
+
+```text
+docs/dashboard/index.html
 ```
 
 External APIs such as Polymarket, Kalshi, Manifold or other odds providers can be added later as optional providers. They should not be hard dependencies.
@@ -79,16 +108,60 @@ Install the project locally:
 python -m pip install -e .
 ```
 
-Create a manual snapshot:
+Create a provider-based snapshot using the default manual CSV provider:
+
+```powershell
+python scripts/update_snapshot.py --provider manual_csv
+```
+
+The old manual command still works as a compatibility wrapper:
 
 ```powershell
 python scripts/update_snapshot_manual.py
+```
+
+Generate historical trends:
+
+```powershell
+python scripts/generate_trends.py
 ```
 
 Generate the daily brief:
 
 ```powershell
 python scripts/generate_brief.py
+```
+
+Generate the dashboard:
+
+```powershell
+python scripts/generate_dashboard.py
+```
+
+Open the dashboard locally:
+
+```powershell
+start docs/dashboard/index.html
+```
+
+## Provider-based snapshot update
+
+The default provider is `manual_csv`:
+
+```powershell
+python scripts/update_snapshot.py --provider manual_csv
+```
+
+The old manual command still works as a compatibility wrapper:
+
+```powershell
+python scripts/update_snapshot_manual.py
+```
+
+Provider documentation:
+
+```text
+docs/providers.md
 ```
 
 ## Example workflow
@@ -99,19 +172,37 @@ python scripts/generate_brief.py
 data/manual/world_cup_markets.csv
 ```
 
-2. Run:
+2. Run the provider-based snapshot update:
 
 ```powershell
-python scripts/update_snapshot_manual.py
+python scripts/update_snapshot.py --provider manual_csv
 ```
 
-3. Generate the brief:
+3. Generate trends:
+
+```powershell
+python scripts/generate_trends.py
+```
+
+4. Generate the brief:
 
 ```powershell
 python scripts/generate_brief.py
 ```
 
-4. Review the generated Markdown file inside:
+5. Generate the dashboard:
+
+```powershell
+python scripts/generate_dashboard.py
+```
+
+6. Review the generated dashboard:
+
+```text
+docs/dashboard/index.html
+```
+
+7. Review the generated Markdown brief inside:
 
 ```text
 briefs/
@@ -121,14 +212,15 @@ briefs/
 
 Each market is interpreted through several layers:
 
-| Layer     | Question                                    |
-| --------- | ------------------------------------------- |
-| Price     | What probability is the market implying?    |
-| Liquidity | Is there real market depth or only noise?   |
-| Volume    | Is there actual participation?              |
-| Narrative | What public story may be driving the price? |
-| Catalyst  | What event may explain the move?            |
-| Red-team  | Why can the signal be wrong?                |
+| Layer     | Question                                          |
+| --------- | ------------------------------------------------- |
+| Price     | What probability is the market implying?          |
+| Liquidity | Is there real market depth or only noise?         |
+| Volume    | Is there actual participation?                    |
+| Narrative | What public story may be driving the price?       |
+| Catalyst  | What event may explain the move?                  |
+| Trend     | Is the move persistent across multiple snapshots? |
+| Red-team  | Why can the signal be wrong?                      |
 
 Signal classification:
 
@@ -138,6 +230,14 @@ Signal classification:
 | Tactical    | Short-term signal that may matter temporarily                            |
 | Speculative | Weak or incomplete signal that needs confirmation                        |
 | Noise       | Low-quality signal with no clear information value                       |
+
+Trend classification:
+
+| Type     | Meaning                                                         |
+| -------- | --------------------------------------------------------------- |
+| Strong   | Meaningful multi-snapshot movement with enough observations     |
+| Emerging | Directional move that may become meaningful but needs more data |
+| Weak     | Too little history or too small a move to draw conclusions      |
 
 ## Project philosophy
 
@@ -150,11 +250,12 @@ It prioritizes:
 * provider-agnostic architecture;
 * manual-first workflows;
 * clear research notes;
+* historical context;
 * red-team analysis;
 * no black-box trading claims.
 
 The goal is not to predict the World Cup winner.
-The goal is to learn how markets, narratives and liquidity interact around a global event.
+The goal is to learn how markets, narratives, liquidity and probability changes interact around a global event.
 
 ## Disclaimer
 

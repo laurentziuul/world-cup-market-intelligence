@@ -16,6 +16,7 @@ TOP_MOVERS_PATH = ROOT / "data" / "processed" / "top_movers_latest.csv"
 SIGNAL_SUMMARY_PATH = ROOT / "data" / "processed" / "signal_summary_latest.csv"
 PROBABILITY_DELTAS_PATH = ROOT / "data" / "processed" / "probability_deltas_latest.csv"
 CATALYST_MATCHES_PATH = ROOT / "data" / "processed" / "catalyst_matches_latest.csv"
+TEAM_INTELLIGENCE_PATH = ROOT / "data" / "processed" / "team_intelligence_latest.csv"
 
 
 def read_optional_csv(path: Path) -> pd.DataFrame:
@@ -41,6 +42,7 @@ def render_file_status() -> str:
         "Top movers": TOP_MOVERS_PATH,
         "Signal summary": SIGNAL_SUMMARY_PATH,
         "Catalyst matches": CATALYST_MATCHES_PATH,
+        "Team intelligence": TEAM_INTELLIGENCE_PATH,
     }
 
     rows = []
@@ -56,6 +58,66 @@ def render_file_status() -> str:
                 <td>{html.escape(label)}</td>
                 <td class="{css_class}">{status}</td>
                 <td><code>{html.escape(str(path.relative_to(ROOT)))}</code></td>
+            </tr>
+            """
+        )
+
+    return "\n".join(rows)
+
+
+def render_team_intelligence(team_intelligence: pd.DataFrame) -> str:
+    if team_intelligence.empty:
+        return """
+        <tr>
+            <td colspan="12">No team intelligence output found yet. Run the historical trends workflow first.</td>
+        </tr>
+        """
+
+    columns = [
+        "review_priority",
+        "team",
+        "provider",
+        "total_signals",
+        "positive_signals",
+        "negative_signals",
+        "matched_catalysts",
+        "unmatched_signals",
+        "strongest_signal",
+        "summary_label",
+        "latest_signal_date",
+        "latest_catalyst_date",
+    ]
+
+    for column in columns:
+        if column not in team_intelligence.columns:
+            team_intelligence[column] = ""
+
+    rows = []
+
+    for _, row in team_intelligence.head(40).iterrows():
+        priority = format_value(row["review_priority"]).lower()
+        priority_class = "priority-low"
+
+        if priority == "high":
+            priority_class = "priority-high"
+        elif priority == "medium":
+            priority_class = "priority-medium"
+
+        rows.append(
+            f"""
+            <tr>
+                <td class="{priority_class}">{html.escape(format_value(row["review_priority"]))}</td>
+                <td class="team">{html.escape(format_value(row["team"]))}</td>
+                <td>{html.escape(format_value(row["provider"]))}</td>
+                <td>{html.escape(format_value(row["total_signals"]))}</td>
+                <td>{html.escape(format_value(row["positive_signals"]))}</td>
+                <td>{html.escape(format_value(row["negative_signals"]))}</td>
+                <td>{html.escape(format_value(row["matched_catalysts"]))}</td>
+                <td>{html.escape(format_value(row["unmatched_signals"]))}</td>
+                <td>{html.escape(format_value(row["strongest_signal"]))}</td>
+                <td>{html.escape(format_value(row["summary_label"]))}</td>
+                <td>{html.escape(format_value(row["latest_signal_date"]))}</td>
+                <td>{html.escape(format_value(row["latest_catalyst_date"]))}</td>
             </tr>
             """
         )
@@ -239,12 +301,14 @@ def render_catalyst_matches(catalyst_matches: pd.DataFrame) -> str:
 
 
 def render_html(
+    team_intelligence: pd.DataFrame,
     top_movers: pd.DataFrame,
     signal_summary: pd.DataFrame,
     catalyst_matches: pd.DataFrame,
     generated_at: str,
 ) -> str:
     file_status_rows = render_file_status()
+    team_intelligence_rows = render_team_intelligence(team_intelligence)
     top_movers_rows = render_top_movers(top_movers)
     signal_summary_rows = render_signal_summary(signal_summary)
     catalyst_matches_rows = render_catalyst_matches(catalyst_matches)
@@ -264,7 +328,7 @@ def render_html(
         }}
 
         .container {{
-            max-width: 1220px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 32px 20px;
         }}
@@ -292,7 +356,7 @@ def render_html(
 
         .subtitle {{
             color: #cbd5e1;
-            max-width: 820px;
+            max-width: 860px;
             line-height: 1.5;
         }}
 
@@ -373,6 +437,21 @@ def render_html(
             font-weight: 700;
         }}
 
+        .priority-high {{
+            color: #fca5a5;
+            font-weight: 800;
+        }}
+
+        .priority-medium {{
+            color: #fde68a;
+            font-weight: 800;
+        }}
+
+        .priority-low {{
+            color: #86efac;
+            font-weight: 800;
+        }}
+
         .footer {{
             margin-top: 28px;
             color: #94a3b8;
@@ -398,15 +477,16 @@ def render_html(
             <div class="label">Experimental historical trends</div>
             <h1>World Cup Market Intelligence — Historical Trends</h1>
             <p class="subtitle">
-                Experimental preview of probability movement, top movers, signal classification
-                and catalyst-note matching generated from historical prediction-market snapshots.
+                Experimental preview of probability movement, top movers, signal classification,
+                catalyst-note matching and team-level intelligence generated from historical
+                prediction-market snapshots.
             </p>
         </section>
 
         <section class="notice">
             Generated at <strong>{html.escape(generated_at)}</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
-            The trend and catalyst system is experimental and should not be treated as betting or investment advice.
+            The trend, catalyst and team-intelligence system is experimental and should not be treated as betting or investment advice.
         </section>
 
         <section>
@@ -421,6 +501,36 @@ def render_html(
                 </thead>
                 <tbody>
                     {file_status_rows}
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Team intelligence</h2>
+            <p class="subtitle">
+                Team-level summary combining signals and catalyst matches. This section helps identify
+                which teams deserve manual review first.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Team</th>
+                        <th>Provider</th>
+                        <th>Total signals</th>
+                        <th>Positive</th>
+                        <th>Negative</th>
+                        <th>Matched catalysts</th>
+                        <th>Unmatched signals</th>
+                        <th>Strongest signal</th>
+                        <th>Summary label</th>
+                        <th>Latest signal</th>
+                        <th>Latest catalyst</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {team_intelligence_rows}
                 </tbody>
             </table>
         </section>
@@ -530,11 +640,13 @@ def main() -> None:
 
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
+    team_intelligence = read_optional_csv(TEAM_INTELLIGENCE_PATH)
     top_movers = read_optional_csv(TOP_MOVERS_PATH)
     signal_summary = read_optional_csv(SIGNAL_SUMMARY_PATH)
     catalyst_matches = read_optional_csv(CATALYST_MATCHES_PATH)
 
     html_content = render_html(
+        team_intelligence=team_intelligence,
         top_movers=top_movers,
         signal_summary=signal_summary,
         catalyst_matches=catalyst_matches,
@@ -544,6 +656,7 @@ def main() -> None:
     OUTPUT_PATH.write_text(html_content, encoding="utf-8")
 
     print("Historical trends dashboard")
+    print(f"Team intelligence rows: {len(team_intelligence)}")
     print(f"Top movers rows:        {len(top_movers)}")
     print(f"Signal summary rows:    {len(signal_summary)}")
     print(f"Catalyst matches rows:  {len(catalyst_matches)}")

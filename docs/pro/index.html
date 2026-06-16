@@ -1,0 +1,430 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>World Cup Market Intelligence Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 42px 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 44px;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
+        }
+
+        h2 {
+            margin-top: 42px;
+            font-size: 28px;
+        }
+
+        h3 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .subtitle {
+            max-width: 880px;
+            color: #cbd5e1;
+            font-size: 18px;
+            margin-top: 16px;
+        }
+
+        .notice {
+            margin: 28px 0;
+            padding: 18px;
+            border: 1px solid #475569;
+            background: #1e293b;
+            border-radius: 16px;
+            color: #cbd5e1;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 18px;
+            padding: 20px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 12px 0;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 5px 8px;
+            border-radius: 999px;
+            margin-bottom: 12px;
+            background: #312e81;
+            color: #c4b5fd;
+        }
+
+        .tag-paid {
+            background: #14532d;
+            color: #bbf7d0;
+        }
+
+        .tag-research {
+            background: #1e3a8a;
+            color: #bfdbfe;
+        }
+
+        a {
+            color: #93c5fd;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 13px;
+            background: #2563eb;
+            color: white;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .button:hover {
+            text-decoration: none;
+            background: #1d4ed8;
+        }
+
+        .button-secondary {
+            display: inline-block;
+            padding: 10px 13px;
+            background: #1e293b;
+            color: #e5e7eb;
+            border: 1px solid #475569;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .button-secondary:hover {
+            text-decoration: none;
+            background: #334155;
+        }
+
+        .list {
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 18px;
+            padding: 20px;
+            margin-top: 18px;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+
+        .footer {
+            margin-top: 42px;
+            color: #94a3b8;
+            font-size: 14px;
+            border-top: 1px solid #334155;
+            padding-top: 22px;
+        }
+
+        code {
+            color: #93c5fd;
+        }
+
+        @media (max-width: 900px) {
+            .grid,
+            .grid-two {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section>
+            <div class="badge">Early product draft · Research-only market intelligence</div>
+            <h1>World Cup Market Intelligence Pro</h1>
+            <p class="subtitle">
+                A daily research brief for FIFA World Cup 2026 prediction-market movement.
+                It tracks probability changes, liquidity movement, volume spikes, catalyst notes,
+                team review priority and data freshness status.
+            </p>
+
+            <div class="hero-actions">
+                <a class="button" href="../briefs/sample_world_cup_market_brief.md">Read sample brief</a>
+                <a class="button-secondary" href="../briefs/latest.md">Latest generated brief</a>
+                <a class="button-secondary" href="../trends-dashboard/">Open intelligence dashboard</a>
+            </div>
+        </section>
+
+        <section class="notice">
+            <strong>Research-only disclaimer:</strong>
+            this product is for education, market-intelligence research and event monitoring.
+            It is not betting advice, investment advice, financial advice, a prediction engine or a trading system.
+        </section>
+
+        <section>
+            <h2>What the Daily Brief gives you</h2>
+
+            <div class="grid">
+                <article class="card">
+                    <span class="tag">Movement</span>
+                    <h3>Top market movers</h3>
+                    <p>
+                        Quickly see which teams moved most by probability, volume and liquidity.
+                    </p>
+                    <ul>
+                        <li>Top probability movers</li>
+                        <li>Top liquidity movers</li>
+                        <li>Top volume movers</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <span class="tag">Context</span>
+                    <h3>Catalyst watchlist</h3>
+                    <p>
+                        Track possible catalysts that may explain market movement without claiming causality.
+                    </p>
+                    <ul>
+                        <li>Squad updates</li>
+                        <li>Injury watch</li>
+                        <li>Match results</li>
+                        <li>Narrative shifts</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <span class="tag">Priority</span>
+                    <h3>Team review priority</h3>
+                    <p>
+                        Identify which teams deserve manual review based on movement, signals and catalyst context.
+                    </p>
+                    <ul>
+                        <li>High-priority teams</li>
+                        <li>Signal alignment</li>
+                        <li>Manual review flags</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>Why this is useful</h2>
+
+            <div class="grid-two">
+                <article class="card">
+                    <span class="tag-research tag">Research workflow</span>
+                    <h3>Saves research time</h3>
+                    <p>
+                        Instead of manually checking dashboards, markets and notes every day,
+                        the brief compresses the important movement into a structured research format.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <span class="tag-research tag">Trust layer</span>
+                    <h3>Freshness-aware interpretation</h3>
+                    <p>
+                        The brief includes data freshness and trust status so readers know whether outputs are fresh,
+                        stale, missing or experimental before interpreting them.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>Early pricing hypothesis</h2>
+
+            <div class="grid">
+                <article class="card">
+                    <span class="tag">Free</span>
+                    <h3>Public layer</h3>
+                    <div class="price">€0</div>
+                    <p>Public dashboards, sample reports and open-source documentation.</p>
+                    <ul>
+                        <li>Landing page</li>
+                        <li>Stable dashboard</li>
+                        <li>Sample brief</li>
+                        <li>GitHub repo</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <span class="tag-paid tag">Starter</span>
+                    <h3>Daily Brief</h3>
+                    <div class="price">€19–€49/mo</div>
+                    <p>Daily market-intelligence brief delivered manually or through a private channel.</p>
+                    <ul>
+                        <li>Daily movers</li>
+                        <li>Catalyst watchlist</li>
+                        <li>Review priority</li>
+                        <li>Freshness status</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <span class="tag-paid tag">Custom</span>
+                    <h3>Research pack</h3>
+                    <div class="price">€300–€1,500</div>
+                    <p>Custom report for communities, creators, researchers or private groups.</p>
+                    <ul>
+                        <li>Group-stage pack</li>
+                        <li>Team momentum pack</li>
+                        <li>Liquidity report</li>
+                        <li>Custom watchlist</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>What this product is not</h2>
+
+            <div class="list">
+                <ul>
+                    <li>It is not betting advice.</li>
+                    <li>It is not investment advice.</li>
+                    <li>It is not a prediction engine.</li>
+                    <li>It is not a guaranteed signal system.</li>
+                    <li>It is not a trading bot.</li>
+                    <li>It does not tell users what to bet on.</li>
+                    <li>It does not guarantee outcomes, profits or market edges.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Best use cases</h2>
+
+            <div class="grid-two">
+                <article class="card">
+                    <h3>For readers</h3>
+                    <p>
+                        Follow what changed in World Cup prediction markets without spending hours manually
+                        checking probabilities, liquidity, volume and narratives.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>For Mayior Capital</h3>
+                    <p>
+                        Use the World Cup vertical as the first monetizable use case for a broader event-intelligence engine.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>Early access placeholder</h2>
+
+            <div class="notice">
+                <p>
+                    Early access is not automated yet. This page is a product validation draft.
+                </p>
+                <p>
+                    The first validation step is simple: share the sample brief and ask whether 10–20 people
+                    would pay for a daily research brief during the World Cup cycle.
+                </p>
+                <p>
+                    Suggested next channels: Telegram, Discord, Substack, Gumroad, Ko-fi, Patreon or manual crypto payment.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Useful links</h2>
+
+            <div class="list">
+                <ul>
+                    <li><a href="../">Public landing page</a></li>
+                    <li><a href="../dashboard/">Stable dashboard</a></li>
+                    <li><a href="../polymarket-dashboard/">Polymarket dashboard</a></li>
+                    <li><a href="../trends-dashboard/">Historical trends dashboard</a></li>
+                    <li><a href="../briefs/sample_world_cup_market_brief.md">Sample public brief</a></li>
+                    <li><a href="../briefs/latest.md">Latest generated brief</a></li>
+                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence">GitHub repository</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="footer">
+            <p>
+                Powered by <strong>Mayior Capital</strong>.
+            </p>
+            <p>
+                World Cup Market Intelligence Pro is an early research-product draft.
+                It is designed for market-intelligence interpretation, not betting or financial advice.
+            </p>
+        </section>
+    </main>
+</body>
+</html>

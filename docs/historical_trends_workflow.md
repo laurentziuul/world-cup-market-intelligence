@@ -9,6 +9,7 @@ snapshot comparison
 probability deltas
 top movers
 signal summary
+catalyst matches
 historical trends dashboard
 ```
 
@@ -26,6 +27,7 @@ Which teams lost probability?
 Which markets moved the most?
 Which moves are supported by liquidity?
 Which moves may be low-liquidity noise?
+Which catalyst notes may explain the move?
 ```
 
 ---
@@ -48,6 +50,16 @@ python scripts/run_polymarket_live_workflow.py
 
 Each run may create a new Polymarket snapshot.
 
+Catalyst notes are optional.
+
+Catalyst notes file:
+
+```text
+data/manual/catalyst_notes.csv
+```
+
+If the catalyst notes file is empty, the workflow still works and can generate unmatched signal rows.
+
 ---
 
 ## Main workflow command
@@ -64,6 +76,7 @@ Default behavior:
 provider = polymarket
 outcome = Yes
 status = existing
+catalyst lookback = 7 days
 ```
 
 This is optimized for Polymarket YES-only World Cup winner markets.
@@ -79,21 +92,22 @@ python scripts/run_historical_trends_workflow.py --provider polymarket --outcome
 Optional parameters:
 
 ```powershell
-python scripts/run_historical_trends_workflow.py --provider polymarket --outcome Yes --status existing --limit 10 --min-abs-change-pp 0.25
+python scripts/run_historical_trends_workflow.py --provider polymarket --outcome Yes --status existing --limit 10 --min-abs-change-pp 0.25 --catalyst-lookback-days 7
 ```
 
 ---
 
 ## What the workflow runs
 
-The workflow runs five steps:
+The workflow runs six steps:
 
 ```text
 1. compare latest two snapshots
 2. generate probability delta report
 3. generate top movers report
 4. generate signal summary report
-5. generate historical trends dashboard
+5. match catalyst notes to signals
+6. generate historical trends dashboard
 ```
 
 Equivalent manual commands:
@@ -103,6 +117,7 @@ python scripts/compare_snapshots.py --provider polymarket
 python scripts/generate_probability_deltas.py --provider polymarket --outcome Yes --status existing
 python scripts/generate_top_movers.py --provider polymarket --outcome Yes
 python scripts/generate_signal_summary.py --provider polymarket --outcome Yes
+python scripts/match_catalyst_notes.py --provider polymarket --lookback-days 7 --include-unmatched
 python scripts/generate_trends_dashboard.py
 ```
 
@@ -117,6 +132,7 @@ data/processed/snapshot_comparison_latest.csv
 data/processed/probability_deltas_latest.csv
 data/processed/top_movers_latest.csv
 data/processed/signal_summary_latest.csv
+data/processed/catalyst_matches_latest.csv
 docs/trends-dashboard/index.html
 ```
 
@@ -286,6 +302,88 @@ liquidity_unknown
 
 ---
 
+## Catalyst matches
+
+Script:
+
+```text
+scripts/match_catalyst_notes.py
+```
+
+Input:
+
+```text
+data/processed/signal_summary_latest.csv
+data/manual/catalyst_notes.csv
+```
+
+Output:
+
+```text
+data/processed/catalyst_matches_latest.csv
+```
+
+This matches manual catalyst notes to generated signal rows.
+
+The matching logic uses:
+
+```text
+provider
+team
+market_id when available
+date lookback window
+```
+
+Default lookback:
+
+```text
+7 days
+```
+
+The workflow runs catalyst matching with:
+
+```powershell
+python scripts/match_catalyst_notes.py --provider polymarket --lookback-days 7 --include-unmatched
+```
+
+The `--include-unmatched` flag keeps signal rows even when no catalyst note matches.
+
+This is useful because the dashboard can still show that a signal exists, even if no explanatory catalyst has been added yet.
+
+---
+
+## Catalyst notes file
+
+Manual catalyst notes live here:
+
+```text
+data/manual/catalyst_notes.csv
+```
+
+The sample file is here:
+
+```text
+examples/catalyst_notes_sample.csv
+```
+
+Validate catalyst notes with:
+
+```powershell
+python scripts/validate_catalyst_notes.py
+```
+
+Validate the sample file with:
+
+```powershell
+python scripts/validate_catalyst_notes.py --path examples/catalyst_notes_sample.csv
+```
+
+Catalyst notes are manual-first by design.
+
+The project does not automatically scrape news or generate unsourced catalyst explanations.
+
+---
+
 ## Important interpretation rule
 
 A probability move is more meaningful when it is supported by liquidity.
@@ -297,9 +395,17 @@ large probability move + rising liquidity = stronger signal
 large probability move + low liquidity = possible noise
 ```
 
-The signal system is intentionally simple and transparent.
+A catalyst note may help explain why a signal appeared.
 
-It is not a black-box trading model.
+Example:
+
+```text
+large probability move + rising liquidity + relevant match result = stronger narrative context
+```
+
+The signal system and catalyst system are intentionally simple and transparent.
+
+They are not black-box trading models.
 
 ---
 
@@ -329,11 +435,14 @@ The trends dashboard shows:
 trend output status
 top movers
 signal summary
+catalyst matches
 ```
 
 If trend CSV outputs are missing, the page still loads and shows the missing status.
 
-This makes the trends dashboard safe to publish even before enough historical snapshots exist.
+If catalyst matches are missing, the page still loads and shows that no catalyst matches were found.
+
+This makes the trends dashboard safe to publish even before enough historical snapshots or catalyst notes exist.
 
 ---
 
@@ -357,6 +466,12 @@ Then rerun:
 
 ```powershell
 python scripts/run_historical_trends_workflow.py
+```
+
+If catalyst notes validation fails, run:
+
+```powershell
+python scripts/validate_catalyst_notes.py
 ```
 
 ---
@@ -392,6 +507,7 @@ data/processed/snapshot_comparison_latest.csv
 data/processed/probability_deltas_latest.csv
 data/processed/top_movers_latest.csv
 data/processed/signal_summary_latest.csv
+data/processed/catalyst_matches_latest.csv
 ```
 
 To clean them manually:
@@ -401,6 +517,7 @@ Remove-Item data\processed\snapshot_comparison_latest.csv -ErrorAction SilentlyC
 Remove-Item data\processed\probability_deltas_latest.csv -ErrorAction SilentlyContinue
 Remove-Item data\processed\top_movers_latest.csv -ErrorAction SilentlyContinue
 Remove-Item data\processed\signal_summary_latest.csv -ErrorAction SilentlyContinue
+Remove-Item data\processed\catalyst_matches_latest.csv -ErrorAction SilentlyContinue
 ```
 
 If you do not want to publish a refreshed trends dashboard, restore it:
@@ -419,13 +536,13 @@ Historical trends workflow status:
 experimental
 ```
 
-It is ready for local testing and now has a separate public preview dashboard.
+It is ready for local testing and now has a separate public preview dashboard with catalyst matching support.
 
 Future work:
 
 ```text
-add richer top movers sections to the trends dashboard
+add richer catalyst context to the trends dashboard
 add signal labels directly to the Polymarket dashboard
-add manual catalyst notes
-add historical trend release notes
+add narrative intelligence documentation
+add v0.8.0 release notes
 ```

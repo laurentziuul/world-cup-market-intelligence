@@ -1,4 +1,4 @@
-from **future** import annotations
+﻿from **future** import annotations
 
 import html
 import re
@@ -523,3 +523,4 @@ print(f"Dashboard saved: {OUTPUT_PATH}")
 
 if **name** == "**main**":
 main()
+

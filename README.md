@@ -561,6 +561,58 @@ The monetization layer sells structure, context, prioritization and research wor
 
 It does not sell betting tips, guaranteed signals, investment advice or prediction certainty.
 
+## Product validation layer
+
+World Cup Market Intelligence now includes a product-validation workflow for testing whether the Daily Brief can become a useful research product.
+
+The validation layer is designed to answer:
+
+- who finds the Daily Brief useful
+- which sections create value
+- whether users want repeated delivery
+- whether Telegram, Discord, email or dashboard delivery is preferred
+- whether there is payment intent
+- whether custom reports are worth building
+
+Key validation docs:
+
+- docs/product_validation_plan.md
+- docs/outreach_messages.md
+- docs/outreach_feedback_tracker.md
+- docs/outreach_feedback_summary.md
+- docs/validation_sprint_checklist.md
+- data/manual/outreach_feedback.csv
+
+Validation scripts:
+
+- python scripts/analyze_outreach_feedback.py
+- python scripts/generate_daily_brief.py
+
+Validation principle:
+
+Do not overbuild before feedback.
+
+The correct sequence is:
+
+- share sample brief
+- collect feedback
+- log responses
+- analyze signals
+- test repeated delivery
+- test payment intent
+- only then build automation
+
+Privacy note:
+
+Because this repository is public, do not store private names, emails, phone numbers, Telegram handles or Discord IDs in the outreach CSV.
+
+Use aliases such as:
+
+- crypto_contact_01
+- prediction_user_01
+- telegram_group_01
+- football_creator_01
+
 ## Final project status
 
 Current public MVP release target:
@@ -627,5 +679,6 @@ This project is not:
 - a black-box AI model
 
 Powered by Mayior Capital.
+
 
 

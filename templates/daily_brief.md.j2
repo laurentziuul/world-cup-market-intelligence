@@ -1,159 +1,236 @@
-# World Cup Market Brief — {{ brief_date }}
+﻿# World Cup Market Intelligence Daily Brief
 
-Generated at: `{{ generated_at }}`  
-Snapshot source: `{{ snapshot_path }}`  
-Trend source: `{{ trends_path }}`  
-Provider: `{{ provider }}`
+Report date: {{ report_date }}
 
-> Research and education only. This is not a betting tip, financial advice or investment advice.
+Generated at: {{ generated_at }}
+
+Product: {{ product_name | default("World Cup Market Intelligence Daily Brief") }}
+
+Powered by Mayior Capital.
 
 ---
 
-## 1. Executive Summary
+## Research-only note
 
-- **Tracked outcomes:** {{ row_count }}
-- **Current leading outcome:** {{ leading_outcome }} at {{ leading_price }}
-- **Biggest 24h up move:** {{ biggest_up_move }}
-- **Biggest 24h down move:** {{ biggest_down_move }}
-- **Active 24h movers:** {{ active_movers_count }}
-- **Static markets:** {{ static_markets_count }}
-- **Historical strongest uptrend:** {{ strongest_uptrend }}
-- **Historical strongest downtrend:** {{ strongest_downtrend }}
-- **Max trend observations:** {{ max_observations }}
+This report is for market-intelligence research and educational use only.
 
-{% if has_trends %}
-The brief now combines short-term snapshot movement with multi-snapshot historical trend analysis.
+It is not betting advice.
+
+It is not investment advice.
+
+It is not financial advice.
+
+It is not a prediction engine.
+
+It does not guarantee outcomes, profits or market edges.
+
+---
+
+## Executive summary
+
+{% if executive_summary %}
+{{ executive_summary }}
 {% else %}
-Historical trend analysis is not available yet. Run `python scripts/generate_trends.py` before generating the brief.
+No executive summary available for this run.
 {% endif %}
 
 ---
 
-## 2. Current Market Structure
+## Dashboard links
 
-| Outcome | Price | 24h Move | Volume | Liquidity | Signal |
-|---|---:|---:|---:|---:|---|
-{% for row in rows -%}
-| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.volume_display }} | {{ row.liquidity_display }} | {{ row.signal_class }} |
-{% endfor %}
+Public landing page:
 
----
+- {{ landing_page_url | default("https://laurentziuul.github.io/world-cup-market-intelligence/") }}
 
-## 3. Biggest 24h Movers
+Stable dashboard:
 
-### Top Positive Movers
+- {{ stable_dashboard_url | default("https://laurentziuul.github.io/world-cup-market-intelligence/dashboard/") }}
 
-{% if top_positive_movers %}
-| Outcome | Price | 24h Move | Signal |
-|---|---:|---:|---|
-{% for row in top_positive_movers -%}
-| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.signal_class }} |
-{% endfor %}
-{% else %}
-No positive movers detected in the latest snapshot.
-{% endif %}
+Polymarket dashboard:
 
-### Top Negative Movers
+- {{ polymarket_dashboard_url | default("https://laurentziuul.github.io/world-cup-market-intelligence/polymarket-dashboard/") }}
 
-{% if top_negative_movers %}
-| Outcome | Price | 24h Move | Signal |
-|---|---:|---:|---|
-{% for row in top_negative_movers -%}
-| {{ row.outcome }} | {{ row.price_display }} | {{ row.price_change_display }} | {{ row.signal_class }} |
-{% endfor %}
-{% else %}
-No negative movers detected in the latest snapshot.
-{% endif %}
+Trends dashboard:
+
+- {{ trends_dashboard_url | default("https://laurentziuul.github.io/world-cup-market-intelligence/trends-dashboard/") }}
 
 ---
 
-## 4. Historical Trend Summary
+## 1. Top probability movers
 
-{% if has_trends %}
-| Metric | Value |
-|---|---:|
-| Tracked trends | {{ tracked_trends_count }} |
-| Strong trends | {{ strong_trends_count }} |
-| Emerging trends | {{ emerging_trends_count }} |
-| Weak trends | {{ weak_trends_count }} |
-| Max observations | {{ max_observations }} |
+{% if top_probability_movers %}
+{% for item in top_probability_movers %}
+### {{ loop.index }}. {{ item.team | default("Unknown team") }}
 
-### Top Historical Uptrends
+- Market: {{ item.market_title | default("Unknown market") }}
+- Outcome: {{ item.outcome | default("Unknown outcome") }}
+- Current probability: {{ item.current_probability | default("n/a") }}
+- Previous probability: {{ item.previous_probability | default("n/a") }}
+- Probability change: {{ item.probability_delta | default("n/a") }}
+- Signal: {{ item.signal_label | default("n/a") }}
+- Review priority: {{ item.review_priority | default("n/a") }}
 
-{% if top_uptrends %}
-| Outcome | First | Latest | Total Change | Observations | Quality |
-|---|---:|---:|---:|---:|---|
-{% for row in top_uptrends -%}
-| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_quality }} |
 {% endfor %}
 {% else %}
-No historical uptrends detected.
-{% endif %}
-
-### Top Historical Downtrends
-
-{% if top_downtrends %}
-| Outcome | First | Latest | Total Change | Observations | Quality |
-|---|---:|---:|---:|---:|---|
-{% for row in top_downtrends -%}
-| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_quality }} |
-{% endfor %}
-{% else %}
-No historical downtrends detected.
-{% endif %}
-
-### Full Historical Trend Table
-
-| Outcome | First | Latest | Total Change | Observations | Direction | Quality |
-|---|---:|---:|---:|---:|---|---|
-{% for row in trend_rows -%}
-| {{ row.outcome }} | {{ row.first_price_display }} | {{ row.latest_price_display }} | {{ row.total_change_display }} | {{ row.observations }} | {{ row.trend_direction }} | {{ row.trend_quality }} |
-{% endfor %}
-{% else %}
-Historical trend table unavailable.
+No probability movers available for this run.
 {% endif %}
 
 ---
 
-## 5. Narrative Map
+## 2. Top liquidity movers
 
-| Outcome | Narrative | Catalyst | Notes |
-|---|---|---|---|
-{% for row in rows -%}
-| {{ row.outcome }} | {{ row.narrative }} | {{ row.catalyst }} | {{ row.notes }} |
+{% if top_liquidity_movers %}
+{% for item in top_liquidity_movers %}
+### {{ loop.index }}. {{ item.team | default("Unknown team") }}
+
+- Market: {{ item.market_title | default("Unknown market") }}
+- Liquidity change: {{ item.liquidity_delta | default("n/a") }}
+- Current liquidity: {{ item.current_liquidity | default("n/a") }}
+- Previous liquidity: {{ item.previous_liquidity | default("n/a") }}
+- Signal: {{ item.signal_label | default("n/a") }}
+- Review priority: {{ item.review_priority | default("n/a") }}
+
 {% endfor %}
+{% else %}
+No liquidity movers available for this run.
+{% endif %}
 
 ---
 
-## 6. Interpretation Layer
+## 3. Top volume movers
 
-**Current strongest market:** {{ leading_outcome }} at {{ leading_price }}
+{% if top_volume_movers %}
+{% for item in top_volume_movers %}
+### {{ loop.index }}. {{ item.team | default("Unknown team") }}
 
-{{ liquidity_note }}
+- Market: {{ item.market_title | default("Unknown market") }}
+- Volume change: {{ item.volume_delta | default("n/a") }}
+- Current volume: {{ item.current_volume | default("n/a") }}
+- Previous volume: {{ item.previous_volume | default("n/a") }}
+- Signal: {{ item.signal_label | default("n/a") }}
+- Review priority: {{ item.review_priority | default("n/a") }}
 
-{% for note in interpretation_notes %}
-- {{ note }}
 {% endfor %}
+{% else %}
+No volume movers available for this run.
+{% endif %}
 
 ---
 
-## 7. Red-Team Notes
+## 4. Teams requiring manual review
 
-{% for note in red_team_notes %}
-- {{ note }}
+{% if team_review_priorities %}
+{% for item in team_review_priorities %}
+### {{ loop.index }}. {{ item.team | default("Unknown team") }}
+
+- Review priority: {{ item.review_priority | default("n/a") }}
+- Net signal score: {{ item.net_signal_score | default("n/a") }}
+- Positive signals: {{ item.positive_signals | default("n/a") }}
+- Negative signals: {{ item.negative_signals | default("n/a") }}
+- Catalyst matches: {{ item.catalyst_matches | default("n/a") }}
+- Notes: {{ item.notes | default("No notes available.") }}
+
 {% endfor %}
+{% else %}
+No team review priorities available for this run.
+{% endif %}
 
 ---
 
-## 8. Next Research Questions
+## 5. Catalyst watchlist
 
-- Which outcomes are priced by reputation rather than current information?
-- Which 24h movers are just one-off noise?
-- Which trends persist across multiple snapshots?
-- Where does liquidity appear first once live markets become active?
-- Which narratives survive after injuries, lineups, match results or news?
-- Which signals are confirmed by multiple providers?
+{% if catalyst_watchlist %}
+{% for item in catalyst_watchlist %}
+### {{ loop.index }}. {{ item.team | default("Unknown team") }}
+
+- Catalyst type: {{ item.catalyst_type | default("n/a") }}
+- Catalyst note: {{ item.catalyst_note | default("n/a") }}
+- Related market: {{ item.market_title | default("n/a") }}
+- Matched signal: {{ item.signal_label | default("n/a") }}
+- Review priority: {{ item.review_priority | default("n/a") }}
+
+{% endfor %}
+{% else %}
+No catalyst watchlist available for this run.
+{% endif %}
 
 ---
 
-Generated by **World Cup Market Intelligence v0.3.4**.
+## 6. Signal summary
+
+{% if signal_summary %}
+{% for item in signal_summary %}
+- {{ item.signal_label | default("Unknown signal") }}: {{ item.count | default("n/a") }}
+{% endfor %}
+{% else %}
+No signal summary available for this run.
+{% endif %}
+
+---
+
+## 7. Data freshness status
+
+{% if data_freshness %}
+- Metadata generated at: {{ data_freshness.generated_at | default("n/a") }}
+- Stale threshold hours: {{ data_freshness.stale_threshold_hours | default("n/a") }}
+- Public dashboard status: {{ data_freshness.public_dashboard_status | default("n/a") }}
+- Dashboards available: {{ data_freshness.dashboards_available | default("n/a") }}
+- Generated outputs available: {{ data_freshness.generated_outputs_available | default("n/a") }}
+- Missing outputs: {{ data_freshness.missing_outputs | default("n/a") }}
+- Stale outputs: {{ data_freshness.stale_outputs | default("n/a") }}
+{% else %}
+Data freshness metadata is not available for this run.
+{% endif %}
+
+---
+
+## 8. Warnings and limitations
+
+{% if warnings %}
+{% for warning in warnings %}
+- {{ warning }}
+{% endfor %}
+{% else %}
+- No additional warnings available.
+{% endif %}
+
+Important limitations:
+
+- Fresh data does not mean correct data.
+- Fresh data does not mean predictive data.
+- Catalyst notes do not prove causality.
+- Signal labels describe market movement, not future outcomes.
+- Manual review is required before making any interpretation.
+- This report should not be used as betting, investment or financial advice.
+
+---
+
+## 9. Interpretation
+
+This brief is designed to answer:
+
+- What changed?
+- Where did probability move?
+- Where did liquidity or volume move?
+- Which teams deserve manual review?
+- Which catalyst notes may be relevant?
+- Is the data fresh, stale or missing?
+
+It is not designed to answer:
+
+- Who will win?
+- What should I bet on?
+- What trade should I make?
+- Where is guaranteed edge?
+
+---
+
+## Status
+
+Brief status:
+
+- generated from the World Cup Market Intelligence research pipeline
+- suitable for public sample reports or paid daily brief format
+- research-only interpretation
+
+Powered by Mayior Capital.

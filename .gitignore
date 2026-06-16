@@ -17,3 +17,8 @@ data/processed/polymarket/
 data/processed/polymarket_worldcup_yes_ranking.csv
 data/processed/polymarket_worldcup_yes_ranking_summary.txt
 data/processed/snapshots/*-polymarket.csv
+# Historical trends generated outputs
+data/processed/snapshot_comparison_latest.csv
+data/processed/probability_deltas_latest.csv
+data/processed/top_movers_latest.csv
+data/processed/signal_summary_latest.csv

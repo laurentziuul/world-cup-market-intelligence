@@ -35,6 +35,13 @@ STEPS = [
             "scripts/generate_polymarket_yes_ranking.py",
         ],
     },
+    {
+        "name": "Generate separate Polymarket live dashboard",
+        "command": [
+            sys.executable,
+            "scripts/generate_polymarket_live_dashboard.py",
+        ],
+    },
 ]
 
 
@@ -85,6 +92,10 @@ def main() -> None:
     print("- data/processed/snapshots/*-polymarket.csv")
     print("- data/processed/polymarket_worldcup_yes_ranking.csv")
     print("- data/processed/polymarket_worldcup_yes_ranking_summary.txt")
+    print("- docs/polymarket-dashboard/index.html")
+    print("")
+    print("Public dashboard path after commit/push:")
+    print("- https://laurentziuul.github.io/world-cup-market-intelligence/polymarket-dashboard/")
 
 
 if __name__ == "__main__":

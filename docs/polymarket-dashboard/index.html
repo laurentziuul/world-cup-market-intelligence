@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Polymarket World Cup 2026 Live Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .label {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #7c2d12;
+            color: #fed7aa;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0 0 8px 0;
+            font-size: 34px;
+        }
+
+        .subtitle {
+            color: #cbd5e1;
+            max-width: 780px;
+            line-height: 1.5;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .card-title {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .notice {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 14px;
+            padding: 16px;
+            margin: 22px 0;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #334155;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        th {
+            background: #1e293b;
+            color: #cbd5e1;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        tr:hover {
+            background: #172033;
+        }
+
+        a {
+            color: #93c5fd;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .rank {
+            width: 52px;
+            font-weight: 700;
+            color: #facc15;
+        }
+
+        .team {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .probability {
+            min-width: 180px;
+        }
+
+        .probability-value {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .bar {
+            width: 100%;
+            height: 8px;
+            background: #334155;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: #22c55e;
+            border-radius: 999px;
+        }
+
+        .market-title {
+            color: #94a3b8;
+            max-width: 340px;
+        }
+
+        .footer {
+            margin-top: 24px;
+            color: #94a3b8;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <section class="header">
+            <div class="label">Experimental live provider</div>
+            <h1>Polymarket World Cup 2026 Live Dashboard</h1>
+            <p class="subtitle">
+                YES-only ranking for Polymarket markets matching:
+                <strong>Will X win the 2026 FIFA World Cup?</strong>
+                This page is separate from the stable manual CSV dashboard.
+            </p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <div class="card-title">Provider</div>
+                <div class="card-value">polymarket</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Status</div>
+                <div class="card-value">experimental</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Teams ranked</div>
+                <div class="card-value">48</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Top market</div>
+                <div class="card-value">France 17.65%</div>
+            </div>
+        </section>
+
+        <section class="notice">
+            Generated at <strong>2026-06-16 12:33:19</strong> UTC.
+            Provider rows loaded: <strong>98</strong>.
+            This dashboard requires live Polymarket access when regenerated.
+            During testing, access worked using Proton VPN with a Moldova server.
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    <th>YES probability</th>
+                    <th>Volume</th>
+                    <th>Liquidity</th>
+                    <th>Source</th>
+                    <th>Market</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            <tr>
+                <td class="rank">1</td>
+                <td class="team">France</td>
+                <td class="probability">
+                    <div class="probability-value">17.65%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 17.65%"></div>
+                    </div>
+                </td>
+                <td>55,312,163</td>
+                <td>2,351,651</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-france-win-the-2026-fifa-world-cup-924" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will France win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">2</td>
+                <td class="team">Spain</td>
+                <td class="probability">
+                    <div class="probability-value">14.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 14.05%"></div>
+                    </div>
+                </td>
+                <td>49,627,955</td>
+                <td>3,537,391</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-spain-win-the-2026-fifa-world-cup-963" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Spain win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">3</td>
+                <td class="team">Portugal</td>
+                <td class="probability">
+                    <div class="probability-value">10.75%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 10.75%"></div>
+                    </div>
+                </td>
+                <td>48,704,689</td>
+                <td>3,074,822</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-portugal-win-the-2026-fifa-world-cup-912" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Portugal win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">4</td>
+                <td class="team">England</td>
+                <td class="probability">
+                    <div class="probability-value">10.55%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 10.55%"></div>
+                    </div>
+                </td>
+                <td>40,853,048</td>
+                <td>3,374,700</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-england-win-the-2026-fifa-world-cup-937" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will England win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">5</td>
+                <td class="team">Argentina</td>
+                <td class="probability">
+                    <div class="probability-value">9.25%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 9.25%"></div>
+                    </div>
+                </td>
+                <td>51,360,669</td>
+                <td>3,165,335</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-argentina-win-the-2026-fifa-world-cup-245" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Argentina win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">6</td>
+                <td class="team">Brazil</td>
+                <td class="probability">
+                    <div class="probability-value">6.65%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 6.65%"></div>
+                    </div>
+                </td>
+                <td>41,816,074</td>
+                <td>3,516,991</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-brazil-win-the-2026-fifa-world-cup-183" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Brazil win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">7</td>
+                <td class="team">Germany</td>
+                <td class="probability">
+                    <div class="probability-value">6.35%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 6.35%"></div>
+                    </div>
+                </td>
+                <td>49,666,722</td>
+                <td>2,432,242</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-germany-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Germany win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">8</td>
+                <td class="team">Netherlands</td>
+                <td class="probability">
+                    <div class="probability-value">4.55%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 4.55%"></div>
+                    </div>
+                </td>
+                <td>49,589,696</td>
+                <td>2,243,268</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-netherlands-win-the-2026-fifa-world-cup-739" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Netherlands win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">9</td>
+                <td class="team">Norway</td>
+                <td class="probability">
+                    <div class="probability-value">2.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 2.45%"></div>
+                    </div>
+                </td>
+                <td>49,293,384</td>
+                <td>2,102,228</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-norway-win-the-2026-fifa-world-cup-893" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Norway win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">10</td>
+                <td class="team">Morocco</td>
+                <td class="probability">
+                    <div class="probability-value">2.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 2.15%"></div>
+                    </div>
+                </td>
+                <td>55,787,837</td>
+                <td>1,677,556</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-morocco-win-the-2026-fifa-world-cup-464" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Morocco win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">11</td>
+                <td class="team">USA</td>
+                <td class="probability">
+                    <div class="probability-value">2.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 2.05%"></div>
+                    </div>
+                </td>
+                <td>72,913,332</td>
+                <td>2,726,087</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-usa-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will USA win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">12</td>
+                <td class="team">Japan</td>
+                <td class="probability">
+                    <div class="probability-value">1.85%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 1.85%"></div>
+                    </div>
+                </td>
+                <td>54,857,713</td>
+                <td>1,413,773</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-japan-win-the-2026-fifa-world-cup-112" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Japan win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">13</td>
+                <td class="team">Belgium</td>
+                <td class="probability">
+                    <div class="probability-value">1.75%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 1.75%"></div>
+                    </div>
+                </td>
+                <td>54,265,453</td>
+                <td>2,096,160</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-belgium-win-the-2026-fifa-world-cup-358" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Belgium win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">14</td>
+                <td class="team">Colombia</td>
+                <td class="probability">
+                    <div class="probability-value">1.55%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 1.55%"></div>
+                    </div>
+                </td>
+                <td>50,123,447</td>
+                <td>5,401,158</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-colombia-win-the-2026-fifa-world-cup-734" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Colombia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">15</td>
+                <td class="team">Mexico</td>
+                <td class="probability">
+                    <div class="probability-value">1.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 1.45%"></div>
+                    </div>
+                </td>
+                <td>65,509,854</td>
+                <td>6,874,018</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-mexico-win-the-2026-fifa-world-cup-529" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Mexico win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">16</td>
+                <td class="team">Croatia</td>
+                <td class="probability">
+                    <div class="probability-value">0.85%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.85%"></div>
+                    </div>
+                </td>
+                <td>56,258,428</td>
+                <td>4,433,476</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-croatia-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Croatia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">17</td>
+                <td class="team">Switzerland</td>
+                <td class="probability">
+                    <div class="probability-value">0.85%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.85%"></div>
+                    </div>
+                </td>
+                <td>49,678,170</td>
+                <td>4,162,276</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-switzerland-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Switzerland win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">18</td>
+                <td class="team">Uruguay</td>
+                <td class="probability">
+                    <div class="probability-value">0.65%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.65%"></div>
+                    </div>
+                </td>
+                <td>56,193,634</td>
+                <td>9,300,358</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-uruguay-win-the-2026-fifa-world-cup-932" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Uruguay win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">19</td>
+                <td class="team">Senegal</td>
+                <td class="probability">
+                    <div class="probability-value">0.65%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.65%"></div>
+                    </div>
+                </td>
+                <td>46,531,874</td>
+                <td>7,558,707</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-senegal-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Senegal win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">20</td>
+                <td class="team">Ivory Coast</td>
+                <td class="probability">
+                    <div class="probability-value">0.55%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.55%"></div>
+                    </div>
+                </td>
+                <td>64,350,830</td>
+                <td>8,132,029</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-ivory-coast-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Ivory Coast win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">21</td>
+                <td class="team">Sweden</td>
+                <td class="probability">
+                    <div class="probability-value">0.55%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.55%"></div>
+                    </div>
+                </td>
+                <td>44,774,851</td>
+                <td>8,565,512</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-sweden-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Sweden win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">22</td>
+                <td class="team">Australia</td>
+                <td class="probability">
+                    <div class="probability-value">0.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.45%"></div>
+                    </div>
+                </td>
+                <td>66,865,933</td>
+                <td>12,982,616</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-australia-win-the-2026-fifa-world-cup-816" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Australia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">23</td>
+                <td class="team">Ecuador</td>
+                <td class="probability">
+                    <div class="probability-value">0.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.45%"></div>
+                    </div>
+                </td>
+                <td>57,254,843</td>
+                <td>5,845,187</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-ecuador-win-the-2026-fifa-world-cup-986" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Ecuador win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">24</td>
+                <td class="team">Austria</td>
+                <td class="probability">
+                    <div class="probability-value">0.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.45%"></div>
+                    </div>
+                </td>
+                <td>55,029,429</td>
+                <td>3,484,179</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-austria-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Austria win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">25</td>
+                <td class="team">Turkiye</td>
+                <td class="probability">
+                    <div class="probability-value">0.45%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.45%"></div>
+                    </div>
+                </td>
+                <td>53,508,640</td>
+                <td>3,244,011</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-turkiye-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Turkiye win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">26</td>
+                <td class="team">South Korea</td>
+                <td class="probability">
+                    <div class="probability-value">0.35%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.35%"></div>
+                    </div>
+                </td>
+                <td>74,015,416</td>
+                <td>5,265,404</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-south-korea-win-the-2026-fifa-world-cup-485" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will South Korea win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">27</td>
+                <td class="team">Egypt</td>
+                <td class="probability">
+                    <div class="probability-value">0.25%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.25%"></div>
+                    </div>
+                </td>
+                <td>61,519,137</td>
+                <td>8,951,221</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-egypt-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Egypt win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">28</td>
+                <td class="team">Scotland</td>
+                <td class="probability">
+                    <div class="probability-value">0.25%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.25%"></div>
+                    </div>
+                </td>
+                <td>56,505,210</td>
+                <td>13,029,134</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-scotland-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Scotland win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">29</td>
+                <td class="team">Canada</td>
+                <td class="probability">
+                    <div class="probability-value">0.25%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.25%"></div>
+                    </div>
+                </td>
+                <td>52,973,938</td>
+                <td>10,336,654</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-canada-win-the-2026-fifa-world-cup-755" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Canada win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">30</td>
+                <td class="team">Paraguay</td>
+                <td class="probability">
+                    <div class="probability-value">0.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.15%"></div>
+                    </div>
+                </td>
+                <td>58,270,700</td>
+                <td>9,697,894</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-paraguay-win-the-2026-fifa-world-cup-967" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Paraguay win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">31</td>
+                <td class="team">Algeria</td>
+                <td class="probability">
+                    <div class="probability-value">0.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.15%"></div>
+                    </div>
+                </td>
+                <td>55,027,696</td>
+                <td>9,956,211</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-algeria-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Algeria win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">32</td>
+                <td class="team">Czechia</td>
+                <td class="probability">
+                    <div class="probability-value">0.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.15%"></div>
+                    </div>
+                </td>
+                <td>52,538,697</td>
+                <td>12,676,976</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-czechia-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Czechia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">33</td>
+                <td class="team">Ghana</td>
+                <td class="probability">
+                    <div class="probability-value">0.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.15%"></div>
+                    </div>
+                </td>
+                <td>45,627,508</td>
+                <td>17,844,755</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-ghana-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Ghana win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">34</td>
+                <td class="team">Bosnia-Herzegovina</td>
+                <td class="probability">
+                    <div class="probability-value">0.15%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.15%"></div>
+                    </div>
+                </td>
+                <td>40,174,308</td>
+                <td>10,914,555</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-bosnia-herzegovina-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Bosnia-Herzegovina win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">35</td>
+                <td class="team">Congo DR</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>65,062,944</td>
+                <td>19,613,380</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-congo-dr-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Congo DR win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">36</td>
+                <td class="team">Uzbekistan</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>60,910,176</td>
+                <td>17,714,400</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-uzbekistan-win-the-2026-fifa-world-cup-773" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Uzbekistan win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">37</td>
+                <td class="team">Iran</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>54,884,342</td>
+                <td>12,911,727</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-iran-win-the-2026-fifa-world-cup-788" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Iran win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">38</td>
+                <td class="team">Saudi Arabia</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>53,940,963</td>
+                <td>13,652,011</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-saudi-arabia-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Saudi Arabia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">39</td>
+                <td class="team">New Zealand</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>46,666,890</td>
+                <td>22,650,957</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-new-zealand-win-the-2026-fifa-world-cup-635" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will New Zealand win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">40</td>
+                <td class="team">Cape Verde</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>45,202,726</td>
+                <td>19,806,496</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-cape-verde-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Cape Verde win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">41</td>
+                <td class="team">Curaçao</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>43,713,048</td>
+                <td>21,771,777</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-curaao-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Curaçao win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">42</td>
+                <td class="team">Qatar</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>43,294,328</td>
+                <td>21,767,188</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-qatar-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Qatar win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">43</td>
+                <td class="team">South Africa</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>39,025,503</td>
+                <td>19,480,869</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-south-africa-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will South Africa win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">44</td>
+                <td class="team">Tunisia</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>36,292,362</td>
+                <td>20,578,933</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-tunisia-win-the-2026-fifa-world-cup-165" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Tunisia win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">45</td>
+                <td class="team">Haiti</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>32,727,709</td>
+                <td>23,285,654</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-haiti-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Haiti win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">46</td>
+                <td class="team">Jordan</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>32,520,496</td>
+                <td>23,155,029</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-jordan-win-the-2026-fifa-world-cup-233" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Jordan win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">47</td>
+                <td class="team">Iraq</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>30,121,633</td>
+                <td>23,086,978</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-iraq-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Iraq win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+
+            <tr>
+                <td class="rank">48</td>
+                <td class="team">Panama</td>
+                <td class="probability">
+                    <div class="probability-value">0.05%</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 0.05%"></div>
+                    </div>
+                </td>
+                <td>19,878,784</td>
+                <td>23,377,717</td>
+                <td>
+                    <a href="https://polymarket.com/event/will-team-z-win-the-2026-fifa-world-cup-316" target="_blank" rel="noopener noreferrer">
+                        Polymarket
+                    </a>
+                </td>
+                <td class="market-title">Will Panama win the 2026 FIFA World Cup?</td>
+            </tr>
+            
+            </tbody>
+        </table>
+
+        <section class="footer">
+            <p>
+                Stable dashboard:
+                <a href="../dashboard/">manual_csv dashboard</a>.
+            </p>
+            <p>
+                This page is generated by
+                <code>scripts/generate_polymarket_live_dashboard.py</code>.
+                It is experimental and should not be treated as betting or investment advice.
+            </p>
+        </section>
+    </main>
+</body>
+</html>

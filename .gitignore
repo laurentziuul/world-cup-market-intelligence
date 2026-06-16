@@ -32,3 +32,6 @@ data/processed/dashboard_metadata_latest.json
 
 # Private operator validation data
 data/private/
+
+# Local pipeline logs
+logs/

@@ -1,0 +1,3 @@
+﻿date,contact_or_community,channel,profile_type,link_sent,response_status,interest_level,useful_section,main_feedback,payment_intent,preferred_delivery,follow_up_action,notes
+YYYY-MM-DD,Example person,Telegram,crypto user,sample brief,pending,unknown,n/a,n/a,unknown,unknown,follow up in 2 days,Example placeholder row
+YYYY-MM-DD,Example community,Discord,community owner,pro page,pending,unknown,n/a,n/a,unknown,unknown,ask for community report interest,Example placeholder row

@@ -29,13 +29,13 @@ PROVIDER_REGISTRY: dict[str, ProviderInfo] = {
         requires_network=False,
         status="stable",
     ),
-    "polymarket": ProviderInfo(
+        "polymarket": ProviderInfo(
         name="polymarket",
         provider_class=PolymarketProvider,
-        description="Planned live API provider for Polymarket prediction markets.",
+        description="Experimental live API provider for Polymarket World Cup prediction markets.",
         is_live=True,
         requires_network=True,
-        status="planned",
+        status="experimental",
     ),
     "predict_fun": ProviderInfo(
         name="predict_fun",

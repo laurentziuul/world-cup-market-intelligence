@@ -22,3 +22,5 @@ data/processed/snapshot_comparison_latest.csv
 data/processed/probability_deltas_latest.csv
 data/processed/top_movers_latest.csv
 data/processed/signal_summary_latest.csv
+# Catalyst notes generated outputs
+data/processed/catalyst_matches_latest.csv

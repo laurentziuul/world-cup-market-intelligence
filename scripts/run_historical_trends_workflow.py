@@ -178,6 +178,15 @@ def main() -> None:
             ],
         },
         {
+            "name": "Generate team intelligence summary",
+            "command": [
+                sys.executable,
+                "scripts/generate_team_intelligence.py",
+                "--provider",
+                provider,
+            ],
+        },
+        {
             "name": "Generate historical trends dashboard",
             "command": [
                 sys.executable,
@@ -200,6 +209,7 @@ def main() -> None:
     print("- data/processed/top_movers_latest.csv")
     print("- data/processed/signal_summary_latest.csv")
     print("- data/processed/catalyst_matches_latest.csv")
+    print("- data/processed/team_intelligence_latest.csv")
     print("- docs/trends-dashboard/index.html")
     print("")
     print("Public dashboard path after commit/push:")

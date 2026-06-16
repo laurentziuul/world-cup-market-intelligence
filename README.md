@@ -1,4 +1,4 @@
-# World Cup Market Intelligence v0
+﻿# World Cup Market Intelligence v0
 
 Open-source market-intelligence framework for tracking prediction-market prices, liquidity, narratives, catalysts, historical probability trends and signal intelligence around the FIFA World Cup 2026.
 
@@ -30,15 +30,15 @@ The project supports a market-intelligence pipeline:
 
 ```text
 provider
-    ↓
+    â†“
 normalized snapshot
-    ↓
+    â†“
 timestamped snapshot archive
-    ↓
+    â†“
 historical trend engine
-    ↓
+    â†“
 signal classification
-    ↓
+    â†“
 dashboard / reports
 ```
 
@@ -736,3 +736,46 @@ It is not trading advice.
 It is not investment advice.
 
 It does not recommend bets, trades or financial decisions.
+
+
+## Catalyst notes and narrative intelligence
+
+v0.8.0 adds an experimental catalyst-notes and narrative-intelligence layer.
+
+This layer connects market movement and signal classification with manually curated real-world context.
+
+It helps answer questions such as:
+
+~~~text
+What may explain this probability move?
+Was there a match result, injury, squad announcement or media narrative shift?
+Was the move supported by liquidity?
+Is the catalyst link low, medium or high confidence?
+~~~
+
+Key files:
+
+~~~text
+data/manual/catalyst_notes.csv
+examples/catalyst_notes_sample.csv
+src/wcmi/catalyst_notes.py
+scripts/validate_catalyst_notes.py
+scripts/match_catalyst_notes.py
+~~~
+
+Key documentation:
+
+~~~text
+docs/catalyst_notes_architecture.md
+docs/catalyst_notes_workflow.md
+docs/narrative_intelligence.md
+docs/historical_trends_workflow.md
+docs/releases/v0.8.0.md
+~~~
+
+The catalyst system is manual-first by design.
+
+It does not automatically scrape news or invent explanations.
+
+Catalyst notes do not prove causality. They provide transparent research context that may help explain probability movement.
+

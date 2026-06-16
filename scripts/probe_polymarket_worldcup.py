@@ -17,105 +17,130 @@ PROBE_DIR = ROOT / "data" / "processed" / "polymarket"
 
 BASE_MARKETS_URL = "https://gamma-api.polymarket.com/markets"
 
-EVENT_KEYWORDS = [
+LIMIT_PER_REQUEST = 100
+MAX_PAGES = 10
+
+
+WORLD_CUP_KEYWORDS = [
     "world cup",
     "fifa world cup",
     "fifa",
     "2026 world cup",
     "world cup 2026",
-    "soccer",
-    "football",
-    "champion",
-    "winner",
-    "golden boot",
-    "group winner",
-    "qualify",
-    "qualification",
-    "final",
-    "semifinal",
-]
-
-TEAM_KEYWORDS = [
-    "mexico",
-    "south africa",
-    "south korea",
-    "czechia",
-    "czech republic",
-    "canada",
-    "bosnia",
-    "bosnia and herzegovina",
-    "qatar",
-    "switzerland",
-    "brazil",
-    "morocco",
-    "haiti",
-    "scotland",
-    "united states",
-    "usa",
-    "usmnt",
-    "paraguay",
-    "australia",
-    "turkey",
-    "germany",
-    "curacao",
-    "curaçao",
-    "ivory coast",
-    "cote d'ivoire",
-    "ecuador",
-    "netherlands",
-    "japan",
-    "sweden",
-    "tunisia",
-    "belgium",
-    "egypt",
-    "iran",
-    "new zealand",
-    "spain",
-    "cape verde",
-    "saudi arabia",
-    "uruguay",
-    "france",
-    "senegal",
-    "iraq",
-    "norway",
-    "argentina",
-    "algeria",
-    "austria",
-    "jordan",
-    "portugal",
-    "dr congo",
-    "democratic republic of congo",
-    "uzbekistan",
-    "colombia",
-    "england",
-    "croatia",
-    "ghana",
-    "panama",
+    "2026 fifa",
 ]
 
 CONTEXT_KEYWORDS = [
-    "world cup",
-    "fifa",
     "soccer",
     "football",
-    "2026",
     "qualify",
     "qualification",
     "champion",
     "winner",
     "group",
+    "group winner",
+    "golden boot",
+    "final",
+    "semifinal",
 ]
+
+TEAM_ALIASES = {
+    "Mexico": ["mexico"],
+    "South Africa": ["south africa"],
+    "South Korea": ["south korea", "korea republic"],
+    "Czechia": ["czechia", "czech republic"],
+    "Canada": ["canada"],
+    "Bosnia and Herzegovina": ["bosnia", "bosnia and herzegovina"],
+    "Qatar": ["qatar"],
+    "Switzerland": ["switzerland", "swiss"],
+    "Brazil": ["brazil"],
+    "Morocco": ["morocco"],
+    "Haiti": ["haiti"],
+    "Scotland": ["scotland"],
+    "United States": ["united states", "usa", "usmnt"],
+    "Paraguay": ["paraguay"],
+    "Australia": ["australia"],
+    "Turkey": ["turkey", "turkiye", "türkiye"],
+    "Germany": ["germany"],
+    "Curacao": ["curacao", "curaçao"],
+    "Ivory Coast": ["ivory coast", "cote d'ivoire", "côte d'ivoire"],
+    "Ecuador": ["ecuador"],
+    "Netherlands": ["netherlands", "holland"],
+    "Japan": ["japan"],
+    "Sweden": ["sweden"],
+    "Tunisia": ["tunisia"],
+    "Belgium": ["belgium"],
+    "Egypt": ["egypt"],
+    "Iran": ["iran"],
+    "New Zealand": ["new zealand"],
+    "Spain": ["spain"],
+    "Cape Verde": ["cape verde"],
+    "Saudi Arabia": ["saudi arabia"],
+    "Uruguay": ["uruguay"],
+    "France": ["france"],
+    "Senegal": ["senegal"],
+    "Iraq": ["iraq"],
+    "Norway": ["norway"],
+    "Argentina": ["argentina"],
+    "Algeria": ["algeria"],
+    "Austria": ["austria"],
+    "Jordan": ["jordan"],
+    "Portugal": ["portugal"],
+    "DR Congo": [
+        "dr congo",
+        "congo dr",
+        "congo",
+        "drc",
+        "democratic republic of congo",
+    ],
+    "Uzbekistan": ["uzbekistan"],
+    "Colombia": ["colombia"],
+    "England": ["england"],
+    "Croatia": ["croatia"],
+    "Ghana": ["ghana"],
+    "Panama": ["panama"],
+}
 
 
 def build_url(params: dict[str, Any]) -> str:
     return f"{BASE_MARKETS_URL}?{urllib.parse.urlencode(params)}"
 
 
+def build_probe_urls() -> list[str]:
+    urls = []
+
+    for page in range(MAX_PAGES):
+        offset = page * LIMIT_PER_REQUEST
+
+        urls.append(
+            build_url(
+                {
+                    "limit": LIMIT_PER_REQUEST,
+                    "offset": offset,
+                }
+            )
+        )
+
+        urls.append(
+            build_url(
+                {
+                    "limit": LIMIT_PER_REQUEST,
+                    "offset": offset,
+                    "active": "true",
+                    "closed": "false",
+                    "archived": "false",
+                }
+            )
+        )
+
+    return urls
+
+
 def fetch_json(url: str) -> Any:
     request = urllib.request.Request(
         url,
         headers={
-            "User-Agent": "world-cup-market-intelligence/0.5.6",
+            "User-Agent": "world-cup-market-intelligence/0.5.7",
             "Accept": "application/json",
         },
     )
@@ -159,31 +184,36 @@ def market_text(market: dict[str, Any]) -> str:
     return " ".join(str(field) for field in fields if field).lower()
 
 
-def keyword_matches(market: dict[str, Any]) -> list[str]:
+def find_keyword_matches(text: str, keywords: list[str]) -> list[str]:
+    return sorted({keyword for keyword in keywords if keyword in text})
+
+
+def find_team_matches(text: str) -> list[str]:
+    matched_teams = []
+
+    for team_name, aliases in TEAM_ALIASES.items():
+        if any(alias in text for alias in aliases):
+            matched_teams.append(team_name)
+
+    return sorted(set(matched_teams))
+
+
+def keyword_matches(market: dict[str, Any]) -> tuple[list[str], list[str]]:
     text = market_text(market)
 
-    event_matches = [
-        keyword for keyword in EVENT_KEYWORDS
-        if keyword in text
-    ]
+    world_cup_matches = find_keyword_matches(text, WORLD_CUP_KEYWORDS)
+    context_matches = find_keyword_matches(text, CONTEXT_KEYWORDS)
+    team_matches = find_team_matches(text)
 
-    team_matches = [
-        keyword for keyword in TEAM_KEYWORDS
-        if keyword in text
-    ]
-
-    context_matches = [
-        keyword for keyword in CONTEXT_KEYWORDS
-        if keyword in text
-    ]
-
-    if event_matches:
-        return sorted(set(event_matches + team_matches))
+    if world_cup_matches:
+        combined_matches = sorted(set(world_cup_matches + context_matches))
+        return combined_matches, team_matches
 
     if team_matches and context_matches:
-        return sorted(set(team_matches + context_matches))
+        combined_matches = sorted(set(context_matches))
+        return combined_matches, team_matches
 
-    return []
+    return [], []
 
 
 def parse_json_list(value: Any) -> list[Any]:
@@ -211,7 +241,11 @@ def to_float(value: Any, default: float = 0.0) -> float:
         return default
 
 
-def summarize_market(market: dict[str, Any], matches: list[str]) -> dict[str, Any]:
+def summarize_market(
+    market: dict[str, Any],
+    matches: list[str],
+    team_matches: list[str],
+) -> dict[str, Any]:
     outcomes = parse_json_list(market.get("outcomes"))
     outcome_prices = parse_json_list(market.get("outcomePrices"))
 
@@ -221,6 +255,7 @@ def summarize_market(market: dict[str, Any], matches: list[str]) -> dict[str, An
         "question": market.get("question", ""),
         "slug": market.get("slug", ""),
         "matches": ", ".join(matches),
+        "teamMatches": ", ".join(team_matches),
         "active": market.get("active", ""),
         "closed": market.get("closed", ""),
         "endDate": market.get("endDate", ""),
@@ -237,20 +272,19 @@ def main() -> None:
 
     timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
 
-    urls = [
-        build_url({"limit": 500}),
-        build_url({"limit": 500, "active": "true", "closed": "false"}),
-        build_url({"limit": 500, "archived": "false"}),
-    ]
+    urls = build_probe_urls()
 
     all_markets: list[dict[str, Any]] = []
     errors: list[str] = []
 
     print("Polymarket World Cup discovery probe")
+    print(f"Limit per request: {LIMIT_PER_REQUEST}")
+    print(f"Max pages: {MAX_PAGES}")
+    print(f"Total URLs to test: {len(urls)}")
     print("")
 
-    for url in urls:
-        print(f"Fetching: {url}")
+    for index, url in enumerate(urls):
+        print(f"Fetching {index + 1}/{len(urls)}: {url}")
 
         try:
             payload = fetch_json(url)
@@ -275,7 +309,7 @@ def main() -> None:
             errors.append(error)
             continue
 
-        raw_path = RAW_DIR / f"worldcup_discovery_{timestamp}_{len(all_markets)}.json"
+        raw_path = RAW_DIR / f"worldcup_discovery_{timestamp}_{index}.json"
         raw_path.write_text(
             json.dumps(payload, indent=2, ensure_ascii=False),
             encoding="utf-8",
@@ -304,10 +338,16 @@ def main() -> None:
     matched_rows = []
 
     for market in unique_markets.values():
-        matches = keyword_matches(market)
+        matches, team_matches = keyword_matches(market)
 
-        if matches:
-            matched_rows.append(summarize_market(market, matches))
+        if matches or team_matches:
+            matched_rows.append(
+                summarize_market(
+                    market=market,
+                    matches=matches,
+                    team_matches=team_matches,
+                )
+            )
 
     matched_rows.sort(
         key=lambda row: (
@@ -326,6 +366,7 @@ def main() -> None:
         "question",
         "slug",
         "matches",
+        "teamMatches",
         "active",
         "closed",
         "endDate",
@@ -349,19 +390,19 @@ def main() -> None:
     lines.append(f"Matched markets: {len(matched_rows)}")
     lines.append("")
 
-    lines.append("Event keywords:")
-    for keyword in EVENT_KEYWORDS:
-        lines.append(f"- {keyword}")
-
-    lines.append("")
-    lines.append("Team keywords:")
-    for keyword in TEAM_KEYWORDS:
+    lines.append("World Cup keywords:")
+    for keyword in WORLD_CUP_KEYWORDS:
         lines.append(f"- {keyword}")
 
     lines.append("")
     lines.append("Context keywords:")
     for keyword in CONTEXT_KEYWORDS:
         lines.append(f"- {keyword}")
+
+    lines.append("")
+    lines.append("Team aliases:")
+    for team_name, aliases in TEAM_ALIASES.items():
+        lines.append(f"- {team_name}: {', '.join(aliases)}")
 
     if errors:
         lines.append("")
@@ -371,10 +412,13 @@ def main() -> None:
 
     lines.append("")
     lines.append("Top matched markets:")
-    for row in matched_rows[:25]:
+    for row in matched_rows[:50]:
         lines.append(
-            f"- {row['question']} | matches={row['matches']} | "
-            f"volume={row['volumeNum']} | liquidity={row['liquidityNum']} | "
+            f"- {row['question']} | "
+            f"matches={row['matches']} | "
+            f"teams={row['teamMatches']} | "
+            f"volume={row['volumeNum']} | "
+            f"liquidity={row['liquidityNum']} | "
             f"slug={row['slug']}"
         )
 

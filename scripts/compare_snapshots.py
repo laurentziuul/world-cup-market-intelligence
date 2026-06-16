@@ -97,7 +97,23 @@ def find_snapshot_pair(
             "Pass --previous and --current explicitly, or generate more snapshots."
         )
 
-    return candidates[-2], candidates[-1]
+    # Use the newest snapshot as "current"
+    current = candidates[-1]
+
+    # Try to find the snapshot closest to 24h before current (ideal for daily comparison).
+    # Fall back to the oldest available snapshot for maximum delta window.
+    try:
+        current_mtime = current.stat().st_mtime
+        target_mtime = current_mtime - 86400  # 24h ago
+        best = min(
+            candidates[:-1],
+            key=lambda p: abs(p.stat().st_mtime - target_mtime),
+        )
+        previous = best
+    except Exception:
+        previous = candidates[0]
+
+    return previous, current
 
 
 def pick_column(dataframe: pd.DataFrame, candidates: list[str]) -> str:
@@ -310,21 +326,4 @@ def main() -> None:
     print("")
 
     previous_raw = pd.read_csv(previous_path)
-    current_raw = pd.read_csv(current_path)
-
-    previous = normalize_snapshot(previous_raw, provider)
-    current = normalize_snapshot(current_raw, provider)
-
-    comparison = compare_snapshots(previous, current)
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    comparison.to_csv(output_path, index=False)
-
-    print(f"Previous rows:   {len(previous)}")
-    print(f"Current rows:    {len(current)}")
-    print(f"Compared rows:   {len(comparison)}")
-    print(f"Output written:  {output_path}")
-
-
-if __name__ == "__main__":
-    main()
+    cu

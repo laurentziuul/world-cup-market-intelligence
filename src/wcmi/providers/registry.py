@@ -3,7 +3,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from wcmi.providers.base import MarketProvider
+from wcmi.providers.kalshi import KalshiProvider
+from wcmi.providers.manifold import ManifoldProvider
 from wcmi.providers.manual_csv import ManualCsvProvider
+from wcmi.providers.polymarket import PolymarketProvider
+from wcmi.providers.predict_fun import PredictFunProvider
 
 
 @dataclass(frozen=True)
@@ -24,6 +28,38 @@ PROVIDER_REGISTRY: dict[str, ProviderInfo] = {
         is_live=False,
         requires_network=False,
         status="stable",
+    ),
+    "polymarket": ProviderInfo(
+        name="polymarket",
+        provider_class=PolymarketProvider,
+        description="Planned live API provider for Polymarket prediction markets.",
+        is_live=True,
+        requires_network=True,
+        status="planned",
+    ),
+    "predict_fun": ProviderInfo(
+        name="predict_fun",
+        provider_class=PredictFunProvider,
+        description="Planned live API provider for Predict.fun prediction markets.",
+        is_live=True,
+        requires_network=True,
+        status="planned",
+    ),
+    "kalshi": ProviderInfo(
+        name="kalshi",
+        provider_class=KalshiProvider,
+        description="Planned live API provider for Kalshi prediction markets.",
+        is_live=True,
+        requires_network=True,
+        status="planned",
+    ),
+    "manifold": ProviderInfo(
+        name="manifold",
+        provider_class=ManifoldProvider,
+        description="Planned live API provider for Manifold prediction markets.",
+        is_live=True,
+        requires_network=True,
+        status="planned",
     ),
 }
 

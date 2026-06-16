@@ -1,0 +1,11 @@
+﻿operator_id,operator_name,mode,risk_profile,primary_signal,confirmation_required,real_money_allowed,max_risk_units,description,status
+operator_01,operator_01_momentum,paper,medium,positive_probability_momentum,volume_or_liquidity_confirmation,false,0,Follows strong positive probability movement when supported by market activity,active
+operator_02,operator_02_liquidity_confirmed,paper,medium,probability_move_with_liquidity,liquidity_expansion,false,0,Acts only when probability movement is confirmed by liquidity expansion,active
+operator_03,operator_03_catalyst_confirmed,paper,medium,signal_with_catalyst,catalyst_match,false,0,Acts only when a market signal has matching catalyst context,active
+operator_04,operator_04_contrarian,paper,high,overreaction_or_negative_move,manual_review,false,0,Looks for potential market overreaction and contrarian setups,active
+operator_05,operator_05_top_teams_only,paper,medium,top_team_signal,major_team_filter,false,0,Only monitors high-profile teams with stronger liquidity and attention,active
+operator_06,operator_06_volume_spike,paper,medium,volume_spike,probability_or_liquidity_check,false,0,Follows unusual volume movement as an attention-shift signal,active
+operator_07,operator_07_high_review_priority,paper,medium,high_review_priority,team_intelligence_alignment,false,0,Acts only on high review priority from team intelligence,active
+operator_08,operator_08_low_risk_watchlist,paper,low,watchlist_confirmation,second_day_confirmation,false,0,Tracks candidates first and waits for confirmation before acting,active
+operator_09,operator_09_human_discretionary,paper,variable,human_discretionary_review,manual_full_context_review,true,1,Human discretionary strategy using all dashboard and brief context,active
+operator_10,operator_10_no_trade_control,paper,none,no_trade_control,none,false,0,Control account that never enters positions and is used for comparison,active

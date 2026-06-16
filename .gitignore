@@ -29,3 +29,6 @@ data/processed/team_intelligence_latest.csv
 
 # Dashboard metadata generated outputs
 data/processed/dashboard_metadata_latest.json
+
+# Private operator validation data
+data/private/

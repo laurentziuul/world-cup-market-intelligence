@@ -1,0 +1,4 @@
+﻿date,operator_id,market,team_or_outcome,signal_type,catalyst_status,probability_at_decision,implied_odds,decision_type,mode,position_size_units,risk_units,entry_reason,exit_plan,status,result,pnl_units,notes
+2026-06-16,operator_01,World Cup 2026 winner market,Example Team A,positive_probability_momentum,no_catalyst,0.120,8.33,paper_entry,paper,1,0,Example momentum signal for documentation,Review after next snapshot,closed,example_win,0.4,Sample row only
+2026-06-16,operator_03,World Cup 2026 winner market,Example Team B,signal_with_catalyst,catalyst_matched,0.080,12.50,paper_entry,paper,1,0,Example catalyst-confirmed decision,Exit if signal reverses,closed,example_loss,-0.2,Sample row only
+2026-06-16,operator_10,World Cup 2026 winner market,no_trade_control,none,n/a,n/a,no_trade,paper,0,0,Control account does nothing,n/a,closed,no_trade,0,Sample control row only

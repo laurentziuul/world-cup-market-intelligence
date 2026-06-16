@@ -1,20 +1,31 @@
-# World Cup Market Intelligence — Daily Pipeline Runner
-# Rulează automat: snapshot Polymarket + trends workflow + daily brief
-# Destinat Windows Task Scheduler, zilnic la 08:00
+# World Cup Market Intelligence - Daily Pipeline Runner
+# Runs automatically: Polymarket snapshot + trends workflow + daily brief
+# Designed for Windows Task Scheduler, daily at 08:00
 #
 # Powered by Mayior Capital.
 
 param(
-    [string]$ProjectRoot = $PSScriptRoot | Split-Path -Parent,
+    [string]$ProjectRoot = "",
     [switch]$SkipPolymarket,
     [switch]$Verbose
 )
+
+# Detect ProjectRoot from script location
+if (-not $ProjectRoot) {
+    $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+    $ProjectRoot = Split-Path -Parent $scriptDir
+}
+
+# Hardcoded fallback if detection fails
+if (-not $ProjectRoot -or -not (Test-Path $ProjectRoot)) {
+    $ProjectRoot = "C:\Users\laure\projects\world-cup-market-intelligence-v0"
+}
 
 $ErrorActionPreference = "Stop"
 $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $logFile = Join-Path $ProjectRoot "logs\daily_pipeline.log"
 
-# Asigură că folderul logs există
+# Ensure logs folder exists
 New-Item -ItemType Directory -Force -Path (Join-Path $ProjectRoot "logs") | Out-Null
 
 function Write-Log {
@@ -37,64 +48,64 @@ function Run-Step {
         Write-Log "PASS: $Name"
         return $true
     } catch {
-        Write-Log "FAIL: $Name — $_" "ERROR"
+        Write-Log "FAIL: $Name - $_" "ERROR"
         return $false
     } finally {
         Pop-Location
     }
 }
 
-# ── Detectează Python (venv sau system) ───────────────────────────────────────
+# Detect Python (venv or system)
 $venvPython = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 $python = if (Test-Path $venvPython) { $venvPython } else { "python" }
 
-Write-Log "=== World Cup Market Intelligence — Daily Pipeline ==="
+Write-Log "=== World Cup Market Intelligence - Daily Pipeline ==="
 Write-Log "Project root: $ProjectRoot"
 Write-Log "Python: $python"
 Write-Log "Log file: $logFile"
 
 Set-Location $ProjectRoot
 
-# ── Step 1: Validare proiect ──────────────────────────────────────────────────
+# Step 1: Project validation
 $ok = Run-Step "Project validation" "$python scripts\validate_project.py" $ProjectRoot
 if (-not $ok) {
     Write-Log "Pipeline aborted: validation failed." "ERROR"
     exit 1
 }
 
-# ── Step 2: Snapshot Polymarket (live) ────────────────────────────────────────
+# Step 2: Polymarket snapshot (live)
 if (-not $SkipPolymarket) {
     $ok = Run-Step "Polymarket snapshot" "$python scripts\update_snapshot.py --provider polymarket" $ProjectRoot
     if (-not $ok) {
-        Write-Log "Polymarket snapshot failed — continuăm cu datele existente." "WARN"
+        Write-Log "Polymarket snapshot failed - continuing with existing data." "WARN"
     }
 
     Run-Step "Polymarket YES ranking" "$python scripts\generate_polymarket_yes_ranking.py" $ProjectRoot | Out-Null
 }
 
-# ── Step 3: Trends workflow (compară snapshot-uri) ────────────────────────────
+# Step 3: Trends workflow (compare snapshots)
 Run-Step "Historical trends workflow" "$python scripts\run_historical_trends_workflow.py --provider polymarket" $ProjectRoot | Out-Null
 
-# ── Step 4: Dashboard metadata ────────────────────────────────────────────────
+# Step 4: Dashboard metadata
 Run-Step "Dashboard metadata" "$python scripts\generate_dashboard_metadata.py" $ProjectRoot | Out-Null
 
-# ── Step 5: Trends dashboard ──────────────────────────────────────────────────
+# Step 5: Trends dashboard
 Run-Step "Trends dashboard" "$python scripts\generate_trends_dashboard.py" $ProjectRoot | Out-Null
 
-# ── Step 6: Daily brief ───────────────────────────────────────────────────────
+# Step 6: Daily brief
 $ok = Run-Step "Daily brief" "$python scripts\generate_daily_brief.py" $ProjectRoot
 if (-not $ok) {
     Write-Log "Daily brief generation failed." "ERROR"
     exit 1
 }
 
-# ── Step 7: Operator performance (privat, nu se commitează) ───────────────────
+# Step 7: Operator performance (private, not committed)
 $perfScript = Join-Path $ProjectRoot "scripts\analyze_operator_performance.py"
 if (Test-Path $perfScript) {
     Run-Step "Operator performance" "$python scripts\analyze_operator_performance.py" $ProjectRoot | Out-Null
 }
 
-# ── Step 8: Git commit automat ────────────────────────────────────────────────
+# Step 8: Git auto-commit public outputs only
 Write-Log "Committing public outputs to git..."
 Set-Location $ProjectRoot
 
@@ -107,8 +118,9 @@ if ($gitStatus) {
     git push 2>&1 | Write-Log
     Write-Log "Committed and pushed: $commitMsg"
 } else {
-    Write-Log "Nothing to commit — no changes in public outputs."
+    Write-Log "Nothing to commit - no changes in public outputs."
 }
 
 Write-Log "=== Daily pipeline complete ==="
-Write-Log "Daily brief: docs\briefs\$(Get-Date -Format 'yyyy-MM-dd').md"
+$briefDate = Get-Date -Format "yyyy-MM-dd"
+Write-Log "Daily brief: docs\briefs\$briefDate.md"

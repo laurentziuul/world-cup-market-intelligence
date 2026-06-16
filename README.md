@@ -337,6 +337,45 @@ docs/api_provider_strategy.md
 ```
 
 The core principle is that each provider can have different raw data, but every provider must return the same normalized internal format before entering the snapshot, trend, dashboard and brief pipeline.
+## Live provider documentation
+
+The stable default provider remains:
+
+```text
+manual_csv
+```
+
+The first experimental live provider is:
+
+```text
+polymarket
+```
+
+Provider and live workflow documentation:
+
+```text
+docs/provider_status.md
+docs/polymarket_live_workflow.md
+docs/api_provider_strategy.md
+docs/api_sources_matrix.md
+```
+
+The experimental Polymarket workflow can be run with:
+
+```powershell
+python scripts/run_polymarket_live_workflow.py
+```
+
+This workflow validates the live provider, creates a Polymarket snapshot and generates a YES-only World Cup ranking.
+
+The stable offline workflow remains:
+
+```powershell
+python scripts/smoke_test_pipeline.py --provider manual_csv
+```
+
+Use `manual_csv` for stable reproducible work.
+Use `polymarket` only for experimental live market intelligence.
 
 ## Disclaimer
 

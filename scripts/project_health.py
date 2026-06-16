@@ -18,14 +18,20 @@ DASHBOARDS = {
 
 CORE_DOCS = {
     "README": "README.md",
+    "Public MVP docs": "docs/public_mvp.md",
+    "Documentation map": "docs/documentation_map.md",
+    "v1.1.0 roadmap": "docs/v1.1.0_roadmap.md",
     "v1.0.0 roadmap": "docs/v1.0.0_roadmap.md",
     "v0.9.0 roadmap": "docs/v0.9.0_roadmap.md",
-    "v0.8.0 release notes": "docs/releases/v0.8.0.md",
+    "v1.0.0 release notes": "docs/releases/v1.0.0.md",
     "v0.9.0 release notes": "docs/releases/v0.9.0.md",
+    "v0.8.0 release notes": "docs/releases/v0.8.0.md",
     "Team intelligence docs": "docs/team_intelligence.md",
     "Catalyst workflow docs": "docs/catalyst_notes_workflow.md",
     "Narrative intelligence docs": "docs/narrative_intelligence.md",
     "Historical trends workflow docs": "docs/historical_trends_workflow.md",
+    "Provider docs": "docs/providers.md",
+    "Provider status docs": "docs/provider_status.md",
 }
 
 
@@ -36,6 +42,7 @@ GENERATED_OUTPUTS = {
     "Signal summary": "data/processed/signal_summary_latest.csv",
     "Catalyst matches": "data/processed/catalyst_matches_latest.csv",
     "Team intelligence": "data/processed/team_intelligence_latest.csv",
+    "Dashboard metadata": "data/processed/dashboard_metadata_latest.json",
 }
 
 
@@ -51,6 +58,24 @@ PUBLIC_URLS = {
     "Stable dashboard": "https://laurentziuul.github.io/world-cup-market-intelligence/dashboard/",
     "Polymarket dashboard": "https://laurentziuul.github.io/world-cup-market-intelligence/polymarket-dashboard/",
     "Trends dashboard": "https://laurentziuul.github.io/world-cup-market-intelligence/trends-dashboard/",
+}
+
+
+PROVIDER_CLASSIFICATION = {
+    "manual_csv": "stable",
+    "polymarket": "experimental",
+    "predict_fun": "experimental",
+    "kalshi": "experimental",
+    "manifold": "experimental",
+}
+
+
+PROVIDER_DESCRIPTIONS = {
+    "manual_csv": "Offline manual CSV provider. Reproducible baseline.",
+    "polymarket": "Experimental live provider for Polymarket-style market data.",
+    "predict_fun": "Experimental provider placeholder / integration surface.",
+    "kalshi": "Experimental provider placeholder / integration surface.",
+    "manifold": "Experimental provider placeholder / integration surface.",
 }
 
 
@@ -98,7 +123,7 @@ def print_status(label: str, relative_path: str) -> None:
         print(f"WARN  {label:<32} {status:<10} {relative_path}")
 
 
-def list_providers() -> list[str]:
+def list_provider_files() -> list[str]:
     providers_dir = ROOT / "src" / "wcmi" / "providers"
 
     if not providers_dir.exists():
@@ -107,6 +132,7 @@ def list_providers() -> list[str]:
     excluded = {
         "__init__",
         "base",
+        "registry",
     }
 
     providers = []
@@ -120,6 +146,10 @@ def list_providers() -> list[str]:
         providers.append(name)
 
     return sorted(providers)
+
+
+def provider_file_path(provider: str) -> str:
+    return f"src/wcmi/providers/{provider}.py"
 
 
 def check_git_ignored(relative_path: str) -> bool:
@@ -155,17 +185,106 @@ def git_status_short() -> str:
     return result.stdout.strip()
 
 
-def print_provider_status() -> None:
-    print_section("Providers")
+def run_provider_validation() -> tuple[int, str, str]:
+    script_path = ROOT / "scripts" / "validate_providers.py"
 
-    providers = list_providers()
+    if not script_path.exists():
+        return 999, "", "scripts/validate_providers.py not found"
+
+    result = subprocess.run(
+        [
+            "python",
+            "scripts/validate_providers.py",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    return result.returncode, result.stdout.strip(), result.stderr.strip()
+
+
+def print_provider_health_summary() -> None:
+    print_section("Provider health summary")
+
+    providers = list_provider_files()
 
     if not providers:
-        print("WARN  No providers found")
+        print("WARN  No provider files found in src/wcmi/providers")
         return
 
+    stable_providers = []
+    experimental_providers = []
+
     for provider in providers:
-        print(f"PASS  provider available: {provider}")
+        classification = PROVIDER_CLASSIFICATION.get(provider, "experimental")
+        description = PROVIDER_DESCRIPTIONS.get(provider, "No description available.")
+        relative_path = provider_file_path(provider)
+        status = "available" if exists(relative_path) else "missing"
+
+        if classification == "stable":
+            stable_providers.append(provider)
+        else:
+            experimental_providers.append(provider)
+
+        prefix = "PASS" if status == "available" else "WARN"
+
+        print(
+            f"{prefix}  {provider:<18} {classification:<14} {status:<10} {relative_path}"
+        )
+        print(f"      {description}")
+
+    print("")
+    print("Provider summary:")
+    print(f"- Stable providers: {len(stable_providers)}")
+    print(f"- Experimental providers: {len(experimental_providers)}")
+
+    if stable_providers:
+        print(f"- Stable: {', '.join(stable_providers)}")
+
+    if experimental_providers:
+        print(f"- Experimental: {', '.join(experimental_providers)}")
+
+    print("")
+    print("Provider docs:")
+
+    provider_docs = {
+        "Provider overview": "docs/providers.md",
+        "Provider status": "docs/provider_status.md",
+        "API provider strategy": "docs/api_provider_strategy.md",
+        "Provider failure modes": "docs/provider_failure_modes.md",
+        "Polymarket troubleshooting": "docs/polymarket_troubleshooting.md",
+    }
+
+    for label, relative_path in provider_docs.items():
+        print_status(label, relative_path)
+
+    print("")
+    print("Provider validation:")
+
+    code, stdout, stderr = run_provider_validation()
+
+    if code == 0:
+        print("PASS  scripts/validate_providers.py completed successfully")
+    elif code == 999:
+        print("WARN  Provider validation skipped")
+    else:
+        print(f"WARN  Provider validation returned exit code {code}")
+
+    if stdout:
+        print("")
+        print(stdout)
+
+    if stderr:
+        print("")
+        print(stderr)
+
+    print("")
+    print("Live provider caution:")
+    print("- manual_csv is the stable reproducible baseline.")
+    print("- live providers are experimental and may fail because of API, network, schema or availability changes.")
+    print("- public dashboards should not overclaim live-provider reliability.")
 
 
 def print_dashboard_status() -> None:
@@ -241,6 +360,7 @@ def print_interpretation() -> None:
     print("- Polymarket dashboard depends on live/provider data.")
     print("- Historical trends depend on multiple snapshots.")
     print("- Catalyst notes and team intelligence are manual-first research layers.")
+    print("- Freshness and metadata reports improve trust, but do not make stale data predictive.")
     print("")
     print("Research-only position:")
     print("- This project is not betting advice.")
@@ -252,7 +372,7 @@ def main() -> None:
     print("World Cup Market Intelligence — Project Health Report")
     print(f"Root: {ROOT}")
 
-    print_provider_status()
+    print_provider_health_summary()
     print_dashboard_status()
     print_documentation_status()
     print_manual_input_status()

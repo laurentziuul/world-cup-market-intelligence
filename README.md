@@ -460,3 +460,51 @@ Already included:
 - project health report
 
 Powered by Mayior Capital.
+
+
+## Dashboard trust layer
+
+v1.1.0 adds a data freshness and trust layer.
+
+This layer helps visitors understand whether dashboard data is fresh, stale, missing or experimental.
+
+Key trust-layer files:
+
+- scripts/check_data_freshness.py
+- scripts/generate_dashboard_metadata.py
+- scripts/project_health.py
+- docs/dashboard_trust_layer.md
+
+Generated metadata output:
+
+- data/processed/dashboard_metadata_latest.json
+
+This metadata file is generated and ignored by Git.
+
+The trends dashboard now includes:
+
+- Data freshness and trust status
+
+This panel shows:
+
+- public dashboard status
+- metadata generated time
+- stale threshold
+- dashboards available
+- generated outputs available
+- warnings
+- research-only interpretation
+
+Trust-layer commands:
+
+- python scripts/check_data_freshness.py
+- python scripts/generate_dashboard_metadata.py
+- python scripts/project_health.py
+- python scripts/validate_project.py
+
+The trust layer improves transparency.
+
+It does not make the project predictive.
+
+It does not provide betting advice or investment advice.
+

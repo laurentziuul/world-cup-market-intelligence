@@ -510,6 +510,57 @@ It does not provide betting advice or investment advice.
 
 
 
+## Monetization and Daily Brief layer
+
+World Cup Market Intelligence is now also being developed as the first monetizable vertical of a broader event-intelligence engine.
+
+Working umbrella concept:
+
+- Mayior Event Intelligence
+
+First use case:
+
+- World Cup Market Intelligence
+
+The first monetizable product is:
+
+- World Cup Market Intelligence Daily Brief
+
+This product is designed to summarize:
+
+- top probability movers
+- top liquidity movers
+- top volume movers
+- team review priority
+- catalyst watchlist
+- data freshness status
+- dashboard links
+- research-only interpretation
+
+Key monetization docs and assets:
+
+- docs/v1.3.0_monetization_roadmap.md
+- docs/briefs/sample_world_cup_market_brief.md
+- docs/briefs/latest.md
+- docs/alert_formats.md
+- docs/pro/index.html
+
+Public Pro landing page:
+
+- https://laurentziuul.github.io/world-cup-market-intelligence/pro/
+
+Sample public brief:
+
+- https://laurentziuul.github.io/world-cup-market-intelligence/briefs/sample_world_cup_market_brief.md
+
+Latest generated brief:
+
+- https://laurentziuul.github.io/world-cup-market-intelligence/briefs/latest.md
+
+The monetization layer sells structure, context, prioritization and research workflow.
+
+It does not sell betting tips, guaranteed signals, investment advice or prediction certainty.
+
 ## Final project status
 
 Current public MVP release target:
@@ -576,4 +627,5 @@ This project is not:
 - a black-box AI model
 
 Powered by Mayior Capital.
+
 

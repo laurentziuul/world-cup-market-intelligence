@@ -337,6 +337,50 @@ docs/api_provider_strategy.md
 ```
 
 The core principle is that each provider can have different raw data, but every provider must return the same normalized internal format before entering the snapshot, trend, dashboard and brief pipeline.
+## Dashboards
+
+World Cup Market Intelligence currently has two public dashboards.
+
+### Stable manual CSV dashboard
+
+```text
+Provider: manual_csv
+Status: stable
+Workflow: offline / reproducible
+```
+
+Public URL:
+
+```text
+https://laurentziuul.github.io/world-cup-market-intelligence/dashboard/
+```
+
+This is the default stable dashboard. It is generated from manually curated CSV data and does not require live API access.
+
+### Experimental Polymarket live dashboard
+
+```text
+Provider: polymarket
+Status: experimental
+Workflow: live API / network-dependent
+```
+
+Public URL:
+
+```text
+https://laurentziuul.github.io/world-cup-market-intelligence/polymarket-dashboard/
+```
+
+This dashboard uses live Polymarket Gamma API data and generates a YES-only ranking for markets matching:
+
+```text
+Will X win the 2026 FIFA World Cup?
+```
+
+The Polymarket dashboard is intentionally separate from the stable manual CSV dashboard.
+
+---
+
 ## Live provider documentation
 
 The stable default provider remains:
@@ -366,7 +410,7 @@ The experimental Polymarket workflow can be run with:
 python scripts/run_polymarket_live_workflow.py
 ```
 
-This workflow validates the live provider, creates a Polymarket snapshot and generates a YES-only World Cup ranking.
+This workflow validates the live provider, creates a Polymarket snapshot, generates a YES-only World Cup ranking and updates the separate Polymarket live dashboard.
 
 The stable offline workflow remains:
 
@@ -376,10 +420,3 @@ python scripts/smoke_test_pipeline.py --provider manual_csv
 
 Use `manual_csv` for stable reproducible work.
 Use `polymarket` only for experimental live market intelligence.
-
-## Disclaimer
-
-This repository is for educational and research purposes only.
-
-It is not financial advice, betting advice or investment advice.
-Do not use this project as the sole basis for placing trades or bets.

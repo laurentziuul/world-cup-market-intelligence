@@ -210,6 +210,56 @@ docs/polymarket-dashboard/index.html
 ```
 
 ---
+## Optional historical trends
+
+The Polymarket live workflow can optionally run the historical trends workflow.
+
+Default command:
+
+```powershell
+python scripts/run_polymarket_live_workflow.py
+```
+
+This runs:
+
+```text
+provider validation
+live snapshot generation
+YES-only ranking generation
+separate Polymarket dashboard generation
+```
+
+Optional trends command:
+
+```powershell
+python scripts/run_polymarket_live_workflow.py --include-trends
+```
+
+This runs the same live workflow, plus:
+
+```text
+snapshot comparison
+probability delta report
+top movers report
+signal summary report
+```
+
+The optional trends step requires at least two processed Polymarket snapshot CSV files.
+
+Relevant generated trend outputs:
+
+```text
+data/processed/snapshot_comparison_latest.csv
+data/processed/probability_deltas_latest.csv
+data/processed/top_movers_latest.csv
+data/processed/signal_summary_latest.csv
+```
+
+These files are generated outputs and are ignored by Git by default.
+
+Use `--include-trends` only when historical Polymarket snapshots already exist.
+
+A failure in the optional trend step usually means there are not enough snapshots yet, not that the stable project is broken.
 
 ## Recommended live workflow
 

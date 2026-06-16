@@ -41,7 +41,7 @@
 
         .subtitle {
             color: #cbd5e1;
-            max-width: 860px;
+            max-width: 880px;
             line-height: 1.5;
         }
 
@@ -53,6 +53,38 @@
             margin: 22px 0;
             color: #cbd5e1;
             line-height: 1.5;
+        }
+
+        .warning-box {
+            border-color: #f59e0b;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .trust-card {
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .trust-label {
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+
+        .trust-value {
+            font-weight: 800;
+            color: #e5e7eb;
+            word-break: break-word;
         }
 
         table {
@@ -117,6 +149,11 @@
             font-weight: 700;
         }
 
+        .status-warning {
+            color: #fde68a;
+            font-weight: 700;
+        }
+
         .status-missing {
             color: #fdba74;
             font-weight: 700;
@@ -150,6 +187,10 @@
                 overflow-x: auto;
             }
 
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
             h1 {
                 font-size: 28px;
             }
@@ -163,16 +204,65 @@
             <h1>World Cup Market Intelligence — Historical Trends</h1>
             <p class="subtitle">
                 Experimental preview of probability movement, top movers, signal classification,
-                catalyst-note matching and team-level intelligence generated from historical
-                prediction-market snapshots.
+                catalyst-note matching, team-level intelligence and dashboard freshness metadata.
             </p>
         </section>
 
         <section class="notice">
-            Generated at <strong>2026-06-16 16:40:43</strong> UTC.
-            These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
-            The trend, catalyst and team-intelligence system is experimental and should not be treated as betting or investment advice.
+            Generated at <strong>2026-06-16 17:16:12</strong> UTC.
+            These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>
+            and <code>scripts/generate_dashboard_metadata.py</code>.
+            The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
         </section>
+
+        
+        <section>
+            <h2>Data freshness and trust status</h2>
+            <p class="subtitle">
+                Metadata-generated trust layer showing dashboard availability, generated output status
+                and stale/missing output warnings.
+            </p>
+
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-label">Public dashboard status</div>
+                    <div class="trust-value status-ok">ready</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Metadata generated at</div>
+                    <div class="trust-value">2026-06-16T17:16:11Z</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Stale threshold</div>
+                    <div class="trust-value">72.0 hours</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Dashboards available</div>
+                    <div class="trust-value">4 / 4</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Generated outputs available</div>
+                    <div class="trust-value">0 / 6</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Interpretation</div>
+                    <div class="trust-value">research-only</div>
+                </div>
+            </div>
+
+            <div class="notice">
+                <strong>Warnings:</strong>
+                <ul>
+                    <li>Missing generated outputs: snapshot_comparison, probability_deltas, top_movers, signal_summary, catalyst_matches, team_intelligence</li>
+                </ul>
+            </div>
+        </section>
+    
 
         <section>
             <h2>Trend output status</h2>
@@ -218,6 +308,13 @@
                 <td>Team intelligence</td>
                 <td class="status-missing">missing</td>
                 <td><code>data\processed\team_intelligence_latest.csv</code></td>
+            </tr>
+            
+
+            <tr>
+                <td>Dashboard metadata</td>
+                <td class="status-ok">available</td>
+                <td><code>data\processed\dashboard_metadata_latest.json</code></td>
             </tr>
             
                 </tbody>

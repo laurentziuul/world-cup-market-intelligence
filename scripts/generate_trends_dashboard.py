@@ -1,6 +1,7 @@
 ﻿from __future__ import annotations
 
 import html
+import json
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -17,6 +18,7 @@ SIGNAL_SUMMARY_PATH = ROOT / "data" / "processed" / "signal_summary_latest.csv"
 PROBABILITY_DELTAS_PATH = ROOT / "data" / "processed" / "probability_deltas_latest.csv"
 CATALYST_MATCHES_PATH = ROOT / "data" / "processed" / "catalyst_matches_latest.csv"
 TEAM_INTELLIGENCE_PATH = ROOT / "data" / "processed" / "team_intelligence_latest.csv"
+DASHBOARD_METADATA_PATH = ROOT / "data" / "processed" / "dashboard_metadata_latest.json"
 
 
 def read_optional_csv(path: Path) -> pd.DataFrame:
@@ -27,6 +29,16 @@ def read_optional_csv(path: Path) -> pd.DataFrame:
         return pd.read_csv(path)
     except Exception:
         return pd.DataFrame()
+
+
+def read_optional_json(path: Path) -> dict[str, object]:
+    if not path.exists():
+        return {}
+
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
 
 
 def format_value(value: object) -> str:
@@ -43,6 +55,7 @@ def render_file_status() -> str:
         "Signal summary": SIGNAL_SUMMARY_PATH,
         "Catalyst matches": CATALYST_MATCHES_PATH,
         "Team intelligence": TEAM_INTELLIGENCE_PATH,
+        "Dashboard metadata": DASHBOARD_METADATA_PATH,
     }
 
     rows = []
@@ -63,6 +76,96 @@ def render_file_status() -> str:
         )
 
     return "\n".join(rows)
+
+
+def render_freshness_panel(metadata: dict[str, object]) -> str:
+    if not metadata:
+        return """
+        <section>
+            <h2>Data freshness and trust status</h2>
+            <div class="notice warning-box">
+                <strong>Metadata missing.</strong>
+                Run <code>python scripts/generate_dashboard_metadata.py</code> before generating this dashboard
+                to show freshness and trust information.
+            </div>
+        </section>
+        """
+
+    public_status = str(metadata.get("public_dashboard_status", "unknown"))
+    generated_at = str(metadata.get("generated_at", ""))
+    stale_threshold = str(metadata.get("stale_threshold_hours", ""))
+    dashboard_available = str(metadata.get("dashboard_available_count", ""))
+    dashboard_count = str(metadata.get("dashboard_count", ""))
+    output_available = str(metadata.get("generated_output_available_count", ""))
+    output_count = str(metadata.get("generated_output_count", ""))
+    warnings = metadata.get("warnings", [])
+
+    status_class = "status-ok"
+
+    if public_status == "stale":
+        status_class = "status-warning"
+    elif public_status == "incomplete":
+        status_class = "status-missing"
+
+    if not isinstance(warnings, list):
+        warnings = []
+
+    if warnings:
+        warning_items = "\n".join(
+            f"<li>{html.escape(str(warning))}</li>"
+            for warning in warnings
+        )
+    else:
+        warning_items = "<li>No metadata warnings.</li>"
+
+    return f"""
+        <section>
+            <h2>Data freshness and trust status</h2>
+            <p class="subtitle">
+                Metadata-generated trust layer showing dashboard availability, generated output status
+                and stale/missing output warnings.
+            </p>
+
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="trust-label">Public dashboard status</div>
+                    <div class="trust-value {status_class}">{html.escape(public_status)}</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Metadata generated at</div>
+                    <div class="trust-value">{html.escape(generated_at)}</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Stale threshold</div>
+                    <div class="trust-value">{html.escape(stale_threshold)} hours</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Dashboards available</div>
+                    <div class="trust-value">{html.escape(dashboard_available)} / {html.escape(dashboard_count)}</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Generated outputs available</div>
+                    <div class="trust-value">{html.escape(output_available)} / {html.escape(output_count)}</div>
+                </div>
+
+                <div class="trust-card">
+                    <div class="trust-label">Interpretation</div>
+                    <div class="trust-value">research-only</div>
+                </div>
+            </div>
+
+            <div class="notice">
+                <strong>Warnings:</strong>
+                <ul>
+                    {warning_items}
+                </ul>
+            </div>
+        </section>
+    """
 
 
 def render_team_intelligence(team_intelligence: pd.DataFrame) -> str:
@@ -301,6 +404,7 @@ def render_catalyst_matches(catalyst_matches: pd.DataFrame) -> str:
 
 
 def render_html(
+    metadata: dict[str, object],
     team_intelligence: pd.DataFrame,
     top_movers: pd.DataFrame,
     signal_summary: pd.DataFrame,
@@ -308,6 +412,7 @@ def render_html(
     generated_at: str,
 ) -> str:
     file_status_rows = render_file_status()
+    freshness_panel = render_freshness_panel(metadata)
     team_intelligence_rows = render_team_intelligence(team_intelligence)
     top_movers_rows = render_top_movers(top_movers)
     signal_summary_rows = render_signal_summary(signal_summary)
@@ -356,7 +461,7 @@ def render_html(
 
         .subtitle {{
             color: #cbd5e1;
-            max-width: 860px;
+            max-width: 880px;
             line-height: 1.5;
         }}
 
@@ -368,6 +473,38 @@ def render_html(
             margin: 22px 0;
             color: #cbd5e1;
             line-height: 1.5;
+        }}
+
+        .warning-box {{
+            border-color: #f59e0b;
+        }}
+
+        .trust-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }}
+
+        .trust-card {{
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 14px;
+        }}
+
+        .trust-label {{
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }}
+
+        .trust-value {{
+            font-weight: 800;
+            color: #e5e7eb;
+            word-break: break-word;
         }}
 
         table {{
@@ -432,6 +569,11 @@ def render_html(
             font-weight: 700;
         }}
 
+        .status-warning {{
+            color: #fde68a;
+            font-weight: 700;
+        }}
+
         .status-missing {{
             color: #fdba74;
             font-weight: 700;
@@ -465,6 +607,10 @@ def render_html(
                 overflow-x: auto;
             }}
 
+            .trust-grid {{
+                grid-template-columns: 1fr;
+            }}
+
             h1 {{
                 font-size: 28px;
             }}
@@ -478,16 +624,18 @@ def render_html(
             <h1>World Cup Market Intelligence — Historical Trends</h1>
             <p class="subtitle">
                 Experimental preview of probability movement, top movers, signal classification,
-                catalyst-note matching and team-level intelligence generated from historical
-                prediction-market snapshots.
+                catalyst-note matching, team-level intelligence and dashboard freshness metadata.
             </p>
         </section>
 
         <section class="notice">
             Generated at <strong>{html.escape(generated_at)}</strong> UTC.
-            These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
-            The trend, catalyst and team-intelligence system is experimental and should not be treated as betting or investment advice.
+            These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>
+            and <code>scripts/generate_dashboard_metadata.py</code>.
+            The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
         </section>
+
+        {freshness_panel}
 
         <section>
             <h2>Trend output status</h2>
@@ -640,12 +788,14 @@ def main() -> None:
 
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
+    metadata = read_optional_json(DASHBOARD_METADATA_PATH)
     team_intelligence = read_optional_csv(TEAM_INTELLIGENCE_PATH)
     top_movers = read_optional_csv(TOP_MOVERS_PATH)
     signal_summary = read_optional_csv(SIGNAL_SUMMARY_PATH)
     catalyst_matches = read_optional_csv(CATALYST_MATCHES_PATH)
 
     html_content = render_html(
+        metadata=metadata,
         team_intelligence=team_intelligence,
         top_movers=top_movers,
         signal_summary=signal_summary,
@@ -656,6 +806,7 @@ def main() -> None:
     OUTPUT_PATH.write_text(html_content, encoding="utf-8")
 
     print("Historical trends dashboard")
+    print(f"Metadata available:      {bool(metadata)}")
     print(f"Team intelligence rows: {len(team_intelligence)}")
     print(f"Top movers rows:        {len(top_movers)}")
     print(f"Signal summary rows:    {len(signal_summary)}")

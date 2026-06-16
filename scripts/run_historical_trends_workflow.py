@@ -159,6 +159,13 @@ def main() -> None:
                 str(args.min_liquidity),
             ],
         },
+        {
+            "name": "Generate historical trends dashboard",
+            "command": [
+                sys.executable,
+                "scripts/generate_trends_dashboard.py",
+            ],
+        },
     ]
 
     for step in steps:
@@ -174,6 +181,10 @@ def main() -> None:
     print("- data/processed/probability_deltas_latest.csv")
     print("- data/processed/top_movers_latest.csv")
     print("- data/processed/signal_summary_latest.csv")
+    print("- docs/trends-dashboard/index.html")
+    print("")
+    print("Public dashboard path after commit/push:")
+    print("- https://laurentziuul.github.io/world-cup-market-intelligence/trends-dashboard/")
 
 
 if __name__ == "__main__":

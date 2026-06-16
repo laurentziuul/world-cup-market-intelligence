@@ -1,0 +1,5 @@
+﻿date,provider,team,market_id,market_title,event_type,event_title,note,source_url,confidence,created_by
+2026-06-20,polymarket,Germany,,Will Germany win the 2026 FIFA World Cup?,match_result,Example strong group-stage result,"Example note only: Germany probability may move after a strong group-stage performance with rising liquidity.",,medium,manual_sample
+2026-06-21,polymarket,France,,Will France win the 2026 FIFA World Cup?,injury,Example injury uncertainty,"Example note only: France probability may move if injury uncertainty affects public expectations.",,low,manual_sample
+2026-06-22,polymarket,Brazil,,Will Brazil win the 2026 FIFA World Cup?,media_narrative,Example media narrative shift,"Example note only: Brazil probability may move after a positive media narrative or analyst coverage.",,low,manual_sample
+2026-06-23,polymarket,Argentina,,Will Argentina win the 2026 FIFA World Cup?,liquidity_spike,Example liquidity spike,"Example note only: Argentina market may deserve review if probability movement is accompanied by rising liquidity.",,medium,manual_sample

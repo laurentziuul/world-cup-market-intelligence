@@ -210,6 +210,17 @@ The current manual CSV sample is:
 examples/provider_outputs/manual_csv_normalized_sample.csv
 ```
 
+## Full pipeline smoke test
+
+Run a full local pipeline test with:
+
+```powershell
+python scripts/smoke_test_pipeline.py --provider manual_csv
+```
+
+This validates the provider, exports a normalized provider sample, updates the latest snapshot, regenerates trends and rebuilds the dashboard.
+
+
 
 ## Example workflow
 

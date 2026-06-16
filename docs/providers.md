@@ -180,3 +180,29 @@ examples/provider_outputs/predict_fun_normalized_sample.csv
 examples/provider_outputs/kalshi_normalized_sample.csv
 examples/provider_outputs/manifold_normalized_sample.csv
 ```
+---
+
+## Full pipeline smoke test
+
+The full local pipeline can be tested with:
+
+```bash
+python scripts/smoke_test_pipeline.py --provider manual_csv
+```
+
+This command runs:
+
+```text
+provider validation
+    ↓
+provider sample export
+    ↓
+snapshot update
+    ↓
+trend generation
+    ↓
+dashboard generation
+```
+
+This is useful before adding new live API providers, because it confirms that the current provider still works end-to-end.
+

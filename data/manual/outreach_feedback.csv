@@ -1,3 +1,11 @@
 ﻿date,contact_or_community,channel,profile_type,link_sent,response_status,interest_level,useful_section,main_feedback,payment_intent,preferred_delivery,follow_up_action,notes
-YYYY-MM-DD,Example person,Telegram,crypto user,sample brief,pending,unknown,n/a,n/a,unknown,unknown,follow up in 2 days,Example placeholder row
-YYYY-MM-DD,Example community,Discord,community owner,pro page,pending,unknown,n/a,n/a,unknown,unknown,ask for community report interest,Example placeholder row
+2026-06-16,crypto_contact_01,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_02,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_03,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_04,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_05,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_06,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_07,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_08,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_09,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch
+2026-06-16,crypto_contact_10,Telegram,crypto user,sample brief,pending,unknown,unknown,unknown,unknown,unknown,follow up in 2 days,first outreach batch

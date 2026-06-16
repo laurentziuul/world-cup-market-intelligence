@@ -1,6 +1,6 @@
 # Outreach Feedback Summary
 
-Generated at: 2026-06-16T19:14:00+00:00
+Generated at: 2026-06-16T19:26:50+00:00
 
 Source file: data/manual/outreach_feedback.csv
 
@@ -22,67 +22,68 @@ It is not financial advice.
 
 ## High-level status
 
-- Real outreach entries: 0
+- Real outreach entries: 10
 - Replies: 0
 - Wants more reports: 0
 - Payment-intent signals: 0
 - Custom report leads: 0
-- Validation status: No real outreach data yet.
+- Validation status: Too early to judge.
 
 ---
 
 ## Response status
 
-- No data yet.
+- pending: 10
 
 ---
 
 ## Interest level
 
-- No data yet.
+- unknown: 10
 
 ---
 
 ## Profile types
 
-- No data yet.
+- crypto user: 10
 
 ---
 
 ## Channels
 
-- No data yet.
+- Telegram: 10
 
 ---
 
 ## Useful sections
 
-- No data yet.
+- unknown: 10
 
 ---
 
 ## Payment intent
 
-- No data yet.
+- unknown: 10
 
 ---
 
 ## Preferred delivery
 
-- No data yet.
+- unknown: 10
 
 ---
 
 ## Interpretation
 
-No real outreach data has been added yet.
+Use this summary to decide what to build next.
 
-Next step:
+Strongest next-build signals:
 
-- send the sample brief to 10 warm contacts
-- use aliases instead of private names
-- log responses in data/manual/outreach_feedback.csv
-- rerun this script
+- people ask for the next report
+- people prefer Telegram or Discord delivery
+- people show payment intent
+- communities ask for custom reports
+- one section repeatedly appears as useful
 
 ---
 

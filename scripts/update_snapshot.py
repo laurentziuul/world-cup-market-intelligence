@@ -6,7 +6,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from wcmi.providers.manual_csv import ManualCsvProvider
+from wcmi.providers.registry import (
+    available_provider_names,
+    create_provider,
+    list_provider_info,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,23 +18,6 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "data" / "processed"
 LATEST_PATH = OUTPUT_DIR / "snapshot_latest.csv"
 SNAPSHOT_ARCHIVE_DIR = OUTPUT_DIR / "snapshots"
-
-
-PROVIDERS = {
-    "manual_csv": ManualCsvProvider,
-}
-
-
-def load_provider(provider_name: str):
-    if provider_name not in PROVIDERS:
-        available = ", ".join(sorted(PROVIDERS))
-        raise ValueError(
-            f"Unknown provider: {provider_name}\n"
-            f"Available providers: {available}"
-        )
-
-    provider_class = PROVIDERS[provider_name]
-    return provider_class()
 
 
 def normalize_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -83,7 +70,11 @@ def calculate_changes(current: pd.DataFrame, previous: pd.DataFrame | None) -> p
         "liquidity",
     ]
 
-    missing_previous = [column for column in required_previous_columns if column not in previous.columns]
+    missing_previous = [
+        column
+        for column in required_previous_columns
+        if column not in previous.columns
+    ]
 
     if missing_previous:
         return current
@@ -149,7 +140,11 @@ def build_archive_filename(snapshot_time: datetime, provider_name: str) -> str:
     return f"{timestamp}-{provider_name}.csv"
 
 
-def write_outputs(df: pd.DataFrame, snapshot_time: datetime, provider_name: str) -> tuple[Path, Path]:
+def write_outputs(
+    df: pd.DataFrame,
+    snapshot_time: datetime,
+    provider_name: str,
+) -> tuple[Path, Path]:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     SNAPSHOT_ARCHIVE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -165,7 +160,7 @@ def write_outputs(df: pd.DataFrame, snapshot_time: datetime, provider_name: str)
 def update_snapshot(provider_name: str) -> tuple[pd.DataFrame, Path, Path]:
     snapshot_time = datetime.now(timezone.utc)
 
-    provider = load_provider(provider_name)
+    provider = create_provider(provider_name)
 
     current = provider.load()
     current = normalize_numeric_columns(current)
@@ -174,7 +169,11 @@ def update_snapshot(provider_name: str) -> tuple[pd.DataFrame, Path, Path]:
     current = calculate_changes(current, previous)
     current = add_metadata(current, snapshot_time, provider_name)
 
-    latest_path, archive_path = write_outputs(current, snapshot_time, provider_name)
+    latest_path, archive_path = write_outputs(
+        current,
+        snapshot_time,
+        provider_name,
+    )
 
     return current, latest_path, archive_path
 
@@ -199,6 +198,21 @@ def print_snapshot_summary(df: pd.DataFrame, latest_path: Path, archive_path: Pa
     print(df[display_columns].to_string(index=False))
 
 
+def print_provider_list() -> None:
+    print("Available providers:")
+    print("")
+
+    for provider in list_provider_info():
+        live_label = "live" if provider.is_live else "offline"
+        network_label = "network" if provider.requires_network else "no-network"
+
+        print(f"- {provider.name}")
+        print(f"  status: {provider.status}")
+        print(f"  mode: {live_label}, {network_label}")
+        print(f"  description: {provider.description}")
+        print("")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Update normalized market snapshot from a provider."
@@ -207,8 +221,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--provider",
         default="manual_csv",
-        choices=sorted(PROVIDERS.keys()),
+        choices=available_provider_names(),
         help="Market data provider to use.",
+    )
+
+    parser.add_argument(
+        "--list-providers",
+        action="store_true",
+        help="List available providers and exit.",
     )
 
     return parser.parse_args()
@@ -217,6 +237,11 @@ def parse_args() -> argparse.Namespace:
 def main(provider_name: str | None = None) -> None:
     if provider_name is None:
         args = parse_args()
+
+        if args.list_providers:
+            print_provider_list()
+            return
+
         provider_name = args.provider
 
     df, latest_path, archive_path = update_snapshot(provider_name)

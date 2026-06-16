@@ -314,6 +314,29 @@ It prioritizes:
 
 The goal is not to predict the World Cup winner.
 The goal is to learn how markets, narratives, liquidity and probability changes interact around a global event.
+## API provider strategy
+
+The project is designed to support multiple data providers over time, not just one API.
+
+Current and future providers may include:
+
+```text
+manual_csv
+polymarket
+predict_fun
+kalshi
+manifold
+custom_csv
+other APIs
+```
+
+The API provider strategy is documented here:
+
+```text
+docs/api_provider_strategy.md
+```
+
+The core principle is that each provider can have different raw data, but every provider must return the same normalized internal format before entering the snapshot, trend, dashboard and brief pipeline.
 
 ## Disclaimer
 

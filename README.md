@@ -158,11 +158,58 @@ The old manual command still works as a compatibility wrapper:
 python scripts/update_snapshot_manual.py
 ```
 
+List all available providers:
+
+```powershell
+python scripts/update_snapshot.py --list-providers
+```
+
 Provider documentation:
 
 ```text
 docs/providers.md
 ```
+
+## Provider validation
+
+Validate all offline providers:
+
+```powershell
+python scripts/validate_providers.py
+```
+
+Validate one provider only:
+
+```powershell
+python scripts/validate_providers.py --provider manual_csv
+```
+
+Live or network-based providers are skipped by default. When live providers are added later, they can be tested explicitly with:
+
+```powershell
+python scripts/validate_providers.py --include-live
+```
+
+## Provider sample export
+
+Export a normalized provider sample:
+
+```powershell
+python scripts/export_provider_sample.py --provider manual_csv
+```
+
+Sample outputs are stored in:
+
+```text
+examples/provider_outputs/
+```
+
+The current manual CSV sample is:
+
+```text
+examples/provider_outputs/manual_csv_normalized_sample.csv
+```
+
 
 ## Example workflow
 

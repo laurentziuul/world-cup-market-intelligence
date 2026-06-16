@@ -151,3 +151,32 @@ Live providers should be optional and fail safely.
 The manual CSV provider should remain the default because it works offline and makes the project reproducible.
 
 The long-term goal is multi-source market intelligence, not dependence on a single API.
+
+---
+
+## Provider sample outputs
+
+Normalized provider samples can be exported with:
+
+```bash
+python scripts/export_provider_sample.py --provider manual_csv
+```
+
+The default sample output path is:
+
+```text
+examples/provider_outputs/manual_csv_normalized_sample.csv
+```
+
+These files are used as human-readable fixtures. They show what a valid normalized provider output should look like before the data enters the snapshot pipeline.
+
+When new providers are added later, each provider should be able to export a similar normalized sample.
+
+Example future files:
+
+```text
+examples/provider_outputs/polymarket_normalized_sample.csv
+examples/provider_outputs/predict_fun_normalized_sample.csv
+examples/provider_outputs/kalshi_normalized_sample.csv
+examples/provider_outputs/manifold_normalized_sample.csv
+```

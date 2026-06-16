@@ -24,3 +24,5 @@ data/processed/top_movers_latest.csv
 data/processed/signal_summary_latest.csv
 # Catalyst notes generated outputs
 data/processed/catalyst_matches_latest.csv
+# Team intelligence generated outputs
+data/processed/team_intelligence_latest.csv

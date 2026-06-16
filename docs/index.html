@@ -31,14 +31,14 @@
 
         h1 {
             margin: 0;
-            font-size: 42px;
+            font-size: 44px;
             line-height: 1.08;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.035em;
         }
 
         h2 {
-            margin-top: 38px;
-            font-size: 26px;
+            margin-top: 42px;
+            font-size: 27px;
         }
 
         h3 {
@@ -51,7 +51,7 @@
         }
 
         .subtitle {
-            max-width: 860px;
+            max-width: 880px;
             color: #cbd5e1;
             font-size: 18px;
             margin-top: 16px;
@@ -66,9 +66,23 @@
             color: #cbd5e1;
         }
 
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .grid-two {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 18px;
             margin-top: 20px;
         }
@@ -111,6 +125,11 @@
             color: #c4b5fd;
         }
 
+        .trust {
+            background: #1e3a8a;
+            color: #bfdbfe;
+        }
+
         a {
             color: #93c5fd;
             text-decoration: none;
@@ -135,6 +154,21 @@
             background: #1d4ed8;
         }
 
+        .button-secondary {
+            display: inline-block;
+            padding: 10px 13px;
+            background: #1e293b;
+            color: #e5e7eb;
+            border: 1px solid #475569;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .button-secondary:hover {
+            text-decoration: none;
+            background: #334155;
+        }
+
         .list {
             background: #111827;
             border: 1px solid #334155;
@@ -150,6 +184,10 @@
             line-height: 1.7;
         }
 
+        code {
+            color: #93c5fd;
+        }
+
         .footer {
             margin-top: 42px;
             color: #94a3b8;
@@ -158,12 +196,9 @@
             padding-top: 22px;
         }
 
-        code {
-            color: #93c5fd;
-        }
-
         @media (max-width: 900px) {
-            .grid {
+            .grid,
+            .grid-two {
                 grid-template-columns: 1fr;
             }
 
@@ -180,18 +215,25 @@
 <body>
     <main class="container">
         <section>
-            <div class="badge">Public MVP · World Cup 2026 market intelligence</div>
+            <div class="badge">Portfolio-ready public MVP · World Cup 2026 market intelligence</div>
             <h1>World Cup Market Intelligence</h1>
             <p class="subtitle">
-                An open-source research project for exploring FIFA World Cup 2026 prediction-market data,
-                historical probability movement, catalyst notes, narrative context and team-level intelligence.
+                An open-source static dashboard system for FIFA World Cup 2026 prediction-market research.
+                It combines market data, historical probability movement, catalyst notes, team intelligence
+                and dashboard trust indicators into one transparent public MVP.
             </p>
+
+            <div class="hero-actions">
+                <a class="button" href="trends-dashboard/">Open main intelligence dashboard</a>
+                <a class="button-secondary" href="dashboard/">Stable dashboard</a>
+                <a class="button-secondary" href="polymarket-dashboard/">Polymarket dashboard</a>
+            </div>
         </section>
 
         <section class="notice">
             <strong>Research-only disclaimer:</strong>
             this project is for education, open-source experimentation and market-intelligence research.
-            It is not betting advice, investment advice, a prediction engine or a trading system.
+            It is not betting advice, investment advice, financial advice, a prediction engine or a trading system.
         </section>
 
         <section>
@@ -213,7 +255,7 @@
                     <h3>Polymarket live dashboard</h3>
                     <p>
                         Experimental provider-based dashboard for live Polymarket-style market data,
-                        probabilities, liquidity and source links.
+                        probabilities, volume, liquidity and source links.
                     </p>
                     <a class="button" href="polymarket-dashboard/">Open Polymarket dashboard</a>
                 </article>
@@ -222,8 +264,8 @@
                     <span class="status research">Intelligence</span>
                     <h3>Historical trends dashboard</h3>
                     <p>
-                        Experimental intelligence surface showing top movers, signal summaries,
-                        catalyst matches and team intelligence.
+                        The main intelligence surface: top movers, signal summaries, catalyst matches,
+                        team intelligence and data freshness status.
                     </p>
                     <a class="button" href="trends-dashboard/">Open trends dashboard</a>
                 </article>
@@ -231,19 +273,53 @@
         </section>
 
         <section>
-            <h2>What the MVP includes</h2>
+            <h2>What makes this project useful</h2>
+
+            <div class="grid-two">
+                <article class="card">
+                    <span class="status research">Intelligence layers</span>
+                    <h3>From raw markets to context</h3>
+                    <p>
+                        The project does more than show probabilities. It adds historical movement,
+                        signal classification, catalyst notes, narrative context and team-level summaries.
+                    </p>
+                    <ul>
+                        <li>Probability movement</li>
+                        <li>Top movers</li>
+                        <li>Signal summary</li>
+                        <li>Catalyst matches</li>
+                        <li>Team intelligence</li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <span class="status trust">Trust layer</span>
+                    <h3>Freshness and reliability indicators</h3>
+                    <p>
+                        The dashboard trust layer makes stale, missing or experimental data easier to interpret.
+                        It helps viewers understand the limits of the data before overreading the dashboard.
+                    </p>
+                    <ul>
+                        <li>Data freshness checks</li>
+                        <li>Dashboard metadata</li>
+                        <li>Generated output status</li>
+                        <li>Provider health reporting</li>
+                        <li>Research-only interpretation</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <h2>3-minute demo path</h2>
 
             <div class="list">
                 <ul>
-                    <li><strong>Stable market dashboard</strong> based on manual CSV data.</li>
-                    <li><strong>Experimental live provider workflow</strong> for Polymarket-style data.</li>
-                    <li><strong>Historical trends</strong> comparing snapshots over time.</li>
-                    <li><strong>Signal classification</strong> for positive, negative and flat movement.</li>
-                    <li><strong>Catalyst notes</strong> for manual real-world context.</li>
-                    <li><strong>Narrative intelligence</strong> connecting market movement with possible explanations.</li>
-                    <li><strong>Team intelligence</strong> aggregating signal and catalyst context by team.</li>
-                    <li><strong>Safe local validation</strong> using <code>scripts/validate_project.py</code>.</li>
-                    <li><strong>Project health reporting</strong> using <code>scripts/project_health.py</code>.</li>
+                    <li><strong>Step 1:</strong> open this landing page and explain the public MVP.</li>
+                    <li><strong>Step 2:</strong> open the stable dashboard as the reproducible baseline.</li>
+                    <li><strong>Step 3:</strong> open the Polymarket dashboard as the experimental live-provider layer.</li>
+                    <li><strong>Step 4:</strong> open the trends dashboard as the main intelligence surface.</li>
+                    <li><strong>Step 5:</strong> highlight trust status, team intelligence and catalyst matches.</li>
                 </ul>
             </div>
         </section>
@@ -279,16 +355,32 @@
         </section>
 
         <section>
+            <h2>Validation and project health</h2>
+
+            <div class="list">
+                <ul>
+                    <li><code>python scripts/validate_project.py</code> — safe one-command local validation.</li>
+                    <li><code>python scripts/project_health.py</code> — provider, dashboard, docs and Git health report.</li>
+                    <li><code>python scripts/check_data_freshness.py</code> — freshness report for dashboards and generated outputs.</li>
+                    <li><code>python scripts/generate_dashboard_metadata.py</code> — generates trust metadata for the trends dashboard.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
             <h2>Documentation</h2>
 
             <div class="list">
                 <ul>
                     <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/README.md">README</a></li>
                     <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/public_mvp.md">Public MVP documentation</a></li>
+                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/demo_guide.md">Public demo guide</a></li>
+                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/final_project_summary.md">Final project summary</a></li>
+                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/documentation_map.md">Documentation map</a></li>
                     <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/team_intelligence.md">Team intelligence</a></li>
+                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/dashboard_trust_layer.md">Dashboard trust layer</a></li>
                     <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/catalyst_notes_workflow.md">Catalyst notes workflow</a></li>
                     <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/narrative_intelligence.md">Narrative intelligence</a></li>
-                    <li><a href="https://github.com/laurentziuul/world-cup-market-intelligence/blob/main/docs/v1.0.0_roadmap.md">v1.0.0 roadmap</a></li>
                 </ul>
             </div>
         </section>

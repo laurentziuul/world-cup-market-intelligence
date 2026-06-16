@@ -11,3 +11,9 @@ data/processed/*.csv
 src/*.egg-info/
 data/processed/snapshots/*.csv
 !data/processed/snapshots/.gitkeep
+# Polymarket live provider generated outputs
+data/raw/polymarket/
+data/processed/polymarket/
+data/processed/polymarket_worldcup_yes_ranking.csv
+data/processed/polymarket_worldcup_yes_ranking_summary.txt
+data/processed/snapshots/*-polymarket.csv

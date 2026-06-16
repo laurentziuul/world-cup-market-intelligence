@@ -147,15 +147,15 @@
             <div class="label">Experimental historical trends</div>
             <h1>World Cup Market Intelligence — Historical Trends</h1>
             <p class="subtitle">
-                Experimental preview of probability movement, top movers and signal classification
-                generated from historical prediction-market snapshots.
+                Experimental preview of probability movement, top movers, signal classification
+                and catalyst-note matching generated from historical prediction-market snapshots.
             </p>
         </section>
 
         <section class="notice">
-            Generated at <strong>2026-06-16 15:03:39</strong> UTC.
+            Generated at <strong>2026-06-16 15:43:02</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
-            The trend system is experimental and should not be treated as betting or investment advice.
+            The trend and catalyst system is experimental and should not be treated as betting or investment advice.
         </section>
 
         <section>
@@ -188,6 +188,13 @@
                 <td>Signal summary</td>
                 <td class="status-missing">missing</td>
                 <td><code>data\processed\signal_summary_latest.csv</code></td>
+            </tr>
+            
+
+            <tr>
+                <td>Catalyst matches</td>
+                <td class="status-missing">missing</td>
+                <td><code>data\processed\catalyst_matches_latest.csv</code></td>
             </tr>
             
                 </tbody>
@@ -247,6 +254,37 @@
                     
         <tr>
             <td colspan="8">No signal summary output found yet. Run the historical trends workflow first.</td>
+        </tr>
+        
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>Catalyst matches</h2>
+            <p class="subtitle">
+                Manual catalyst notes matched to generated signal rows by team or market identifier
+                and a configurable lookback window.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Signal</th>
+                        <th>Change</th>
+                        <th>Event type</th>
+                        <th>Event title</th>
+                        <th>Confidence</th>
+                        <th>Match type</th>
+                        <th>Match reason</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+        <tr>
+            <td colspan="9">No catalyst matches found yet. Run the historical trends workflow after adding catalyst notes.</td>
         </tr>
         
                 </tbody>

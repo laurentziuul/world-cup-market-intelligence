@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import html
 from datetime import datetime, timezone
@@ -15,6 +15,7 @@ OUTPUT_PATH = OUTPUT_DIR / "index.html"
 TOP_MOVERS_PATH = ROOT / "data" / "processed" / "top_movers_latest.csv"
 SIGNAL_SUMMARY_PATH = ROOT / "data" / "processed" / "signal_summary_latest.csv"
 PROBABILITY_DELTAS_PATH = ROOT / "data" / "processed" / "probability_deltas_latest.csv"
+CATALYST_MATCHES_PATH = ROOT / "data" / "processed" / "catalyst_matches_latest.csv"
 
 
 def read_optional_csv(path: Path) -> pd.DataFrame:
@@ -39,6 +40,7 @@ def render_file_status() -> str:
         "Probability deltas": PROBABILITY_DELTAS_PATH,
         "Top movers": TOP_MOVERS_PATH,
         "Signal summary": SIGNAL_SUMMARY_PATH,
+        "Catalyst matches": CATALYST_MATCHES_PATH,
     }
 
     rows = []
@@ -174,14 +176,78 @@ def render_signal_summary(signal_summary: pd.DataFrame) -> str:
     return "\n".join(rows)
 
 
+def render_catalyst_matches(catalyst_matches: pd.DataFrame) -> str:
+    if catalyst_matches.empty:
+        return """
+        <tr>
+            <td colspan="9">No catalyst matches found yet. Run the historical trends workflow after adding catalyst notes.</td>
+        </tr>
+        """
+
+    columns = [
+        "team",
+        "signal_label",
+        "probability_change_display",
+        "event_type",
+        "event_title",
+        "catalyst_confidence",
+        "match_type",
+        "match_reason",
+        "catalyst_source_url",
+    ]
+
+    for column in columns:
+        if column not in catalyst_matches.columns:
+            catalyst_matches[column] = ""
+
+    rows = []
+
+    useful = catalyst_matches[
+        catalyst_matches["match_type"].astype(str) != "unmatched"
+    ].copy()
+
+    if useful.empty:
+        useful = catalyst_matches.copy()
+
+    for _, row in useful.head(40).iterrows():
+        source_url = html.escape(format_value(row["catalyst_source_url"]))
+        source_cell = ""
+
+        if source_url:
+            source_cell = (
+                f'<a href="{source_url}" target="_blank" '
+                f'rel="noopener noreferrer">Source</a>'
+            )
+
+        rows.append(
+            f"""
+            <tr>
+                <td class="team">{html.escape(format_value(row["team"]))}</td>
+                <td>{html.escape(format_value(row["signal_label"]))}</td>
+                <td class="change">{html.escape(format_value(row["probability_change_display"]))}</td>
+                <td>{html.escape(format_value(row["event_type"]))}</td>
+                <td>{html.escape(format_value(row["event_title"]))}</td>
+                <td>{html.escape(format_value(row["catalyst_confidence"]))}</td>
+                <td>{html.escape(format_value(row["match_type"]))}</td>
+                <td class="reason">{html.escape(format_value(row["match_reason"]))}</td>
+                <td>{source_cell}</td>
+            </tr>
+            """
+        )
+
+    return "\n".join(rows)
+
+
 def render_html(
     top_movers: pd.DataFrame,
     signal_summary: pd.DataFrame,
+    catalyst_matches: pd.DataFrame,
     generated_at: str,
 ) -> str:
     file_status_rows = render_file_status()
     top_movers_rows = render_top_movers(top_movers)
     signal_summary_rows = render_signal_summary(signal_summary)
+    catalyst_matches_rows = render_catalyst_matches(catalyst_matches)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -332,15 +398,15 @@ def render_html(
             <div class="label">Experimental historical trends</div>
             <h1>World Cup Market Intelligence — Historical Trends</h1>
             <p class="subtitle">
-                Experimental preview of probability movement, top movers and signal classification
-                generated from historical prediction-market snapshots.
+                Experimental preview of probability movement, top movers, signal classification
+                and catalyst-note matching generated from historical prediction-market snapshots.
             </p>
         </section>
 
         <section class="notice">
             Generated at <strong>{html.escape(generated_at)}</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>.
-            The trend system is experimental and should not be treated as betting or investment advice.
+            The trend and catalyst system is experimental and should not be treated as betting or investment advice.
         </section>
 
         <section>
@@ -410,6 +476,33 @@ def render_html(
             </table>
         </section>
 
+        <section>
+            <h2>Catalyst matches</h2>
+            <p class="subtitle">
+                Manual catalyst notes matched to generated signal rows by team or market identifier
+                and a configurable lookback window.
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Signal</th>
+                        <th>Change</th>
+                        <th>Event type</th>
+                        <th>Event title</th>
+                        <th>Confidence</th>
+                        <th>Match type</th>
+                        <th>Match reason</th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {catalyst_matches_rows}
+                </tbody>
+            </table>
+        </section>
+
         <section class="footer">
             <p>
                 Main page:
@@ -439,19 +532,22 @@ def main() -> None:
 
     top_movers = read_optional_csv(TOP_MOVERS_PATH)
     signal_summary = read_optional_csv(SIGNAL_SUMMARY_PATH)
+    catalyst_matches = read_optional_csv(CATALYST_MATCHES_PATH)
 
     html_content = render_html(
         top_movers=top_movers,
         signal_summary=signal_summary,
+        catalyst_matches=catalyst_matches,
         generated_at=generated_at,
     )
 
     OUTPUT_PATH.write_text(html_content, encoding="utf-8")
 
     print("Historical trends dashboard")
-    print(f"Top movers rows:     {len(top_movers)}")
-    print(f"Signal summary rows: {len(signal_summary)}")
-    print(f"Dashboard saved:     {OUTPUT_PATH}")
+    print(f"Top movers rows:        {len(top_movers)}")
+    print(f"Signal summary rows:    {len(signal_summary)}")
+    print(f"Catalyst matches rows:  {len(catalyst_matches)}")
+    print(f"Dashboard saved:        {OUTPUT_PATH}")
 
 
 if __name__ == "__main__":

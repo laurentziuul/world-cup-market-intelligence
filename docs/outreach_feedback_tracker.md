@@ -39,11 +39,6 @@ The goal is to avoid vague validation.
 Instead of saying:
 
 - people liked it
-- people did to avoid vague validation.
-
-Instead of saying:
-
-- people liked it
 - people did not respond
 - maybe it is useful
 
@@ -401,3 +396,4 @@ It is the difference between guessing and learning.
 The goal is to turn feedback into product direction.
 
 Powered by Mayior Capital.
+

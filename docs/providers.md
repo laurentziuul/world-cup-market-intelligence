@@ -2,6 +2,10 @@
 
 World Cup Market Intelligence uses a provider abstraction layer so market data can come from multiple sources while keeping the rest of the pipeline stable.
 
+The goal is simple: every provider can have different raw data, but every provider must return the same normalized internal format.
+
+---
+
 ## Current provider
 
 ### `manual_csv`
@@ -12,7 +16,7 @@ The default provider reads market data from:
 data/manual/world_cup_markets.csv
 ```
 
-Run:
+Run the provider-based snapshot update:
 
 ```bash
 python scripts/update_snapshot.py --provider manual_csv
@@ -23,6 +27,32 @@ Backward-compatible wrapper:
 ```bash
 python scripts/update_snapshot_manual.py
 ```
+
+The manual CSV provider is the default because it works offline, is reproducible, and does not depend on any external API.
+
+---
+
+## Provider registry
+
+Available providers can be listed with:
+
+```bash
+python scripts/update_snapshot.py --list-providers
+```
+
+Current provider registry:
+
+```text
+manual_csv
+```
+
+Future providers can be added to:
+
+```text
+src/wcmi/providers/registry.py
+```
+
+---
 
 ## Provider contract
 
@@ -52,6 +82,8 @@ The snapshot pipeline then adds:
 | `volume_change_24h`    | Volume change versus previous snapshot    |
 | `liquidity_change_24h` | Liquidity change versus previous snapshot |
 
+---
+
 ## Current pipeline
 
 ```text
@@ -68,15 +100,54 @@ trends_latest.csv
 dashboard / brief
 ```
 
+---
+
+## Provider validation
+
+Providers can be validated against the normalized provider contract with:
+
+```bash
+python scripts/validate_providers.py
+```
+
+Validate one provider only:
+
+```bash
+python scripts/validate_providers.py --provider manual_csv
+```
+
+Live or network-based providers are skipped by default. When live providers are added later, they can be tested explicitly with:
+
+```bash
+python scripts/validate_providers.py --include-live
+```
+
+The validator checks that each provider returns:
+
+* a pandas dataframe;
+* all required normalized columns;
+* numeric `price`, `volume` and `liquidity` fields;
+* non-empty key fields such as `market_id`, `market_title` and `outcome`;
+* consistent provider names.
+
+---
+
 ## Future providers
 
-Planned providers:
+Planned providers may include:
 
 ```text
 polymarket
+predict_fun
 kalshi
+manifold
 manual_google_sheet
 custom_csv
+other APIs
 ```
 
-Live providers should be optional and fail safely. The manual CSV provider should remain the default because it works offline and makes the project reproducible.
+Live providers should be optional and fail safely.
+
+The manual CSV provider should remain the default because it works offline and makes the project reproducible.
+
+The long-term goal is multi-source market intelligence, not dependence on a single API.

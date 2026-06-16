@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import subprocess
@@ -57,6 +57,12 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=1000.0,
         help="Minimum liquidity before a move is treated as better supported.",
+    )
+    parser.add_argument(
+        "--catalyst-lookback-days",
+        type=int,
+        default=7,
+        help="Lookback window used when matching catalyst notes to signals.",
     )
     return parser.parse_args()
 
@@ -160,6 +166,18 @@ def main() -> None:
             ],
         },
         {
+            "name": "Match catalyst notes to signals",
+            "command": [
+                sys.executable,
+                "scripts/match_catalyst_notes.py",
+                "--provider",
+                provider,
+                "--lookback-days",
+                str(args.catalyst_lookback_days),
+                "--include-unmatched",
+            ],
+        },
+        {
             "name": "Generate historical trends dashboard",
             "command": [
                 sys.executable,
@@ -181,6 +199,7 @@ def main() -> None:
     print("- data/processed/probability_deltas_latest.csv")
     print("- data/processed/top_movers_latest.csv")
     print("- data/processed/signal_summary_latest.csv")
+    print("- data/processed/catalyst_matches_latest.csv")
     print("- docs/trends-dashboard/index.html")
     print("")
     print("Public dashboard path after commit/push:")

@@ -156,7 +156,58 @@ No catalyst watchlist available for this run.
 
 ---
 
-## 6. Signal summary
+## 6. Upcoming Match Intelligence
+
+Polymarket winner probabilities for teams playing today and tomorrow.
+
+These are tournament winner probabilities, not match-outcome probabilities.
+
+This section is for research context only. It is not betting advice.
+
+{% if match_context_today %}
+### Today, Romania time ({{ report_date }})
+
+{% for match in match_context_today %}
+#### {{ match.home_team }} vs {{ match.away_team }}{% if match.major_market_impact %} — major market{% endif %}
+
+- Kickoff Romania: {{ match.kickoff_romania_time }} | UTC: {{ match.kickoff_utc }}
+- Group: {{ match.group }}
+- {{ match.home_team }}: {{ match.home_probability }} winner probability | volume {{ match.home_volume }} | liquidity {{ match.home_liquidity }}{% if not match.home_market_found %} — no Polymarket winner market found{% endif %}
+
+- {{ match.away_team }}: {{ match.away_probability }} winner probability | volume {{ match.away_volume }} | liquidity {{ match.away_liquidity }}{% if not match.away_market_found %} — no Polymarket winner market found{% endif %}
+
+{% endfor %}
+{% else %}
+No matches scheduled for today ({{ report_date }}).
+
+{% endif %}
+
+{% if match_context_next24h %}
+### Tomorrow, Romania time
+
+{% for match in match_context_next24h %}
+#### {{ match.home_team }} vs {{ match.away_team }}{% if match.major_market_impact %} — major market{% endif %}
+
+- Kickoff Romania: {{ match.kickoff_romania_time }} | UTC: {{ match.kickoff_utc }}
+- Group: {{ match.group }}
+- {{ match.home_team }}: {{ match.home_probability }} winner probability | volume {{ match.home_volume }}{% if not match.home_market_found %} — no Polymarket winner market found{% endif %}
+
+- {{ match.away_team }}: {{ match.away_probability }} winner probability | volume {{ match.away_volume }}{% if not match.away_market_found %} — no Polymarket winner market found{% endif %}
+
+{% endfor %}
+{% else %}
+No matches scheduled for tomorrow (Romania time).
+
+{% endif %}
+
+{% if match_context_missing_teams %}
+Teams with no Polymarket winner market data: {{ match_context_missing_teams | join(", ") }}
+
+{% endif %}
+
+---
+
+## 7. Signal summary (all markets)
 
 {% if signal_summary %}
 {% for item in signal_summary %}

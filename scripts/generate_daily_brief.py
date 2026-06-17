@@ -1,10 +1,10 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import argparse
 import csv
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -20,6 +20,13 @@ ROOT = Path(__file__).resolve().parents[1]
 PROCESSED_DIR = ROOT / "data" / "processed"
 DEFAULT_TEMPLATE = ROOT / "templates" / "daily_brief.md.j2"
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "briefs"
+
+MANUAL_DIR = ROOT / "data" / "manual"
+MATCH_SCHEDULE_PATH = MANUAL_DIR / "world_cup_match_schedule.csv"
+TEAM_ALIASES_PATH = MANUAL_DIR / "team_aliases.csv"
+SNAPSHOT_DIR = PROCESSED_DIR / "snapshots"
+WINNER_PREFIX = "Will "
+WINNER_SUFFIX = " win the 2026 FIFA World Cup?"
 
 
 def normalize_key(value: str) -> str:
@@ -530,6 +537,182 @@ def collect_warnings(
     return warnings
 
 
+def _extract_team_from_title(title: str) -> str:
+    t = str(title).strip()
+    if t.startswith(WINNER_PREFIX) and t.endswith(WINNER_SUFFIX):
+        return t[len(WINNER_PREFIX) : -len(WINNER_SUFFIX)].strip()
+    return ""
+
+
+def _load_aliases() -> dict[str, str]:
+    """Return mapping: any_name_lower -> canonical Polymarket team name."""
+    mapping: dict[str, str] = {}
+    if not TEAM_ALIASES_PATH.exists():
+        return mapping
+    with TEAM_ALIASES_PATH.open("r", encoding="utf-8-sig", newline="") as fh:
+        for row in csv.DictReader(fh):
+            schedule_team = str(row.get("schedule_team", "")).strip()
+            market_team = str(row.get("market_team", "")).strip()
+            aliases_raw = str(row.get("aliases", "")).strip()
+            if not market_team:
+                continue
+            if schedule_team:
+                mapping[schedule_team.lower()] = market_team
+            for alias in aliases_raw.split("|"):
+                a = alias.strip()
+                if a:
+                    mapping[a.lower()] = market_team
+    return mapping
+
+
+def _load_market_index() -> dict[str, dict[str, str]]:
+    """Return dict: team_name_lower -> market data from latest Polymarket snapshot."""
+    candidates = sorted(SNAPSHOT_DIR.glob("*polymarket*.csv"))
+    if not candidates:
+        return {}
+    path = candidates[-1]
+    index: dict[str, dict[str, str]] = {}
+    with path.open("r", encoding="utf-8-sig", newline="") as fh:
+        for row in csv.DictReader(fh):
+            outcome = str(row.get("outcome", "")).strip().lower()
+            if outcome not in ("yes", ""):
+                continue
+            team = _extract_team_from_title(str(row.get("market_title", "")))
+            if not team:
+                continue
+            index[team.lower()] = {
+                "team": team,
+                "probability": str(row.get("price", row.get("probability", "n/a"))),
+                "probability_delta": str(row.get("price_change_24h", "0.0")),
+                "volume": str(row.get("volume", "n/a")),
+                "liquidity": str(row.get("liquidity", "n/a")),
+            }
+    return index
+
+
+def _resolve_team(
+    raw: str,
+    aliases: dict[str, str],
+    index: dict[str, dict[str, str]],
+) -> dict[str, str] | None:
+    key = raw.lower()
+    if key in index:
+        return index[key]
+    market_name = aliases.get(key)
+    if market_name and market_name.lower() in index:
+        return index[market_name.lower()]
+    return None
+
+
+def _fmt_prob(value: str) -> str:
+    try:
+        return f"{float(value) * 100:.2f}%"
+    except (ValueError, TypeError):
+        return str(value)
+
+
+def _fmt_volume(value: str) -> str:
+    try:
+        v = float(value)
+        if v >= 1_000_000:
+            return f"${v / 1_000_000:.1f}M"
+        if v >= 1_000:
+            return f"${v / 1_000:.0f}K"
+        return f"${v:.0f}"
+    except (ValueError, TypeError):
+        return str(value)
+
+
+# Romania is UTC+3 (EEST) during the World Cup (June-July).
+# This fixed offset is valid for the entire tournament window.
+_ROMANIA_TZ = timezone(timedelta(hours=3))
+
+
+def build_match_context(report_date_str: str) -> dict[str, list[dict]]:
+    """
+    Load schedule + snapshot + aliases. Groups matches by Romania local date.
+
+    'today_ro'    : matches whose kickoff_romania_datetime falls on today Romania date
+    'next24h_ro'  : matches whose kickoff_romania_datetime falls on tomorrow Romania date
+    'missing_teams': team names with no Polymarket winner market data
+
+    All grouping uses Romania local time (UTC+3). The field kickoff_romania_datetime
+    in world_cup_match_schedule.csv is a full datetime (YYYY-MM-DD HH:MM, Romania local).
+    """
+    if not MATCH_SCHEDULE_PATH.exists():
+        return {"today_ro": [], "next24h_ro": [], "missing_teams": []}
+
+    # Determine today and tomorrow in Romania local time
+    now_romania = datetime.now(_ROMANIA_TZ)
+    today_ro = now_romania.date()
+    tomorrow_ro = today_ro + timedelta(days=1)
+
+    aliases = _load_aliases()
+    market_index = _load_market_index()
+
+    today_matches: list[dict] = []
+    tomorrow_matches: list[dict] = []
+    missing_teams: list[str] = []
+
+    with MATCH_SCHEDULE_PATH.open("r", encoding="utf-8-sig", newline="") as fh:
+        for row in csv.DictReader(fh):
+            # Parse Romania local datetime (authoritative for grouping)
+            ro_dt_str = str(row.get("kickoff_romania_datetime", "")).strip()
+            try:
+                ro_dt = datetime.strptime(ro_dt_str, "%Y-%m-%d %H:%M")
+                ro_date = ro_dt.date()
+            except ValueError:
+                continue  # skip rows with unparseable datetime
+
+            if ro_date not in (today_ro, tomorrow_ro):
+                continue
+
+            home_raw = str(row.get("home_team", "")).strip()
+            away_raw = str(row.get("away_team", "")).strip()
+
+            home_data = _resolve_team(home_raw, aliases, market_index)
+            away_data = _resolve_team(away_raw, aliases, market_index)
+
+            if not home_data:
+                missing_teams.append(home_raw)
+            if not away_data:
+                missing_teams.append(away_raw)
+
+            major = str(row.get("major_market_impact", "false")).strip().lower()
+
+            entry = {
+                "kickoff_romania_datetime": ro_dt_str,
+                "kickoff_romania_date": ro_dt.strftime("%Y-%m-%d"),
+                "kickoff_romania_time": ro_dt.strftime("%H:%M"),
+                "kickoff_utc": str(row.get("kickoff_utc", "")).strip(),
+                "home_team": home_raw,
+                "away_team": away_raw,
+                "group": str(row.get("group", "")).strip() or "--",
+                "major_market_impact": major in ("true", "yes", "1"),
+                "home_probability": _fmt_prob(home_data["probability"]) if home_data else "n/a",
+                "away_probability": _fmt_prob(away_data["probability"]) if away_data else "n/a",
+                "home_probability_delta": home_data["probability_delta"] if home_data else "n/a",
+                "away_probability_delta": away_data["probability_delta"] if away_data else "n/a",
+                "home_volume": _fmt_volume(home_data["volume"]) if home_data else "n/a",
+                "away_volume": _fmt_volume(away_data["volume"]) if away_data else "n/a",
+                "home_liquidity": _fmt_volume(home_data["liquidity"]) if home_data else "n/a",
+                "away_liquidity": _fmt_volume(away_data["liquidity"]) if away_data else "n/a",
+                "home_market_found": home_data is not None,
+                "away_market_found": away_data is not None,
+            }
+
+            if ro_date == today_ro:
+                today_matches.append(entry)
+            else:
+                tomorrow_matches.append(entry)
+
+    return {
+        "today_ro": today_matches,
+        "next24h_ro": tomorrow_matches,
+        "missing_teams": sorted(set(missing_teams)),
+    }
+
+
 def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
     top_movers_path = PROCESSED_DIR / "top_movers_latest.csv"
     probability_deltas_path = PROCESSED_DIR / "probability_deltas_latest.csv"
@@ -594,6 +777,8 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
     report_date = args.report_date or datetime.now(timezone.utc).date().isoformat()
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
+    match_context = build_match_context(report_date)
+
     context = {
         "report_date": report_date,
         "generated_at": generated_at,
@@ -614,6 +799,9 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
         "signal_summary": normalized_signals,
         "data_freshness": data_freshness,
         "warnings": collect_warnings(missing_files, metadata),
+        "match_context_today": match_context["today_ro"],
+        "match_context_next24h": match_context["next24h_ro"],
+        "match_context_missing_teams": match_context["missing_teams"],
     }
 
     template_path = Path(args.template)
@@ -658,7 +846,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         default=str(DEFAULT_OUTPUT_DIR),
-        help="Directory where generated briefs are written.",
+        help="Directory where brief files are written.",
     )
     parser.add_argument(
         "--report-date",
@@ -669,7 +857,7 @@ def parse_args() -> argparse.Namespace:
         "--limit",
         type=int,
         default=5,
-        help="Number of items to include in each brief section.",
+        help="Number of rows to include in each section.",
     )
 
     return parser.parse_args()
@@ -679,9 +867,9 @@ def main() -> None:
     args = parse_args()
     dated_output, latest_output = generate_brief(args)
 
-    print("Daily brief generated:")
-    print(f"- {dated_output.relative_to(ROOT)}")
-    print(f"- {latest_output.relative_to(ROOT)}")
+    print(f"Daily brief generated:")
+    print(f"  Dated:  {dated_output}")
+    print(f"  Latest: {latest_output}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,26 @@
+match_date_utc,kickoff_utc,kickoff_romania_datetime,home_team,away_team,group,stage,major_market_impact,notes
+2026-06-17,04:00,2026-06-17 07:00,Austria,Jordan,,group_stage,false,Round 2
+2026-06-17,17:00,2026-06-17 20:00,Portugal,DR Congo,K,group_stage,true,Round 2 Group K
+2026-06-17,20:00,2026-06-17 23:00,England,Croatia,L,group_stage,true,Round 2 Group L
+2026-06-17,23:00,2026-06-18 02:00,Ghana,Panama,L,group_stage,false,Round 2 Group L
+2026-06-18,02:00,2026-06-18 05:00,Uzbekistan,Colombia,K,group_stage,false,Round 2 Group K
+2026-06-18,16:00,2026-06-18 19:00,Czechia,South Africa,A,group_stage,false,Round 2 Group A
+2026-06-18,19:00,2026-06-18 22:00,Switzerland,Bosnia and Herzegovina,B,group_stage,false,Round 2 Group B
+2026-06-18,22:00,2026-06-19 01:00,Canada,Qatar,B,group_stage,false,Round 2 Group B
+2026-06-19,01:00,2026-06-19 04:00,Mexico,South Korea,A,group_stage,false,Round 2 Group A
+2026-06-19,19:00,2026-06-19 22:00,USA,Australia,D,group_stage,false,Round 2 Group D
+2026-06-19,22:00,2026-06-20 01:00,Scotland,Morocco,C,group_stage,false,Round 2 Group C
+2026-06-20,01:00,2026-06-20 04:00,Brazil,Haiti,C,group_stage,true,Round 2 Group C
+2026-06-20,04:00,2026-06-20 07:00,Turkiye,Paraguay,,group_stage,false,Round 2
+2026-06-20,17:00,2026-06-20 20:00,Netherlands,Sweden,,group_stage,true,Round 2
+2026-06-20,20:00,2026-06-20 23:00,Germany,Ivory Coast,,group_stage,true,Round 2
+2026-06-21,00:00,2026-06-21 03:00,Ecuador,Curacao,,group_stage,false,Round 2
+2026-06-21,04:00,2026-06-21 07:00,Tunisia,Japan,,group_stage,false,Round 2
+2026-06-21,16:00,2026-06-21 19:00,Spain,Saudi Arabia,,group_stage,true,Round 2
+2026-06-21,19:00,2026-06-21 22:00,Belgium,Iran,,group_stage,false,Round 2
+2026-06-21,22:00,2026-06-22 01:00,Uruguay,Cabo Verde,,group_stage,false,Round 2
+2026-06-22,01:00,2026-06-22 04:00,New Zealand,Egypt,,group_stage,false,Round 2
+2026-06-22,17:00,2026-06-22 20:00,Argentina,Austria,,group_stage,true,Round 2
+2026-06-22,21:00,2026-06-23 00:00,France,Iraq,,group_stage,true,Round 2
+2026-06-23,00:00,2026-06-23 03:00,Norway,Senegal,,group_stage,false,Round 2
+2026-06-23,03:00,2026-06-23 06:00,Jordan,Algeria,,group_stage,false,Round 2

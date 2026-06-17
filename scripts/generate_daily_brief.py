@@ -25,6 +25,7 @@ MANUAL_DIR = ROOT / "data" / "manual"
 MATCH_SCHEDULE_PATH = MANUAL_DIR / "world_cup_match_schedule.csv"
 TEAM_ALIASES_PATH = MANUAL_DIR / "team_aliases.csv"
 SNAPSHOT_DIR = PROCESSED_DIR / "snapshots"
+SNAPSHOT_PLAN_PATH = PROCESSED_DIR / "snapshot_plan_latest.csv"
 WINNER_PREFIX = "Will "
 WINNER_SUFFIX = " win the 2026 FIFA World Cup?"
 
@@ -628,6 +629,23 @@ def _fmt_volume(value: str) -> str:
 _ROMANIA_TZ = timezone(timedelta(hours=3))
 
 
+def load_snapshot_plan() -> list[dict[str, str]]:
+    """Load snapshot_plan_latest.csv and return only upcoming windows.
+
+    Returns an empty list (does not crash) if the file is missing or unreadable.
+    The Daily Brief gracefully degrades: it shows 'No snapshot plan generated yet.'
+    """
+    if not SNAPSHOT_PLAN_PATH.exists():
+        return []
+    try:
+        with SNAPSHOT_PLAN_PATH.open("r", encoding="utf-8-sig", newline="") as fh:
+            rows = list(csv.DictReader(fh))
+        # Return only upcoming windows; past windows are for audit in the CSV only.
+        return [r for r in rows if str(r.get("status", "")).strip() == "upcoming"]
+    except Exception:
+        return []
+
+
 def build_match_context(report_date_str: str) -> dict[str, list[dict]]:
     """
     Load schedule + snapshot + aliases. Groups matches by Romania local date.
@@ -778,6 +796,7 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
 
     match_context = build_match_context(report_date)
+    snapshot_windows = load_snapshot_plan()
 
     context = {
         "report_date": report_date,
@@ -802,6 +821,7 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
         "match_context_today": match_context["today_ro"],
         "match_context_next24h": match_context["next24h_ro"],
         "match_context_missing_teams": match_context["missing_teams"],
+        "snapshot_windows": snapshot_windows,
     }
 
     template_path = Path(args.template)

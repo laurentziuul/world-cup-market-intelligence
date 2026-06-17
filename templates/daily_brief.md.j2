@@ -207,7 +207,32 @@ Teams with no Polymarket winner market data: {{ match_context_missing_teams | jo
 
 ---
 
-## 7. Signal summary (all markets)
+## 7. Recommended Snapshot Windows
+
+These are recommended research snapshot windows, not betting signals.
+
+Snapshot timing helps observe market repricing around match windows.
+
+No automated trading or betting decision is implied.
+
+{% if snapshot_windows %}
+{% for snap in snapshot_windows %}
+### {{ snap.snapshot_label }} — {{ snap.match }}{% if snap.major_market_impact == "true" %} — MAJOR{% endif %}
+
+- Snapshot Romania: {{ snap.snapshot_romania_datetime }}
+- Snapshot UTC: {{ snap.snapshot_utc_datetime }}
+- Kickoff Romania: {{ snap.kickoff_romania_datetime }}
+- Reason: {{ snap.reason }}
+
+{% endfor %}
+{% else %}
+No snapshot plan generated yet. Run `scripts/generate_snapshot_plan.py` first.
+
+{% endif %}
+
+---
+
+## 8. Signal summary (all markets)
 
 {% if signal_summary %}
 {% for item in signal_summary %}
@@ -219,7 +244,7 @@ No signal summary available for this run.
 
 ---
 
-## 7. Data freshness status
+## 9. Data freshness status
 
 {% if data_freshness %}
 - Metadata generated at: {{ data_freshness.generated_at | default("n/a") }}
@@ -235,7 +260,7 @@ Data freshness metadata is not available for this run.
 
 ---
 
-## 8. Warnings and limitations
+## 10. Warnings and limitations
 
 {% if warnings %}
 {% for warning in warnings %}
@@ -256,7 +281,7 @@ Important limitations:
 
 ---
 
-## 9. Interpretation
+## 11. Interpretation
 
 This brief is designed to answer:
 

@@ -172,6 +172,8 @@ def normalize_market_row(row: dict[str, Any]) -> dict[str, str]:
                 "delta_probability",
                 "prob_delta",
                 "price_delta",
+                "probability_change_display",
+                "probability_change_pp",
                 "probability_change",
                 "delta",
                 "change",
@@ -770,6 +772,31 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
     normalized_teams = [
         normalize_team_row(row) for row in read_csv_rows(team_intelligence_path)
     ]
+
+    # Enrich movers with signal_label (from signal_summary raw rows) and
+    # review_priority (from team_intelligence raw rows). These fields are absent
+    # from top_movers_latest.csv. normalize_signal_row aggregates counts only.
+    _signal_by_team: dict[str, str] = {}
+    for _raw in read_csv_rows(signal_summary_path):
+        _t = str(_raw.get("team", "")).strip().lower()
+        _lbl = str(_raw.get("signal_label", "")).strip()
+        if _t and _lbl:
+            _signal_by_team.setdefault(_t, _lbl)
+
+    _priority_by_team: dict[str, str] = {}
+    for _raw in read_csv_rows(team_intelligence_path):
+        _t = str(_raw.get("team", "")).strip().lower()
+        _pri = str(_raw.get("review_priority", "")).strip()
+        if _t and _pri:
+            _priority_by_team[_t] = _pri
+
+    _MISSING = {"n/a", "", "none", "null"}
+    for _mover in normalized_movers:
+        _key = str(_mover.get("team", "")).strip().lower()
+        if str(_mover.get("signal_label", "n/a")).lower() in _MISSING and _key in _signal_by_team:
+            _mover["signal_label"] = _signal_by_team[_key]
+        if str(_mover.get("review_priority", "n/a")).lower() in _MISSING and _key in _priority_by_team:
+            _mover["review_priority"] = _priority_by_team[_key]
 
     metadata = read_json(dashboard_metadata_path)
     data_freshness = summarize_metadata(metadata)

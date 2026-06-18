@@ -250,8 +250,10 @@ def compare_snapshots(
     )
 
     result = pd.DataFrame()
-    result["comparison_timestamp"] = comparison_timestamp
 
+    # NOTE: comparison_timestamp must be assigned AFTER at least one Series
+    # column is set. Setting a scalar on an empty DataFrame produces NaN in all
+    # rows because the index is not yet established (pandas 2.x behaviour).
     result["provider"] = merged["provider_current"].combine_first(
         merged["provider_previous"]
     )
@@ -296,6 +298,9 @@ def compare_snapshots(
         merged["source_url_previous"]
     )
 
+    # Set scalar timestamp after rows exist so it broadcasts correctly.
+    result["comparison_timestamp"] = comparison_timestamp
+
     result = result.sort_values(
         by=["probability_change_pp", "current_probability"],
         key=lambda series: series.abs() if series.name == "probability_change_pp" else series,
@@ -326,4 +331,31 @@ def main() -> None:
     print("")
 
     previous_raw = pd.read_csv(previous_path)
-    cu
+    current_raw = pd.read_csv(current_path)
+
+    previous_df = normalize_snapshot(previous_raw, provider)
+    current_df = normalize_snapshot(current_raw, provider)
+
+    if previous_df.empty or current_df.empty:
+        raise SystemExit(
+            f"One or both snapshots produced 0 rows after normalization.\n"
+            f"Previous: {len(previous_df)} rows  Current: {len(current_df)} rows\n"
+            "Check --provider filter and snapshot CSV content."
+        )
+
+    result = compare_snapshots(previous_df, current_df)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    result.to_csv(output_path, index=False)
+
+    status_counts = result["status"].value_counts()
+    print(f"Rows in comparison: {len(result)}")
+    for status_val, count in status_counts.items():
+        print(f"  {status_val}: {count}")
+    print(f"Output: {output_path}")
+    print("")
+    print("Snapshot comparison complete.")
+
+
+if __name__ == "__main__":
+    main()

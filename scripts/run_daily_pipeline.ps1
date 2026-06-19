@@ -92,7 +92,10 @@ Run-Step "Dashboard metadata" "$python scripts\generate_dashboard_metadata.py" $
 # Step 5: Trends dashboard
 Run-Step "Trends dashboard" "$python scripts\generate_trends_dashboard.py" $ProjectRoot | Out-Null
 
-# Step 6: Daily brief
+# Step 6a: Snapshot plan (must run before daily brief)
+Run-Step "Snapshot plan" "$python scripts\generate_snapshot_plan.py" $ProjectRoot | Out-Null
+
+# Step 6b: Daily brief
 $ok = Run-Step "Daily brief" "$python scripts\generate_daily_brief.py" $ProjectRoot
 if (-not $ok) {
     Write-Log "Daily brief generation failed." "ERROR"
@@ -109,18 +112,49 @@ if (Test-Path $perfScript) {
 Write-Log "Committing public outputs to git..."
 Set-Location $ProjectRoot
 
-git add docs\briefs\ docs\trends-dashboard\index.html docs\polymarket-dashboard\index.html 2>&1 | Out-Null
+# Stage specific public output paths only - never use git add .
+$gitAddPaths = @(
+    "docs\briefs\",
+    "docs\trends-dashboard\index.html",
+    "docs\polymarket-dashboard\index.html"
+)
+foreach ($addPath in $gitAddPaths) {
+    $fullAddPath = Join-Path $ProjectRoot $addPath
+    if (Test-Path $fullAddPath) {
+        git add $fullAddPath 2>&1 | Out-Null
+    }
+}
 
-$gitStatus = git status --porcelain 2>&1
-if ($gitStatus) {
+# Check what is actually staged (not all working tree changes)
+$gitStaged = git diff --cached --name-only 2>&1
+if ($gitStaged) {
+    Write-Log "Staged files: $($gitStaged -join ', ')"
     $commitMsg = "Daily pipeline: $(Get-Date -Format 'yyyy-MM-dd HH:mm') UTC"
-    git commit -m $commitMsg 2>&1 | Write-Log
-    git push 2>&1 | Write-Log
-    Write-Log "Committed and pushed: $commitMsg"
+
+    $commitOut = git commit -m $commitMsg 2>&1
+    $commitCode = $LASTEXITCODE
+    Write-Log "git commit: $($commitOut -join ' | ')"
+
+    if ($commitCode -ne 0) {
+        Write-Log "git commit failed (exit $commitCode) - resetting staged files to avoid leftover stage." "WARN"
+        git reset HEAD 2>&1 | Out-Null
+    } else {
+        Write-Log "Committed: $commitMsg"
+        $pushOut = git push 2>&1
+        $pushCode = $LASTEXITCODE
+        Write-Log "git push: $($pushOut -join ' | ')"
+        if ($pushCode -ne 0) {
+            Write-Log "git push failed (exit $pushCode) - commit is local only." "WARN"
+        } else {
+            Write-Log "Pushed to remote successfully."
+        }
+    }
 } else {
-    Write-Log "Nothing to commit - no changes in public outputs."
+    Write-Log "Nothing to commit - no staged changes in public outputs."
 }
 
 Write-Log "=== Daily pipeline complete ==="
 $briefDate = Get-Date -Format "yyyy-MM-dd"
 Write-Log "Daily brief: docs\briefs\$briefDate.md"
+
+exit 0

@@ -393,11 +393,30 @@ def sort_rows_by_abs_number(
     field_name: str,
     limit: int,
 ) -> list[dict[str, str]]:
-    return sorted(
+    """Sort by abs(field), deduplicate by market_id (or team+outcome), return top N.
+
+    top_movers_latest.csv contains multiple categories (top_positive_probability_movers,
+    top_negative_probability_movers, top_volume_movers, top_liquidity_movers). The same
+    market can appear in several categories, causing duplicates in the brief. We sort
+    all rows together and keep only the first occurrence of each unique market.
+    """
+    sorted_rows = sorted(
         rows,
         key=lambda row: abs(parse_number(row.get(field_name))),
         reverse=True,
-    )[:limit]
+    )
+    seen: set[str] = set()
+    deduped: list[dict[str, str]] = []
+    for row in sorted_rows:
+        key = str(row.get("market_id", "")).strip()
+        if not key or key in ("n/a", ""):
+            team = str(row.get("team", "")).strip().lower()
+            outcome = str(row.get("outcome", "")).strip().lower()
+            key = f"{team}|{outcome}"
+        if key not in seen:
+            seen.add(key)
+            deduped.append(row)
+    return deduped[:limit]
 
 
 def sort_team_priorities(rows: list[dict[str, str]], limit: int) -> list[dict[str, str]]:

@@ -174,11 +174,76 @@
             font-weight: 800;
         }
 
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+            margin: 22px 0;
+        }
+
+        .summary-card {
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .summary-label {
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-weight: 800;
+            font-size: 16px;
+            color: #e5e7eb;
+            word-break: break-word;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .badge-up {
+            background: #14532d;
+            color: #86efac;
+        }
+
+        .badge-down {
+            background: #450a0a;
+            color: #fca5a5;
+        }
+
+        .badge-flat {
+            background: #1e293b;
+            color: #94a3b8;
+        }
+
+        .badge-watch {
+            background: #713f12;
+            color: #fde68a;
+        }
+
         .footer {
             margin-top: 28px;
             color: #94a3b8;
             font-size: 13px;
             line-height: 1.5;
+        }
+
+        @media (max-width: 1200px) {
+            .summary-cards {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
         }
 
         @media (max-width: 900px) {
@@ -191,8 +256,18 @@
                 grid-template-columns: 1fr;
             }
 
+            .summary-cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             h1 {
                 font-size: 28px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -209,11 +284,36 @@
         </section>
 
         <section class="notice">
-            Generated at <strong>2026-06-19 07:15:57</strong> UTC.
+            Generated at <strong>2026-06-19 08:07:00</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>
             and <code>scripts/generate_dashboard_metadata.py</code>.
             The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
         </section>
+
+        
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-label">Top positive mover</div>
+                <div class="summary-value">Germany <span style="color:#86efac;font-size:13px;">+0.20 pp</span></div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Top negative mover</div>
+                <div class="summary-value">Portugal <span style="color:#fca5a5;font-size:13px;">-0.70 pp</span></div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Highest priority team</div>
+                <div class="summary-value">Algeria</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Freshness status</div>
+                <div class="summary-value status-missing">ready</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Last generated</div>
+                <div class="summary-value" style="font-size:14px;">2026-06-19 08:07:00 UTC</div>
+            </div>
+        </div>
+    
 
         
         <section>
@@ -231,7 +331,7 @@
 
                 <div class="trust-card">
                     <div class="trust-label">Metadata generated at</div>
-                    <div class="trust-value">2026-06-19T07:15:56Z</div>
+                    <div class="trust-value">2026-06-19T08:06:59Z</div>
                 </div>
 
                 <div class="trust-card">
@@ -279,42 +379,42 @@
             <tr>
                 <td>Probability deltas</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\probability_deltas_latest.csv</code></td>
+                <td><code>data/processed/probability_deltas_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Top movers</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\top_movers_latest.csv</code></td>
+                <td><code>data/processed/top_movers_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Signal summary</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\signal_summary_latest.csv</code></td>
+                <td><code>data/processed/signal_summary_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Catalyst matches</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\catalyst_matches_latest.csv</code></td>
+                <td><code>data/processed/catalyst_matches_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Team intelligence</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\team_intelligence_latest.csv</code></td>
+                <td><code>data/processed/team_intelligence_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Dashboard metadata</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\dashboard_metadata_latest.json</code></td>
+                <td><code>data/processed/dashboard_metadata_latest.json</code></td>
             </tr>
             
                 </tbody>
@@ -991,7 +1091,7 @@
         </section>
 
         <section>
-            <h2>Top movers</h2>
+            <h2>Top movers <span style="font-size:15px;font-weight:400;color:#94a3b8;">— UP / DOWN / FLAT / WATCH</span></h2>
             <p class="subtitle">
                 Largest positive and negative probability moves, plus volume and liquidity movers,
                 when available.
@@ -1018,7 +1118,7 @@
                 <td class="team">Germany</td>
                 <td>Yes</td>
                 <td class="change">+0.20 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>4123831.12156</td>
                 <td><a href="https://polymarket.com/event/will-germany-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1030,7 +1130,7 @@
                 <td class="team">Argentina</td>
                 <td>Yes</td>
                 <td class="change">+0.20 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>6045960.86517</td>
                 <td><a href="https://polymarket.com/event/will-argentina-win-the-2026-fifa-world-cup-245" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1042,7 +1142,7 @@
                 <td class="team">USA</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>2484853.30479</td>
                 <td><a href="https://polymarket.com/event/will-usa-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1054,7 +1154,7 @@
                 <td class="team">Colombia</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>4293767.80725</td>
                 <td><a href="https://polymarket.com/event/will-colombia-win-the-2026-fifa-world-cup-734" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1066,7 +1166,7 @@
                 <td class="team">Canada</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>6072841.23444</td>
                 <td><a href="https://polymarket.com/event/will-canada-win-the-2026-fifa-world-cup-755" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1078,7 +1178,7 @@
                 <td class="team">Mexico</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>3709579.03402</td>
                 <td><a href="https://polymarket.com/event/will-mexico-win-the-2026-fifa-world-cup-529" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1090,7 +1190,7 @@
                 <td class="team">Switzerland</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>3912673.48937</td>
                 <td><a href="https://polymarket.com/event/will-switzerland-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1102,7 +1202,7 @@
                 <td class="team">Portugal</td>
                 <td>Yes</td>
                 <td class="change">-0.70 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>4359283.04896</td>
                 <td><a href="https://polymarket.com/event/will-portugal-win-the-2026-fifa-world-cup-912" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1114,7 +1214,7 @@
                 <td class="team">Spain</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>7221279.61736</td>
                 <td><a href="https://polymarket.com/event/will-spain-win-the-2026-fifa-world-cup-963" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1126,7 +1226,7 @@
                 <td class="team">Norway</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>3824344.7792</td>
                 <td><a href="https://polymarket.com/event/will-norway-win-the-2026-fifa-world-cup-893" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1138,7 +1238,7 @@
                 <td class="team">Belgium</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>5937513.70784</td>
                 <td><a href="https://polymarket.com/event/will-belgium-win-the-2026-fifa-world-cup-358" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1150,7 +1250,7 @@
                 <td class="team">Uruguay</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>11931451.42136</td>
                 <td><a href="https://polymarket.com/event/will-uruguay-win-the-2026-fifa-world-cup-932" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1162,7 +1262,7 @@
                 <td class="team">Ivory Coast</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>9928997.78169</td>
                 <td><a href="https://polymarket.com/event/will-ivory-coast-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1174,7 +1274,7 @@
                 <td class="team">Algeria</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>14546435.48558</td>
                 <td><a href="https://polymarket.com/event/will-algeria-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1186,7 +1286,7 @@
                 <td class="team">Bosnia-Herzegovina</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>9794121.86534</td>
                 <td><a href="https://polymarket.com/event/will-bosnia-herzegovina-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1198,7 +1298,7 @@
                 <td class="team">Mexico</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>3709579.03402</td>
                 <td><a href="https://polymarket.com/event/will-mexico-win-the-2026-fifa-world-cup-529" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1210,7 +1310,7 @@
                 <td class="team">Canada</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>6072841.23444</td>
                 <td><a href="https://polymarket.com/event/will-canada-win-the-2026-fifa-world-cup-755" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1222,7 +1322,7 @@
                 <td class="team">Switzerland</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>3912673.48937</td>
                 <td><a href="https://polymarket.com/event/will-switzerland-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1234,7 +1334,7 @@
                 <td class="team">South Korea</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>4285807.1695</td>
                 <td><a href="https://polymarket.com/event/will-south-korea-win-the-2026-fifa-world-cup-485" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1246,7 +1346,7 @@
                 <td class="team">Bosnia-Herzegovina</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>9794121.86534</td>
                 <td><a href="https://polymarket.com/event/will-bosnia-herzegovina-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1258,7 +1358,7 @@
                 <td class="team">Czechia</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>14822494.93183</td>
                 <td><a href="https://polymarket.com/event/will-czechia-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1270,7 +1370,7 @@
                 <td class="team">Germany</td>
                 <td>Yes</td>
                 <td class="change">+0.20 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>4123831.12156</td>
                 <td><a href="https://polymarket.com/event/will-germany-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1282,7 +1382,7 @@
                 <td class="team">USA</td>
                 <td>Yes</td>
                 <td class="change">+0.10 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>2484853.30479</td>
                 <td><a href="https://polymarket.com/event/will-usa-win-the-2026-fifa-world-cup-467" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1294,7 +1394,7 @@
                 <td class="team">Ghana</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>18975129.00544</td>
                 <td><a href="https://polymarket.com/event/will-ghana-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1306,7 +1406,7 @@
                 <td class="team">Argentina</td>
                 <td>Yes</td>
                 <td class="change">+0.20 pp</td>
-                <td>up</td>
+                <td><span class="badge badge-up">UP</span></td>
                 <td>6045960.86517</td>
                 <td><a href="https://polymarket.com/event/will-argentina-win-the-2026-fifa-world-cup-245" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1318,7 +1418,7 @@
                 <td class="team">Paraguay</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>13753054.84307</td>
                 <td><a href="https://polymarket.com/event/will-paraguay-win-the-2026-fifa-world-cup-967" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1330,7 +1430,7 @@
                 <td class="team">Iran</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>17104320.3979</td>
                 <td><a href="https://polymarket.com/event/will-iran-win-the-2026-fifa-world-cup-788" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1342,7 +1442,7 @@
                 <td class="team">Uzbekistan</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>22045791.36999</td>
                 <td><a href="https://polymarket.com/event/will-uzbekistan-win-the-2026-fifa-world-cup-773" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1354,7 +1454,7 @@
                 <td class="team">England</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>5405628.30942</td>
                 <td><a href="https://polymarket.com/event/will-england-win-the-2026-fifa-world-cup-937" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1366,7 +1466,7 @@
                 <td class="team">Spain</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>7221279.61736</td>
                 <td><a href="https://polymarket.com/event/will-spain-win-the-2026-fifa-world-cup-963" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1378,7 +1478,7 @@
                 <td class="team">Scotland</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>13886292.46523</td>
                 <td><a href="https://polymarket.com/event/will-scotland-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1390,7 +1490,7 @@
                 <td class="team">Portugal</td>
                 <td>Yes</td>
                 <td class="change">-0.70 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>4359283.04896</td>
                 <td><a href="https://polymarket.com/event/will-portugal-win-the-2026-fifa-world-cup-912" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1402,7 +1502,7 @@
                 <td class="team">Panama</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>26974662.15336</td>
                 <td><a href="https://polymarket.com/event/will-team-z-win-the-2026-fifa-world-cup-316" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1414,7 +1514,7 @@
                 <td class="team">Czechia</td>
                 <td>Yes</td>
                 <td class="change">0.00 pp</td>
-                <td>flat</td>
+                <td><span class="badge badge-flat">FLAT</span></td>
                 <td>14822494.93183</td>
                 <td><a href="https://polymarket.com/event/will-czechia-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
@@ -1426,9 +1526,9 @@
                 <td class="team">Ivory Coast</td>
                 <td>Yes</td>
                 <td class="change">-0.10 pp</td>
-                <td>down</td>
+                <td><span class="badge badge-down">DOWN</span></td>
                 <td>9928997.78169</td>
-                <td><a href="https://polymarket.com/event/will-ivory-coast-win-the-2026-fifa-world-cup" target="_blank" rel="noopener noreferrer">Source</a></td>
+                <td><a href="https://polymarket.com/event/will-ivory-coast-" target="_blank" rel="noopener noreferrer">Source</a></td>
             </tr>
             
                 </tbody>

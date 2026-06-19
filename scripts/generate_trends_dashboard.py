@@ -228,6 +228,104 @@ def render_team_intelligence(team_intelligence: pd.DataFrame) -> str:
     return "\n".join(rows)
 
 
+DIRECTION_BADGE = {
+    "up": '<span class="badge badge-up">UP</span>',
+    "down": '<span class="badge badge-down">DOWN</span>',
+    "flat": '<span class="badge badge-flat">FLAT</span>',
+    "watch": '<span class="badge badge-watch">WATCH</span>',
+}
+
+
+def render_direction_badge(direction: str) -> str:
+    key = str(direction).strip().lower()
+    if key in DIRECTION_BADGE:
+        return DIRECTION_BADGE[key]
+    if key in ("positive", "rising"):
+        return DIRECTION_BADGE["up"]
+    if key in ("negative", "falling", "declining"):
+        return DIRECTION_BADGE["down"]
+    if key in ("flat_no_signal", "unchanged"):
+        return DIRECTION_BADGE["flat"]
+    if key:
+        return f'<span class="badge badge-watch">{html.escape(direction.upper())}</span>'
+    return ""
+
+
+def render_summary_cards(
+    top_movers: pd.DataFrame,
+    team_intelligence: pd.DataFrame,
+    metadata: dict[str, object],
+    generated_at: str,
+) -> str:
+    top_positive = "\u2014"
+    top_positive_change = ""
+    top_negative = "\u2014"
+    top_negative_change = ""
+
+    if not top_movers.empty and "direction" in top_movers.columns:
+        pos = top_movers[
+            top_movers["direction"].astype(str).str.lower().isin(["up", "positive", "rising"])
+        ]
+        neg = top_movers[
+            top_movers["direction"].astype(str).str.lower().isin(["down", "negative", "falling", "declining"])
+        ]
+        if not pos.empty:
+            r = pos.iloc[0]
+            top_positive = str(r.get("team", "\u2014"))
+            top_positive_change = str(r.get("probability_change_display", ""))
+        if not neg.empty:
+            r = neg.iloc[0]
+            top_negative = str(r.get("team", "\u2014"))
+            top_negative_change = str(r.get("probability_change_display", ""))
+
+    top_priority_team = "\u2014"
+    if not team_intelligence.empty and "review_priority" in team_intelligence.columns:
+        high = team_intelligence[
+            team_intelligence["review_priority"].astype(str).str.lower() == "high"
+        ]
+        if not high.empty and "team" in high.columns:
+            top_priority_team = str(high.iloc[0]["team"])
+        elif "team" in team_intelligence.columns:
+            top_priority_team = str(team_intelligence.iloc[0]["team"])
+
+    freshness = str(metadata.get("public_dashboard_status", "unknown")) if metadata else "unknown"
+    freshness_class = "status-ok" if freshness == "ok" else ("status-warning" if freshness == "stale" else "status-missing")
+
+    pos_change_html = (
+        f' <span style="color:#86efac;font-size:13px;">{html.escape(top_positive_change)}</span>'
+        if top_positive_change else ""
+    )
+    neg_change_html = (
+        f' <span style="color:#fca5a5;font-size:13px;">{html.escape(top_negative_change)}</span>'
+        if top_negative_change else ""
+    )
+
+    return f"""
+        <div class="summary-cards">
+            <div class="summary-card">
+                <div class="summary-label">Top positive mover</div>
+                <div class="summary-value">{html.escape(top_positive)}{pos_change_html}</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Top negative mover</div>
+                <div class="summary-value">{html.escape(top_negative)}{neg_change_html}</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Highest priority team</div>
+                <div class="summary-value">{html.escape(top_priority_team)}</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Freshness status</div>
+                <div class="summary-value {freshness_class}">{html.escape(freshness)}</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">Last generated</div>
+                <div class="summary-value" style="font-size:14px;">{html.escape(generated_at)} UTC</div>
+            </div>
+        </div>
+    """
+
+
 def render_top_movers(top_movers: pd.DataFrame) -> str:
     if top_movers.empty:
         return """
@@ -271,7 +369,7 @@ def render_top_movers(top_movers: pd.DataFrame) -> str:
                 <td class="team">{html.escape(format_value(row["team"]))}</td>
                 <td>{html.escape(format_value(row["outcome"]))}</td>
                 <td class="change">{html.escape(format_value(row["probability_change_display"]))}</td>
-                <td>{html.escape(format_value(row["direction"]))}</td>
+                <td>{render_direction_badge(format_value(row["direction"]))}</td>
                 <td>{html.escape(format_value(row["current_liquidity"]))}</td>
                 <td>{source_cell}</td>
             </tr>
@@ -417,6 +515,7 @@ def render_html(
     top_movers_rows = render_top_movers(top_movers)
     signal_summary_rows = render_signal_summary(signal_summary)
     catalyst_matches_rows = render_catalyst_matches(catalyst_matches)
+    summary_cards_html = render_summary_cards(top_movers, team_intelligence, metadata, generated_at)
 
     return f"""<!doctype html>
 <html lang="en">
@@ -594,11 +693,76 @@ def render_html(
             font-weight: 800;
         }}
 
+        .summary-cards {{
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 14px;
+            margin: 22px 0;
+        }}
+
+        .summary-card {{
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 16px;
+        }}
+
+        .summary-label {{
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }}
+
+        .summary-value {{
+            font-weight: 800;
+            font-size: 16px;
+            color: #e5e7eb;
+            word-break: break-word;
+        }}
+
+        .badge {{
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }}
+
+        .badge-up {{
+            background: #14532d;
+            color: #86efac;
+        }}
+
+        .badge-down {{
+            background: #450a0a;
+            color: #fca5a5;
+        }}
+
+        .badge-flat {{
+            background: #1e293b;
+            color: #94a3b8;
+        }}
+
+        .badge-watch {{
+            background: #713f12;
+            color: #fde68a;
+        }}
+
         .footer {{
             margin-top: 28px;
             color: #94a3b8;
             font-size: 13px;
             line-height: 1.5;
+        }}
+
+        @media (max-width: 1200px) {{
+            .summary-cards {{
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }}
         }}
 
         @media (max-width: 900px) {{
@@ -611,8 +775,18 @@ def render_html(
                 grid-template-columns: 1fr;
             }}
 
+            .summary-cards {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }}
+
             h1 {{
                 font-size: 28px;
+            }}
+        }}
+
+        @media (max-width: 560px) {{
+            .summary-cards {{
+                grid-template-columns: 1fr;
             }}
         }}
     </style>
@@ -634,6 +808,8 @@ def render_html(
             and <code>scripts/generate_dashboard_metadata.py</code>.
             The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
         </section>
+
+        {summary_cards_html}
 
         {freshness_panel}
 
@@ -684,7 +860,7 @@ def render_html(
         </section>
 
         <section>
-            <h2>Top movers</h2>
+            <h2>Top movers <span style="font-size:15px;font-weight:400;color:#94a3b8;">— UP / DOWN / FLAT / WATCH</span></h2>
             <p class="subtitle">
                 Largest positive and negative probability moves, plus volume and liquidity movers,
                 when available.

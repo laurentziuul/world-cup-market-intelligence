@@ -2,7 +2,7 @@
 
 Report date: 2026-06-19
 
-Generated at: 2026-06-19T07:08:03+00:00
+Generated at: 2026-06-19T07:15:57+00:00
 
 Product: World Cup Market Intelligence Daily Brief
 
@@ -32,9 +32,9 @@ This brief summarizes the latest World Cup market-intelligence outputs generated
 
 Top probability movement to review: Portugal with change -0.70 pp.
 
-Top liquidity movement to review: Canada with change -5308490.28881.
+Top liquidity movement to review: Canada with change -5264434.38905.
 
-Top volume movement to review: Mexico with change 6162159.876107052.
+Top volume movement to review: Mexico with change 6162756.587239057.
 
 5 teams are listed for manual review priority.
 
@@ -126,8 +126,8 @@ Trends dashboard:
 ### 1. Canada
 
 - Market: Will Canada win the 2026 FIFA World Cup?
-- Liquidity change: -5308490.28881
-- Current liquidity: 6028785.33468
+- Liquidity change: -5264434.38905
+- Current liquidity: 6072841.23444
 - Previous liquidity: 11337275.62349
 - Signal: flat_no_signal
 - Review priority: medium
@@ -135,8 +135,8 @@ Trends dashboard:
 ### 2. Mexico
 
 - Market: Will Mexico win the 2026 FIFA World Cup?
-- Liquidity change: -4514794.40233
-- Current liquidity: 3719061.66734
+- Liquidity change: -4524277.03565
+- Current liquidity: 3709579.03402
 - Previous liquidity: 8233856.06967
 - Signal: flat_no_signal
 - Review priority: medium
@@ -144,8 +144,8 @@ Trends dashboard:
 ### 3. Bosnia-Herzegovina
 
 - Market: Will Bosnia-Herzegovina win the 2026 FIFA World Cup?
-- Liquidity change: -4162838.45022
-- Current liquidity: 9794239.56119
+- Liquidity change: -4162956.14607
+- Current liquidity: 9794121.86534
 - Previous liquidity: 13957078.01141
 - Signal: flat_no_signal
 - Review priority: medium
@@ -153,8 +153,8 @@ Trends dashboard:
 ### 4. Paraguay
 
 - Market: Will Paraguay win the 2026 FIFA World Cup?
-- Liquidity change: 3251473.22153
-- Current liquidity: 13757810.27062
+- Liquidity change: 3246717.7939800005
+- Current liquidity: 13753054.84307
 - Previous liquidity: 10506337.04909
 - Signal: flat_no_signal
 - Review priority: medium
@@ -162,8 +162,8 @@ Trends dashboard:
 ### 5. Iran
 
 - Market: Will Iran win the 2026 FIFA World Cup?
-- Liquidity change: 2908738.27448
-- Current liquidity: 17075604.29947
+- Liquidity change: 2937454.3729100004
+- Current liquidity: 17104320.3979
 - Previous liquidity: 14166866.02499
 - Signal: flat_no_signal
 - Review priority: medium
@@ -176,8 +176,8 @@ Trends dashboard:
 ### 1. Mexico
 
 - Market: Will Mexico win the 2026 FIFA World Cup?
-- Volume change: 6162159.876107052
-- Current volume: 75886451.22770227
+- Volume change: 6162756.587239057
+- Current volume: 75887047.93883428
 - Previous volume: 69724291.35159522
 - Signal: flat_no_signal
 - Review priority: medium
@@ -185,8 +185,8 @@ Trends dashboard:
 ### 2. Canada
 
 - Market: Will Canada win the 2026 FIFA World Cup?
-- Volume change: 5786049.108811006
-- Current volume: 61160539.39640435
+- Volume change: 5788180.462143004
+- Current volume: 61162670.74973635
 - Previous volume: 55374490.28759334
 - Signal: flat_no_signal
 - Review priority: medium
@@ -194,8 +194,8 @@ Trends dashboard:
 ### 3. Switzerland
 
 - Market: Will Switzerland win the 2026 FIFA World Cup?
-- Volume change: 5247510.346589983
-- Current volume: 56892176.27592735
+- Volume change: 5248827.031032994
+- Current volume: 56893492.96037036
 - Previous volume: 51644665.92933737
 - Signal: flat_no_signal
 - Review priority: medium
@@ -203,8 +203,8 @@ Trends dashboard:
 ### 4. South Korea
 
 - Market: Will South Korea win the 2026 FIFA World Cup?
-- Volume change: 5159781.278943911
-- Current volume: 84501567.52880529
+- Volume change: 5180118.020276904
+- Current volume: 84521904.27013828
 - Previous volume: 79341786.24986137
 - Signal: flat_no_signal
 - Review priority: medium
@@ -329,7 +329,7 @@ This section is for research context only. It is not betting advice.
 #### Canada vs Qatar
 - Kickoff Romania: 01:00 | UTC: 22:00
 - Group: B
-- Canada: 0.35% winner probability | volume $61.2M | liquidity $6.0M
+- Canada: 0.35% winner probability | volume $61.2M | liquidity $6.1M
 - Qatar: 0.05% winner probability | volume $45.1M | liquidity $24.6M
 #### Mexico vs South Korea
 - Kickoff Romania: 04:00 | UTC: 01:00
@@ -352,7 +352,7 @@ This section is for research context only. It is not betting advice.
 #### Brazil vs Haiti — major market
 - Kickoff Romania: 04:00 | UTC: 01:00
 - Group: C
-- Brazil: 6.65% winner probability | volume $44.4M
+- Brazil: 6.65% winner probability | volume $44.5M
 - Haiti: 0.05% winner probability | volume $32.8M
 #### Turkiye vs Paraguay
 - Kickoff Romania: 07:00 | UTC: 04:00
@@ -571,10 +571,10 @@ No automated trading or betting decision is implied.
 
 ## 9. Data freshness status
 
-- Metadata generated at: 2026-06-19T07:08:03Z
+- Metadata generated at: 2026-06-19T07:15:56Z
 - Stale threshold hours: 72.0
 - Public dashboard status: ready
-- Dashboards available: landing_page: {'age_hours': 59.98, 'available': True, 'modified_at': '2026-06-16T19:09:12Z', 'path': 'docs/index.html', 'size_bytes': 18090, 'status': 'fresh'}, polymarket_dashboard: {'age_hours': 62.3, 'available': True, 'modified_at': '2026-06-16T16:50:06Z', 'path': 'docs/polymarket-dashboard/index.html', 'size_bytes': 46623, 'status': 'fresh'}, stable_dashboard: {'age_hours': 64.08, 'available': True, 'modified_at': '2026-06-16T15:03:07Z', 'path': 'docs/dashboard/index.html', 'size_bytes': 57921, 'status': 'fresh'}, trends_dashboard: {'age_hours': 0.0, 'available': True, 'modified_at': '2026-06-19T07:08:03Z', 'path': 'docs/trends-dashboard/index.html', 'size_bytes': 86360, 'status': 'fresh'}
+- Dashboards available: landing_page: {'age_hours': 60.11, 'available': True, 'modified_at': '2026-06-16T19:09:12Z', 'path': 'docs/index.html', 'size_bytes': 18090, 'status': 'fresh'}, polymarket_dashboard: {'age_hours': 62.43, 'available': True, 'modified_at': '2026-06-16T16:50:06Z', 'path': 'docs/polymarket-dashboard/index.html', 'size_bytes': 46623, 'status': 'fresh'}, stable_dashboard: {'age_hours': 64.21, 'available': True, 'modified_at': '2026-06-16T15:03:07Z', 'path': 'docs/dashboard/index.html', 'size_bytes': 57921, 'status': 'fresh'}, trends_dashboard: {'age_hours': 0.0, 'available': True, 'modified_at': '2026-06-19T07:15:56Z', 'path': 'docs/trends-dashboard/index.html', 'size_bytes': 90231, 'status': 'fresh'}
 - Generated outputs available: n/a
 - Missing outputs: none
 - Stale outputs: none

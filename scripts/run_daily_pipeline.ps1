@@ -108,6 +108,22 @@ if (Test-Path $perfScript) {
     Run-Step "Operator performance" "$python scripts\analyze_operator_performance.py" $ProjectRoot | Out-Null
 }
 
+# Helper: run a git command with ErrorActionPreference = Continue so that
+# git stderr warnings (e.g. LF/CRLF notices) do not throw NativeCommandError.
+# Returns the captured output lines. Sets script-scope $script:gitCode.
+function Invoke-Git {
+    param([string[]]$GitArgs)
+    $old = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        $out = & git @GitArgs 2>&1
+        $script:gitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $old
+    }
+    return $out
+}
+
 # Step 8: Git auto-commit public outputs only
 Write-Log "Committing public outputs to git..."
 Set-Location $ProjectRoot
@@ -131,19 +147,19 @@ foreach ($addPath in $gitAddPaths) {
 
     # Check if path is gitignored before attempting git add.
     # git check-ignore exits 0 = ignored, non-zero = not ignored.
-    $null = git check-ignore -q $fullAddPath 2>&1
-    if ($LASTEXITCODE -eq 0) {
+    $null = Invoke-Git @("check-ignore", "-q", "--", $fullAddPath)
+    if ($script:gitCode -eq 0) {
         Write-Log "SKIP ignored output: $addPath"
         continue
     }
 
-    # Attempt git add; capture output so errors are logged clearly.
-    $addOut = git add $fullAddPath 2>&1
-    $addCode = $LASTEXITCODE
-    if ($addCode -ne 0) {
-        Write-Log "git add FAILED for '$addPath' (exit $addCode): $($addOut -join ' | ')" "ERROR"
+    # Attempt git add -- <path>; warnings logged, only non-zero exit is failure.
+    $addOut = Invoke-Git @("add", "--", $fullAddPath)
+    if ($addOut) { $addOut | ForEach-Object { Write-Log "$_" } }
+    if ($script:gitCode -ne 0) {
+        Write-Log "git add FAILED for '$addPath' (exit $($script:gitCode))" "ERROR"
         if ($stagedPaths.Count -gt 0) {
-            git reset HEAD -- $stagedPaths 2>&1 | Out-Null
+            Invoke-Git @("reset", "HEAD", "--") + $stagedPaths | Out-Null
         }
         Write-Log "Pipeline aborted: git add failed for '$addPath'." "ERROR"
         exit 1
@@ -152,27 +168,28 @@ foreach ($addPath in $gitAddPaths) {
 }
 
 # Check only what we staged, not all working tree changes.
-$gitStaged = git diff --cached --name-only 2>&1
+$stagedOut = Invoke-Git @("diff", "--cached", "--name-only")
+$gitStaged = $stagedOut | Where-Object { $_ -and $_.Trim() -ne "" }
 if ($gitStaged) {
     Write-Log "Staged files: $($gitStaged -join ', ')"
     $commitMsg = "Daily pipeline: $(Get-Date -Format 'yyyy-MM-dd HH:mm') UTC"
 
-    $commitOut = git commit -m $commitMsg 2>&1
-    $commitCode = $LASTEXITCODE
-    Write-Log "git commit: $($commitOut -join ' | ')"
+    $commitOut = Invoke-Git @("commit", "-m", $commitMsg)
+    $commitCode = $script:gitCode
+    if ($commitOut) { Write-Log "git commit: $($commitOut -join ' | ')" }
 
     if ($commitCode -ne 0) {
         Write-Log "git commit failed (exit $commitCode) - resetting staged files." "WARN"
         if ($stagedPaths.Count -gt 0) {
-            git reset HEAD -- $stagedPaths 2>&1 | Out-Null
+            Invoke-Git (@("reset", "HEAD", "--") + $stagedPaths) | Out-Null
         } else {
-            git reset HEAD 2>&1 | Out-Null
+            Invoke-Git @("reset", "HEAD") | Out-Null
         }
     } else {
         Write-Log "Committed: $commitMsg"
-        $pushOut = git push 2>&1
-        $pushCode = $LASTEXITCODE
-        Write-Log "git push: $($pushOut -join ' | ')"
+        $pushOut = Invoke-Git @("push")
+        $pushCode = $script:gitCode
+        if ($pushOut) { Write-Log "git push: $($pushOut -join ' | ')" }
         if ($pushCode -ne 0) {
             Write-Log "git push failed (exit $pushCode) - commit is local only." "WARN"
         } else {

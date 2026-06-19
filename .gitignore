@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 .env
 .DS_Store
-briefs/
+/briefs/
 data/raw/*.json
 data/raw/*.csv
 data/processed/*.csv

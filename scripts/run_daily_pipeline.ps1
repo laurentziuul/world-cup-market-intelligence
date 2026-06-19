@@ -112,20 +112,46 @@ if (Test-Path $perfScript) {
 Write-Log "Committing public outputs to git..."
 Set-Location $ProjectRoot
 
-# Stage specific public output paths only - never use git add .
+# Public output paths to stage - never use git add .
 $gitAddPaths = @(
     "docs\briefs\",
     "docs\trends-dashboard\index.html",
     "docs\polymarket-dashboard\index.html"
 )
+
+$stagedPaths = @()
+
 foreach ($addPath in $gitAddPaths) {
     $fullAddPath = Join-Path $ProjectRoot $addPath
-    if (Test-Path $fullAddPath) {
-        git add $fullAddPath 2>&1 | Out-Null
+
+    if (-not (Test-Path $fullAddPath)) {
+        Write-Log "SKIP missing output: $addPath"
+        continue
     }
+
+    # Check if path is gitignored before attempting git add.
+    # git check-ignore exits 0 = ignored, non-zero = not ignored.
+    $null = git check-ignore -q $fullAddPath 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Log "SKIP ignored output: $addPath"
+        continue
+    }
+
+    # Attempt git add; capture output so errors are logged clearly.
+    $addOut = git add $fullAddPath 2>&1
+    $addCode = $LASTEXITCODE
+    if ($addCode -ne 0) {
+        Write-Log "git add FAILED for '$addPath' (exit $addCode): $($addOut -join ' | ')" "ERROR"
+        if ($stagedPaths.Count -gt 0) {
+            git reset HEAD -- $stagedPaths 2>&1 | Out-Null
+        }
+        Write-Log "Pipeline aborted: git add failed for '$addPath'." "ERROR"
+        exit 1
+    }
+    $stagedPaths += $fullAddPath
 }
 
-# Check what is actually staged (not all working tree changes)
+# Check only what we staged, not all working tree changes.
 $gitStaged = git diff --cached --name-only 2>&1
 if ($gitStaged) {
     Write-Log "Staged files: $($gitStaged -join ', ')"
@@ -136,8 +162,12 @@ if ($gitStaged) {
     Write-Log "git commit: $($commitOut -join ' | ')"
 
     if ($commitCode -ne 0) {
-        Write-Log "git commit failed (exit $commitCode) - resetting staged files to avoid leftover stage." "WARN"
-        git reset HEAD 2>&1 | Out-Null
+        Write-Log "git commit failed (exit $commitCode) - resetting staged files." "WARN"
+        if ($stagedPaths.Count -gt 0) {
+            git reset HEAD -- $stagedPaths 2>&1 | Out-Null
+        } else {
+            git reset HEAD 2>&1 | Out-Null
+        }
     } else {
         Write-Log "Committed: $commitMsg"
         $pushOut = git push 2>&1
@@ -150,7 +180,7 @@ if ($gitStaged) {
         }
     }
 } else {
-    Write-Log "Nothing to commit - no staged changes in public outputs."
+    Write-Log "No public output changes to commit."
 }
 
 Write-Log "=== Daily pipeline complete ==="

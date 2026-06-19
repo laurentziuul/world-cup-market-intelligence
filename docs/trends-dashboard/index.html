@@ -209,7 +209,7 @@
         </section>
 
         <section class="notice">
-            Generated at <strong>2026-06-19 07:01:36</strong> UTC.
+            Generated at <strong>2026-06-19 07:08:03</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>
             and <code>scripts/generate_dashboard_metadata.py</code>.
             The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
@@ -218,51 +218,13 @@
         
         <section>
             <h2>Data freshness and trust status</h2>
-            <p class="subtitle">
-                Metadata-generated trust layer showing dashboard availability, generated output status
-                and stale/missing output warnings.
-            </p>
-
-            <div class="trust-grid">
-                <div class="trust-card">
-                    <div class="trust-label">Public dashboard status</div>
-                    <div class="trust-value status-ok">ready</div>
-                </div>
-
-                <div class="trust-card">
-                    <div class="trust-label">Metadata generated at</div>
-                    <div class="trust-value">2026-06-19T07:01:35Z</div>
-                </div>
-
-                <div class="trust-card">
-                    <div class="trust-label">Stale threshold</div>
-                    <div class="trust-value">72.0 hours</div>
-                </div>
-
-                <div class="trust-card">
-                    <div class="trust-label">Dashboards available</div>
-                    <div class="trust-value">4 / 4</div>
-                </div>
-
-                <div class="trust-card">
-                    <div class="trust-label">Generated outputs available</div>
-                    <div class="trust-value">6 / 6</div>
-                </div>
-
-                <div class="trust-card">
-                    <div class="trust-label">Interpretation</div>
-                    <div class="trust-value">research-only</div>
-                </div>
-            </div>
-
-            <div class="notice">
-                <strong>Warnings:</strong>
-                <ul>
-                    <li>No metadata warnings.</li>
-                </ul>
+            <div class="notice warning-box">
+                <strong>Metadata missing.</strong>
+                Run <code>python scripts/generate_dashboard_metadata.py</code> before generating this dashboard
+                to show freshness and trust information.
             </div>
         </section>
-    
+        
 
         <section>
             <h2>Trend output status</h2>
@@ -279,42 +241,42 @@
             <tr>
                 <td>Probability deltas</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\probability_deltas_latest.csv</code></td>
+                <td><code>data/processed/probability_deltas_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Top movers</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\top_movers_latest.csv</code></td>
+                <td><code>data/processed/top_movers_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Signal summary</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\signal_summary_latest.csv</code></td>
+                <td><code>data/processed/signal_summary_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Catalyst matches</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\catalyst_matches_latest.csv</code></td>
+                <td><code>data/processed/catalyst_matches_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Team intelligence</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\team_intelligence_latest.csv</code></td>
+                <td><code>data/processed/team_intelligence_latest.csv</code></td>
             </tr>
             
 
             <tr>
                 <td>Dashboard metadata</td>
                 <td class="status-ok">available</td>
-                <td><code>data\processed\dashboard_metadata_latest.json</code></td>
+                <td><code>data/processed/dashboard_metadata_latest.json</code></td>
             </tr>
             
                 </tbody>

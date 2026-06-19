@@ -2,7 +2,7 @@
 
 Report date: 2026-06-19
 
-Generated at: 2026-06-19T07:01:36+00:00
+Generated at: 2026-06-19T07:08:03+00:00
 
 Product: World Cup Market Intelligence Daily Brief
 
@@ -571,10 +571,10 @@ No automated trading or betting decision is implied.
 
 ## 9. Data freshness status
 
-- Metadata generated at: 2026-06-19T07:01:35Z
+- Metadata generated at: 2026-06-19T07:08:03Z
 - Stale threshold hours: 72.0
 - Public dashboard status: ready
-- Dashboards available: landing_page: {'age_hours': 59.87, 'available': True, 'modified_at': '2026-06-16T19:09:12Z', 'path': 'docs/index.html', 'size_bytes': 18090, 'status': 'fresh'}, polymarket_dashboard: {'age_hours': 62.19, 'available': True, 'modified_at': '2026-06-16T16:50:06Z', 'path': 'docs/polymarket-dashboard/index.html', 'size_bytes': 46623, 'status': 'fresh'}, stable_dashboard: {'age_hours': 63.97, 'available': True, 'modified_at': '2026-06-16T15:03:07Z', 'path': 'docs/dashboard/index.html', 'size_bytes': 57921, 'status': 'fresh'}, trends_dashboard: {'age_hours': 0.0, 'available': True, 'modified_at': '2026-06-19T07:01:35Z', 'path': 'docs/trends-dashboard/index.html', 'size_bytes': 90230, 'status': 'fresh'}
+- Dashboards available: landing_page: {'age_hours': 59.98, 'available': True, 'modified_at': '2026-06-16T19:09:12Z', 'path': 'docs/index.html', 'size_bytes': 18090, 'status': 'fresh'}, polymarket_dashboard: {'age_hours': 62.3, 'available': True, 'modified_at': '2026-06-16T16:50:06Z', 'path': 'docs/polymarket-dashboard/index.html', 'size_bytes': 46623, 'status': 'fresh'}, stable_dashboard: {'age_hours': 64.08, 'available': True, 'modified_at': '2026-06-16T15:03:07Z', 'path': 'docs/dashboard/index.html', 'size_bytes': 57921, 'status': 'fresh'}, trends_dashboard: {'age_hours': 0.0, 'available': True, 'modified_at': '2026-06-19T07:08:03Z', 'path': 'docs/trends-dashboard/index.html', 'size_bytes': 86360, 'status': 'fresh'}
 - Generated outputs available: n/a
 - Missing outputs: none
 - Stale outputs: none

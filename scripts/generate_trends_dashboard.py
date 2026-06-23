@@ -305,22 +305,27 @@ def render_summary_cards(
             <div class="summary-card">
                 <div class="summary-label">Top positive mover</div>
                 <div class="summary-value">{html.escape(top_positive)}{pos_change_html}</div>
+                <div class="summary-subtext">Largest upward move in market-implied probability.</div>
             </div>
             <div class="summary-card">
                 <div class="summary-label">Top negative mover</div>
                 <div class="summary-value">{html.escape(top_negative)}{neg_change_html}</div>
+                <div class="summary-subtext">Largest downward move in market-implied probability.</div>
             </div>
             <div class="summary-card">
-                <div class="summary-label">Highest priority team</div>
+                <div class="summary-label">Manual review priority</div>
                 <div class="summary-value">{html.escape(top_priority_team)}</div>
+                <div class="summary-subtext">First team to review manually. Not a recommendation.</div>
             </div>
             <div class="summary-card">
                 <div class="summary-label">Freshness status</div>
                 <div class="summary-value {freshness_class}">{html.escape(freshness)}</div>
+                <div class="summary-subtext">Shows whether the data is recent enough to trust.</div>
             </div>
             <div class="summary-card">
                 <div class="summary-label">Last generated</div>
                 <div class="summary-value" style="font-size:14px;">{html.escape(generated_at)} UTC</div>
+                <div class="summary-subtext">When this dashboard was generated.</div>
             </div>
         </div>
     """
@@ -501,6 +506,135 @@ def render_catalyst_matches(catalyst_matches: pd.DataFrame) -> str:
     return "\n".join(rows)
 
 
+def render_explainability_section() -> str:
+    """Return the 'How to read this dashboard' section + mini glossary + disclaimer.
+
+    This is a static section — no data-dependent variables.
+    """
+    return """
+        <section class="explain-section">
+            <h2>How to read this dashboard</h2>
+            <p class="subtitle">
+                Not familiar with prediction markets? Here is what each section means.
+                These are research outputs, not betting tips.
+            </p>
+
+            <div class="explain-grid">
+                <div class="explain-card">
+                    <div class="explain-term">Top positive mover</div>
+                    <div class="explain-def">
+                        The team whose market-implied probability increased the most since
+                        the previous snapshot. It does not mean the team will win — only that
+                        the market moved upward.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Top negative mover</div>
+                    <div class="explain-def">
+                        The team whose market-implied probability decreased the most since
+                        the previous snapshot.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">pp — percentage points</div>
+                    <div class="explain-def">
+                        The change in probability measured in percentage points, not percent.
+                        Example: 10.00% → 10.20% = +0.20 pp — not +20%.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Signal</div>
+                    <div class="explain-def">
+                        A rule-based classification of market movement (e.g. sharp_move_up,
+                        low_volume_move). It is not a betting recommendation or prediction.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Catalyst</div>
+                    <div class="explain-def">
+                        A possible manual context note for a market move (e.g. injury news,
+                        squad update). A catalyst match does not prove what caused the move —
+                        it is context, not causality.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Manual review priority</div>
+                    <div class="explain-def">
+                        The team flagged for manual review first, based on signal and catalyst
+                        activity. It is not a pick or a recommendation of any kind.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Volume</div>
+                    <div class="explain-def">
+                        How much has traded in this market. Higher volume can indicate more
+                        attention or conviction from market participants.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Liquidity</div>
+                    <div class="explain-def">
+                        How much market depth is available. Higher liquidity means it is
+                        easier to trade near the current price.
+                    </div>
+                </div>
+                <div class="explain-card">
+                    <div class="explain-term">Freshness status</div>
+                    <div class="explain-def">
+                        Whether the underlying data is recent enough to trust.
+                        "ok" = fresh. "stale" = data is older than the stale threshold.
+                    </div>
+                </div>
+            </div>
+
+            <div class="glossary-box">
+                <div class="glossary-title">Mini glossary</div>
+                <div class="glossary-grid">
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Probability</span>
+                        <span class="glossary-def">Market-implied chance of an outcome (0%–100%). Not a prediction.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">pp (percentage points)</span>
+                        <span class="glossary-def">Absolute change in probability. 10% → 11% = +1 pp, not +10%.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Volume</span>
+                        <span class="glossary-def">Total amount traded in the market.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Liquidity</span>
+                        <span class="glossary-def">Available depth in the order book around the current price.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Signal label</span>
+                        <span class="glossary-def">Rule-based movement classification. Not a buy/sell/bet signal.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Review priority</span>
+                        <span class="glossary-def">Which team to check manually first. Not a recommendation.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Catalyst match</span>
+                        <span class="glossary-def">A news event that may explain a market move. Correlation, not causation.</span>
+                    </div>
+                    <div class="glossary-entry">
+                        <span class="glossary-term">Stale data</span>
+                        <span class="glossary-def">Data older than the configured freshness threshold. Treat with extra caution.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notice research-notice">
+                <strong>Research-only.</strong> No betting tips. No predictions. No financial or betting advice.
+                This dashboard is for education, open-source experimentation and market-intelligence research only.
+                Signal labels, catalyst matches and review priorities are research outputs — they are not
+                recommendations to bet, trade or take any financial action.
+            </div>
+        </section>
+    """
+
+
 def render_html(
     metadata: dict[str, object],
     team_intelligence: pd.DataFrame,
@@ -516,6 +650,7 @@ def render_html(
     signal_summary_rows = render_signal_summary(signal_summary)
     catalyst_matches_rows = render_catalyst_matches(catalyst_matches)
     summary_cards_html = render_summary_cards(top_movers, team_intelligence, metadata, generated_at)
+    explainability_html = render_explainability_section()
 
     return f"""<!doctype html>
 <html lang="en">
@@ -752,6 +887,92 @@ def render_html(
             color: #fde68a;
         }}
 
+        .summary-subtext {{
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 6px;
+            line-height: 1.4;
+        }}
+
+        .explain-section {{
+            margin: 28px 0 0 0;
+        }}
+
+        .explain-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }}
+
+        .explain-card {{
+            background: #111827;
+            border: 1px solid #1e40af;
+            border-radius: 14px;
+            padding: 16px;
+        }}
+
+        .explain-term {{
+            color: #93c5fd;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }}
+
+        .explain-def {{
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+        }}
+
+        .glossary-box {{
+            background: #0f1f3a;
+            border: 1px solid #1e3a8a;
+            border-radius: 14px;
+            padding: 20px;
+            margin: 18px 0;
+        }}
+
+        .glossary-title {{
+            color: #93c5fd;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 14px;
+        }}
+
+        .glossary-grid {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }}
+
+        .glossary-entry {{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }}
+
+        .glossary-term {{
+            color: #e5e7eb;
+            font-size: 13px;
+            font-weight: 700;
+        }}
+
+        .glossary-def {{
+            color: #94a3b8;
+            font-size: 12px;
+            line-height: 1.4;
+        }}
+
+        .research-notice {{
+            border-color: #7c3aed;
+            background: #1e1b4b;
+        }}
+
         .footer {{
             margin-top: 28px;
             color: #94a3b8;
@@ -762,6 +983,10 @@ def render_html(
         @media (max-width: 1200px) {{
             .summary-cards {{
                 grid-template-columns: repeat(3, minmax(0, 1fr));
+            }}
+
+            .explain-grid {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }}
         }}
 
@@ -779,6 +1004,14 @@ def render_html(
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }}
 
+            .explain-grid {{
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }}
+
+            .glossary-grid {{
+                grid-template-columns: 1fr;
+            }}
+
             h1 {{
                 font-size: 28px;
             }}
@@ -786,6 +1019,10 @@ def render_html(
 
         @media (max-width: 560px) {{
             .summary-cards {{
+                grid-template-columns: 1fr;
+            }}
+
+            .explain-grid {{
                 grid-template-columns: 1fr;
             }}
         }}
@@ -810,6 +1047,8 @@ def render_html(
         </section>
 
         {summary_cards_html}
+
+        {explainability_html}
 
         {freshness_panel}
 

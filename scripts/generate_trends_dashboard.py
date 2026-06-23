@@ -1118,9 +1118,8 @@ def render_html(
             <a href="#summary">Summary</a>
             <a href="#how-to-read">How to read</a>
             <a href="#movers">Market movers</a>
-            <a href="#signals">Signals</a>
             <a href="#team-intelligence">Team intelligence</a>
-            <a href="#freshness">Freshness</a>
+            <a href="#catalyst-matches">Catalyst matches</a>
         </nav>
 
         <section class="notice">
@@ -1139,7 +1138,7 @@ def render_html(
         </div>
 
         <details class="collapsible-section" id="freshness">
-            <summary>Data freshness and trust status</summary>
+            <summary>Freshness details</summary>
             <div class="collapsible-inner">
             {freshness_panel}
             </div>
@@ -1165,35 +1164,39 @@ def render_html(
             </div>
         </details>
 
-        <section id="team-intelligence">
-            <h2>Team intelligence</h2>
-            <p class="subtitle">
-                Team-level summary combining signals and catalyst matches. This section helps identify
-                which teams deserve manual review first.
-            </p>
+        <details class="collapsible-section" id="team-intelligence" open>
+            <summary>Team intelligence</summary>
+            <div class="collapsible-inner">
+            <section>
+                <p class="subtitle">
+                    Team-level summary combining signals and catalyst matches. This section helps identify
+                    which teams deserve manual review first.
+                </p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Priority</th>
-                        <th>Team</th>
-                        <th>Provider</th>
-                        <th>Total signals</th>
-                        <th>Positive</th>
-                        <th>Negative</th>
-                        <th>Matched catalysts</th>
-                        <th>Unmatched signals</th>
-                        <th>Strongest signal</th>
-                        <th>Summary label</th>
-                        <th>Latest signal</th>
-                        <th>Latest catalyst</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {team_intelligence_rows}
-                </tbody>
-            </table>
-        </section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Team</th>
+                            <th>Provider</th>
+                            <th>Total signals</th>
+                            <th>Positive</th>
+                            <th>Negative</th>
+                            <th>Matched catalysts</th>
+                            <th>Unmatched signals</th>
+                            <th>Strongest signal</th>
+                            <th>Summary label</th>
+                            <th>Latest signal</th>
+                            <th>Latest catalyst</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {team_intelligence_rows}
+                    </tbody>
+                </table>
+            </section>
+            </div>
+        </details>
 
         <section id="movers">
             <h2>Top movers <span style="font-size:15px;font-weight:400;color:#94a3b8;">— UP / DOWN / FLAT / WATCH</span></h2>
@@ -1250,7 +1253,7 @@ def render_html(
             </div>
         </details>
 
-        <section>
+        <section id="catalyst-matches">
             <h2>Catalyst matches</h2>
             <p class="subtitle">
                 Manual catalyst notes matched to generated signal rows by team or market identifier

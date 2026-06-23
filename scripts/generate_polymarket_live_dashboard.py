@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = ROOT / "docs" / "polymarket-dashboard"
 OUTPUT_PATH = OUTPUT_DIR / "index.html"
 
+# Pre-processed YES ranking produced by generate_polymarket_yes_ranking.py (Step 2 of pipeline).
+# The dashboard reads from this CSV when available — avoids a duplicate live API call.
+YES_RANKING_PATH = ROOT / "data" / "processed" / "polymarket_worldcup_yes_ranking.csv"
+
 TREND_OUTPUTS = {
     "Snapshot comparison": ROOT / "data" / "processed" / "snapshot_comparison_latest.csv",
     "Probability deltas": ROOT / "data" / "processed" / "probability_deltas_latest.csv",
@@ -65,6 +69,49 @@ def format_probability(value: float) -> str:
 
 def format_number(value: float) -> str:
     return f"{value:,.0f}"
+
+
+def load_from_ranking_csv() -> pd.DataFrame | None:
+    """Read the pre-processed YES ranking CSV produced by generate_polymarket_yes_ranking.py.
+
+    Returns a DataFrame with OUTPUT_COLUMNS, or None if the file does not exist.
+    Using the CSV avoids a duplicate live API call inside the daily pipeline.
+    """
+    if not YES_RANKING_PATH.exists():
+        return None
+
+    try:
+        df = pd.read_csv(YES_RANKING_PATH, encoding="utf-8")
+    except Exception as exc:
+        print(f"Warning: could not read {YES_RANKING_PATH}: {exc}")
+        return None
+
+    if df.empty:
+        return None
+
+    # Ensure required columns exist
+    for col in OUTPUT_COLUMNS:
+        if col not in df.columns:
+            print(f"Warning: column '{col}' missing from {YES_RANKING_PATH} — falling back to live API.")
+            return None
+
+    # Apply team-name encoding corrections to both team and market_title columns
+    df = df.copy()
+    df["team"] = df["team"].astype(str).apply(normalize_team_name)
+    # Replace known bad substrings inside market_title without destroying the full title
+    def normalize_market_title(title: str) -> str:
+        for bad, good in TEAM_NAME_CORRECTIONS.items():
+            title = title.replace(bad, good)
+        return title
+    df["market_title"] = df["market_title"].astype(str).apply(normalize_market_title)
+
+    # Ensure numeric types
+    df["yes_probability"] = pd.to_numeric(df["yes_probability"], errors="coerce").fillna(0.0)
+    df["volume"] = pd.to_numeric(df["volume"], errors="coerce").fillna(0.0)
+    df["liquidity"] = pd.to_numeric(df["liquidity"], errors="coerce").fillna(0.0)
+    df["rank"] = pd.to_numeric(df["rank"], errors="coerce").fillna(0).astype(int)
+
+    return df[OUTPUT_COLUMNS]
 
 
 def build_yes_ranking(dataframe: pd.DataFrame) -> pd.DataFrame:
@@ -173,6 +220,7 @@ def render_html(
     ranking: pd.DataFrame,
     provider_rows: int,
     generated_at: str,
+    data_source: str = "live_api",
 ) -> str:
     top_team = "N/A"
     top_probability = "N/A"
@@ -454,9 +502,8 @@ def render_html(
 
         <section class="notice">
             Generated at <strong>{html.escape(generated_at)}</strong> UTC.
-            Provider rows loaded: <strong>{provider_rows}</strong>.
-            This dashboard requires live Polymarket access when regenerated.
-            During testing, access worked using Proton VPN with a Moldova server.
+            Teams ranked: <strong>{provider_rows}</strong>.
+            Data source: <strong>{html.escape(data_source)}</strong>.
         </section>
 
         <table>
@@ -526,22 +573,34 @@ def main() -> None:
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
     print("Generating experimental Polymarket live dashboard...")
-    print("Fetching Polymarket provider data...")
 
-    provider = PolymarketProvider()
-    dataframe = provider.load()
-    ranking = build_yes_ranking(dataframe)
+    # Prefer the pre-processed YES ranking CSV (produced by generate_polymarket_yes_ranking.py
+    # earlier in the same pipeline run) over a duplicate live API call.
+    ranking = load_from_ranking_csv()
+    data_source: str
+
+    if ranking is not None:
+        data_source = f"ranking_csv ({YES_RANKING_PATH.name})"
+        print(f"Using cached ranking CSV: {YES_RANKING_PATH}")
+    else:
+        print("Ranking CSV not found — fetching from live Polymarket API...")
+        provider = PolymarketProvider()
+        dataframe = provider.load()
+        ranking = build_yes_ranking(dataframe)
+        data_source = "live_api (polymarket)"
+        print(f"Provider rows loaded: {len(dataframe)}")
 
     html_content = render_html(
         ranking=ranking,
-        provider_rows=len(dataframe),
+        provider_rows=len(ranking),
         generated_at=generated_at,
+        data_source=data_source,
     )
 
     OUTPUT_PATH.write_text(html_content, encoding="utf-8")
 
-    print(f"Provider rows loaded: {len(dataframe)}")
     print(f"YES ranking rows: {len(ranking)}")
+    print(f"Data source: {data_source}")
     print(f"Dashboard saved: {OUTPUT_PATH}")
 
 

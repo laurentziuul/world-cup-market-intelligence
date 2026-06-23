@@ -92,6 +92,9 @@ Run-Step "Dashboard metadata" "$python scripts\generate_dashboard_metadata.py" $
 # Step 5: Trends dashboard
 Run-Step "Trends dashboard" "$python scripts\generate_trends_dashboard.py" $ProjectRoot | Out-Null
 
+# Step 5b: Polymarket live dashboard (reads from ranking CSV produced in Step 2 - no extra API call)
+Run-Step "Polymarket live dashboard" "$python scripts\generate_polymarket_live_dashboard.py" $ProjectRoot | Out-Null
+
 # Step 6a: Snapshot plan (must run before daily brief)
 Run-Step "Snapshot plan" "$python scripts\generate_snapshot_plan.py" $ProjectRoot | Out-Null
 

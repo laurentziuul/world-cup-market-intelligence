@@ -587,43 +587,45 @@ def render_explainability_section() -> str:
                 </div>
             </div>
 
-            <div class="glossary-box">
-                <div class="glossary-title">Mini glossary</div>
-                <div class="glossary-grid">
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Probability</span>
-                        <span class="glossary-def">Market-implied chance of an outcome (0%–100%). Not a prediction.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">pp (percentage points)</span>
-                        <span class="glossary-def">Absolute change in probability. 10% → 11% = +1 pp, not +10%.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Volume</span>
-                        <span class="glossary-def">Total amount traded in the market.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Liquidity</span>
-                        <span class="glossary-def">Available depth in the order book around the current price.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Signal label</span>
-                        <span class="glossary-def">Rule-based movement classification. Not a buy/sell/bet signal.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Review priority</span>
-                        <span class="glossary-def">Which team to check manually first. Not a recommendation.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Catalyst match</span>
-                        <span class="glossary-def">A news event that may explain a market move. Correlation, not causation.</span>
-                    </div>
-                    <div class="glossary-entry">
-                        <span class="glossary-term">Stale data</span>
-                        <span class="glossary-def">Data older than the configured freshness threshold. Treat with extra caution.</span>
+            <details class="glossary-details">
+                <summary>Mini glossary — click to expand</summary>
+                <div class="glossary-box">
+                    <div class="glossary-grid">
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Probability</span>
+                            <span class="glossary-def">Market-implied chance of an outcome (0%–100%). Not a prediction.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">pp (percentage points)</span>
+                            <span class="glossary-def">Absolute change in probability. 10% → 11% = +1 pp, not +10%.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Volume</span>
+                            <span class="glossary-def">Total amount traded in the market.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Liquidity</span>
+                            <span class="glossary-def">Available depth in the order book around the current price.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Signal label</span>
+                            <span class="glossary-def">Rule-based movement classification. Not a buy/sell/bet signal.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Review priority</span>
+                            <span class="glossary-def">Which team to check manually first. Not a recommendation.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Catalyst match</span>
+                            <span class="glossary-def">A news event that may explain a market move. Correlation, not causation.</span>
+                        </div>
+                        <div class="glossary-entry">
+                            <span class="glossary-term">Stale data</span>
+                            <span class="glossary-def">Data older than the configured freshness threshold. Treat with extra caution.</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </details>
 
             <div class="notice research-notice">
                 <strong>Research-only.</strong> No betting tips. No predictions. No financial or betting advice.
@@ -888,10 +890,83 @@ def render_html(
         }}
 
         .summary-subtext {{
-            color: #64748b;
-            font-size: 11px;
+            color: #94a3b8;
+            font-size: 12px;
             margin-top: 6px;
             line-height: 1.4;
+        }}
+
+        .section-nav {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 18px 0 10px 0;
+            padding: 12px 16px;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 12px;
+        }}
+
+        .section-nav a {{
+            color: #93c5fd;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: #1e293b;
+            transition: background 0.15s;
+        }}
+
+        .section-nav a:hover {{
+            background: #334155;
+            text-decoration: none;
+        }}
+
+        .collapsible-section {{
+            margin: 22px 0;
+        }}
+
+        .collapsible-section > summary,
+        .glossary-details > summary {{
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            color: #cbd5e1;
+            padding: 12px 16px;
+            background: #111827;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }}
+
+        .collapsible-section > summary::before,
+        .glossary-details > summary::before {{
+            content: "▶";
+            font-size: 10px;
+            color: #64748b;
+            transition: transform 0.15s;
+        }}
+
+        .collapsible-section[open] > summary::before,
+        .glossary-details[open] > summary::before {{
+            transform: rotate(90deg);
+        }}
+
+        .collapsible-section > summary::-webkit-details-marker,
+        .glossary-details > summary::-webkit-details-marker {{
+            display: none;
+        }}
+
+        .collapsible-inner {{
+            margin-top: 10px;
+        }}
+
+        .glossary-details {{
+            margin: 18px 0;
         }}
 
         .explain-section {{
@@ -1039,6 +1114,15 @@ def render_html(
             </p>
         </section>
 
+        <nav class="section-nav">
+            <a href="#summary">Summary</a>
+            <a href="#how-to-read">How to read</a>
+            <a href="#movers">Market movers</a>
+            <a href="#signals">Signals</a>
+            <a href="#team-intelligence">Team intelligence</a>
+            <a href="#freshness">Freshness</a>
+        </nav>
+
         <section class="notice">
             Generated at <strong>{html.escape(generated_at)}</strong> UTC.
             These outputs are created by <code>scripts/run_historical_trends_workflow.py</code>
@@ -1046,29 +1130,42 @@ def render_html(
             The trend, catalyst, team-intelligence and trust system is experimental and should not be treated as betting or investment advice.
         </section>
 
+        <div id="summary">
         {summary_cards_html}
+        </div>
 
+        <div id="how-to-read">
         {explainability_html}
+        </div>
 
-        {freshness_panel}
+        <details class="collapsible-section" id="freshness">
+            <summary>Data freshness and trust status</summary>
+            <div class="collapsible-inner">
+            {freshness_panel}
+            </div>
+        </details>
 
-        <section>
-            <h2>Trend output status</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Output</th>
-                        <th>Status</th>
-                        <th>Path</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {file_status_rows}
-                </tbody>
-            </table>
-        </section>
+        <details class="collapsible-section">
+            <summary>Trend output status — diagnostic</summary>
+            <div class="collapsible-inner">
+            <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Output</th>
+                            <th>Status</th>
+                            <th>Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {file_status_rows}
+                    </tbody>
+                </table>
+            </section>
+            </div>
+        </details>
 
-        <section>
+        <section id="team-intelligence">
             <h2>Team intelligence</h2>
             <p class="subtitle">
                 Team-level summary combining signals and catalyst matches. This section helps identify
@@ -1098,7 +1195,7 @@ def render_html(
             </table>
         </section>
 
-        <section>
+        <section id="movers">
             <h2>Top movers <span style="font-size:15px;font-weight:400;color:#94a3b8;">— UP / DOWN / FLAT / WATCH</span></h2>
             <p class="subtitle">
                 Largest positive and negative probability moves, plus volume and liquidity movers,
@@ -1124,30 +1221,34 @@ def render_html(
             </table>
         </section>
 
-        <section>
-            <h2>Signal summary</h2>
-            <p class="subtitle">
-                Transparent rule-based signal classification. This is not a black-box model.
-            </p>
+        <details class="collapsible-section" id="signals">
+            <summary>Signal summary — rule-based classification</summary>
+            <div class="collapsible-inner">
+            <section>
+                <p class="subtitle">
+                    Transparent rule-based signal classification. This is not a black-box model.
+                </p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Team</th>
-                        <th>Outcome</th>
-                        <th>Change</th>
-                        <th>Signal</th>
-                        <th>Strength</th>
-                        <th>Liquidity label</th>
-                        <th>Reason</th>
-                        <th>Source</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {signal_summary_rows}
-                </tbody>
-            </table>
-        </section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Team</th>
+                            <th>Outcome</th>
+                            <th>Change</th>
+                            <th>Signal</th>
+                            <th>Strength</th>
+                            <th>Liquidity label</th>
+                            <th>Reason</th>
+                            <th>Source</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {signal_summary_rows}
+                    </tbody>
+                </table>
+            </section>
+            </div>
+        </details>
 
         <section>
             <h2>Catalyst matches</h2>

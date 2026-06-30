@@ -1,4 +1,4 @@
-﻿# World Cup Market Intelligence Daily Brief
+# World Cup Market Intelligence Daily Brief
 
 Report date: {{ report_date }}
 
@@ -124,11 +124,18 @@ No volume movers available for this run.
 ### {{ loop.index }}. {{ item.team | default("Unknown team") }}
 
 - Review priority: {{ item.review_priority | default("n/a") }}
-- Net signal score: {{ item.net_signal_score | default("n/a") }}
-- Positive signals: {{ item.positive_signals | default("n/a") }}
-- Negative signals: {{ item.negative_signals | default("n/a") }}
-- Catalyst matches: {{ item.catalyst_matches | default("n/a") }}
-- Notes: {{ item.notes | default("No notes available.") }}
+{% if item.manual_review_reason %}
+- Manual review reason: {{ item.manual_review_reason }}
+{% endif %}
+{% if item.positive_signals and item.positive_signals not in ("n/a", "0", "") %}
+- Positive signals: {{ item.positive_signals }}
+{% endif %}
+{% if item.negative_signals and item.negative_signals not in ("n/a", "0", "") %}
+- Negative signals: {{ item.negative_signals }}
+{% endif %}
+{% if item.catalyst_matches and item.catalyst_matches not in ("n/a", "0", "") %}
+- Catalyst matches: {{ item.catalyst_matches }}
+{% endif %}
 
 {% endfor %}
 {% else %}
@@ -151,7 +158,9 @@ No team review priorities available for this run.
 {% endif %}
 - Related market: {{ item.market_title | default("n/a") }}
 - Matched signal: {{ item.signal_label | default("n/a") }}
-- Review priority: {{ item.review_priority | default("n/a") }}
+{% if item.review_priority and item.review_priority not in ("n/a", "", none) %}
+- Review priority: {{ item.review_priority }}
+{% endif %}
 
 {% endfor %}
 {% else %}
@@ -251,15 +260,17 @@ No signal summary available for this run.
 ## 9. Data freshness status
 
 {% if data_freshness %}
-- Metadata generated at: {{ data_freshness.generated_at | default("n/a") }}
-- Stale threshold hours: {{ data_freshness.stale_threshold_hours | default("n/a") }}
-- Trends data status: {{ data_freshness.trends_data_status | default("n/a") }}
-- Freshness summary: {{ data_freshness.freshness_summary | default("n/a") }}
-- Auxiliary pages stale: {{ data_freshness.auxiliary_pages_stale | default("none") }}
-- Public dashboard status: {{ data_freshness.public_dashboard_status | default("n/a") }}
-- Generated outputs available: {{ data_freshness.generated_outputs_available | default("n/a") }}
-- Missing outputs: {{ data_freshness.missing_outputs | default("n/a") }}
-- Stale outputs: {{ data_freshness.stale_outputs | default("n/a") }}
+- Main trends data: {{ data_freshness.trends_data_status | default("n/a") }}
+{% if data_freshness.auxiliary_pages_stale and data_freshness.auxiliary_pages_stale != "none" %}
+- Auxiliary static pages: {{ data_freshness.auxiliary_pages_stale }} older than freshness threshold
+- This does not affect the market-intelligence data in this brief.
+{% endif %}
+{% if data_freshness.missing_outputs and data_freshness.missing_outputs not in ("n/a", "none", "") %}
+- Missing outputs: {{ data_freshness.missing_outputs }}
+{% endif %}
+{% if data_freshness.stale_outputs and data_freshness.stale_outputs not in ("n/a", "none", "") %}
+- Stale outputs: {{ data_freshness.stale_outputs }}
+{% endif %}
 {% else %}
 Data freshness metadata is not available for this run.
 {% endif %}

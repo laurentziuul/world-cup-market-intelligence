@@ -321,6 +321,15 @@ def normalize_team_row(row: dict[str, Any]) -> dict[str, str]:
 
 
 def normalize_catalyst_row(row: dict[str, Any]) -> dict[str, str]:
+    raw_signal = get_field(
+        row,
+        [
+            "signal_label",
+            "signal",
+            "classification",
+            "movement_label",
+        ],
+    )
     return {
         "team": get_field(row, ["team", "team_name", "entity", "outcome", "name"]),
         "catalyst_type": get_field(
@@ -352,15 +361,7 @@ def normalize_catalyst_row(row: dict[str, Any]) -> dict[str, str]:
                 "event",
             ],
         ),
-        "signal_label": get_field(
-            row,
-            [
-                "signal_label",
-                "signal",
-                "classification",
-                "movement_label",
-            ],
-        ),
+        "signal_label": _humanize_signal(raw_signal) if raw_signal not in ("n/a", "", "none") else raw_signal,
         "review_priority": get_field(
             row,
             [
@@ -575,7 +576,21 @@ def collect_warnings(
             "No major generator warnings. Manual review is still required before interpretation."
         )
 
-    return warnings
+    # Transform technical warning messages to public-facing wording
+    transformed = []
+    for w in warnings:
+        if w.startswith("Stale dashboard HTML files:"):
+            pages = w.replace("Stale dashboard HTML files:", "").strip()
+            transformed.append(
+                f"Auxiliary static pages older than freshness threshold: {pages}. "
+                "This does not affect the main intelligence data."
+            )
+        elif w.startswith("Missing dashboard HTML files:"):
+            pages = w.replace("Missing dashboard HTML files:", "").strip()
+            transformed.append(f"Some dashboard pages are not yet generated: {pages}.")
+        else:
+            transformed.append(w)
+    return transformed
 
 
 def _extract_team_from_title(title: str) -> str:
@@ -678,6 +693,33 @@ def _fmt_vol_signed(value: str) -> str:
     except (ValueError, TypeError):
         return str(value)
 
+
+
+
+_SIGNAL_LABELS: dict[str, str] = {
+    "strong_positive_move": "Strong positive move",
+    "strong_negative_move": "Strong negative move",
+    "moderate_positive_move": "Moderate positive move",
+    "moderate_negative_move": "Moderate negative move",
+    "flat_no_signal": "Flat / no clear signal",
+}
+
+
+def _humanize_signal(label: str) -> str:
+    """Convert snake_case signal label to human-readable form."""
+    return _SIGNAL_LABELS.get(str(label).lower().strip(), str(label))
+
+
+def _signal_to_reason(label: str) -> str:
+    """Derive a public-facing manual review reason from a signal label."""
+    _REASONS = {
+        "strong_positive_move": "Strong positive market movement",
+        "strong_negative_move": "Strong negative market movement",
+        "moderate_positive_move": "Moderate positive market movement",
+        "moderate_negative_move": "Moderate negative market movement",
+        "flat_no_signal": "Flat market — no strong directional signal",
+    }
+    return _REASONS.get(str(label).lower().strip(), "Market movement detected")
 
 # Romania is UTC+3 (EEST) during the World Cup (June-July).
 # This fixed offset is valid for the entire tournament window.
@@ -826,7 +868,7 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
         if _lbl and _lbl.lower() not in _MISSING_VALS:
             _label_counts[_lbl] = _label_counts.get(_lbl, 0) + 1
     normalized_signals = [
-        {"signal_label": label, "count": str(count)}
+        {"signal_label": _humanize_signal(label), "count": str(count)}
         for label, count in sorted(_label_counts.items(), key=lambda x: x[1], reverse=True)
     ]
     normalized_catalysts = [
@@ -860,6 +902,32 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
             _mover["signal_label"] = _signal_by_team[_key]
         if str(_mover.get("review_priority", "n/a")).lower() in _MISSING and _key in _priority_by_team:
             _mover["review_priority"] = _priority_by_team[_key]
+
+    # Enrich team rows with signal_label and manual_review_reason
+    for _team in normalized_teams:
+        _key = str(_team.get("team", "")).strip().lower()
+        _lbl = _signal_by_team.get(_key, "")
+        _team["signal_label"] = _humanize_signal(_lbl) if _lbl else ""
+        # Derive manual review reason from signal label or signal counts
+        if _lbl and _lbl.lower() not in _MISSING:
+            _team["manual_review_reason"] = _signal_to_reason(_lbl)
+        else:
+            try:
+                _pos_n = int(str(_team.get("positive_signals", "0")).strip())
+            except (ValueError, TypeError):
+                _pos_n = 0
+            try:
+                _neg_n = int(str(_team.get("negative_signals", "0")).strip())
+            except (ValueError, TypeError):
+                _neg_n = 0
+            if _pos_n > 0 and _neg_n > 0:
+                _team["manual_review_reason"] = "Mixed market signals detected"
+            elif _pos_n > 0:
+                _team["manual_review_reason"] = "Positive market movement detected"
+            elif _neg_n > 0:
+                _team["manual_review_reason"] = "Negative market movement detected"
+            else:
+                _team["manual_review_reason"] = "Market movement detected"
 
     metadata = read_json(dashboard_metadata_path)
     data_freshness = summarize_metadata(metadata)
@@ -895,6 +963,9 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
         for _df in ("volume_delta", "liquidity_delta"):
             if str(out.get(_df, "n/a")).lower().strip() not in _MISSING_VALS:
                 out[_df] = _fmt_vol_signed(out[_df])
+        _raw_lbl = str(out.get("signal_label", "")).strip()
+        if _raw_lbl and _raw_lbl.lower() not in _MISSING_VALS:
+            out["signal_label"] = _humanize_signal(_raw_lbl)
         return out
 
     top_probability_movers = [_fmt_mover(m) for m in top_probability_movers]

@@ -1,8 +1,8 @@
-﻿# World Cup Market Intelligence Daily Brief
+# World Cup Market Intelligence Daily Brief
 
 Report date: 2026-06-30
 
-Generated at: 2026-06-30T14:55:20+00:00
+Generated at: 2026-06-30T16:04:35+00:00
 
 Product: World Cup Market Intelligence Daily Brief
 
@@ -40,7 +40,7 @@ Top volume movement to review: Morocco with change +14.78M.
 
 5 catalyst matches are included in the watchlist.
 
-Dashboard trust status: partial freshness warning — trends data fresh, auxiliary pages stale.
+Dashboard trust status: fresh.
 
 All interpretation is research-only and should not be treated as betting, investment or financial advice.
 
@@ -75,7 +75,7 @@ Trends dashboard:
 - Current probability: 0.05%
 - Previous probability: 5.05%
 - Probability change: -5.00 pp
-- Signal: strong_negative_move
+- Signal: Strong negative move
 - Review priority: high
 
 ### 2. France
@@ -85,7 +85,7 @@ Trends dashboard:
 - Current probability: 27.25%
 - Previous probability: 22.95%
 - Probability change: +4.30 pp
-- Signal: strong_positive_move
+- Signal: Strong positive move
 - Review priority: high
 
 ### 3. Morocco
@@ -95,7 +95,7 @@ Trends dashboard:
 - Current probability: 4.05%
 - Previous probability: 1.35%
 - Probability change: +2.70 pp
-- Signal: strong_positive_move
+- Signal: Strong positive move
 - Review priority: high
 
 ### 4. Brazil
@@ -105,7 +105,7 @@ Trends dashboard:
 - Current probability: 7.05%
 - Previous probability: 5.75%
 - Probability change: +1.30 pp
-- Signal: moderate_positive_move
+- Signal: Moderate positive move
 - Review priority: medium
 
 ### 5. Argentina
@@ -115,7 +115,7 @@ Trends dashboard:
 - Current probability: 19.50%
 - Previous probability: 20.75%
 - Probability change: -1.25 pp
-- Signal: moderate_negative_move
+- Signal: Moderate negative move
 - Review priority: medium
 
 
@@ -129,7 +129,7 @@ Trends dashboard:
 - Liquidity change: -4.89M
 - Current liquidity: $12.7M
 - Previous liquidity: $17.6M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 2. Mexico
@@ -138,7 +138,7 @@ Trends dashboard:
 - Liquidity change: -3.62M
 - Current liquidity: $2.0M
 - Previous liquidity: $5.6M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 3. Ghana
@@ -147,7 +147,7 @@ Trends dashboard:
 - Liquidity change: +3.13M
 - Current liquidity: $18.8M
 - Previous liquidity: $15.6M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 4. Sweden
@@ -156,7 +156,7 @@ Trends dashboard:
 - Liquidity change: -3.07M
 - Current liquidity: $10.5M
 - Previous liquidity: $13.5M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 5. Croatia
@@ -165,7 +165,7 @@ Trends dashboard:
 - Liquidity change: -3.06M
 - Current liquidity: $5.0M
 - Previous liquidity: $8.0M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 
@@ -179,7 +179,7 @@ Trends dashboard:
 - Volume change: +14.78M
 - Current volume: $98.1M
 - Previous volume: $83.4M
-- Signal: strong_positive_move
+- Signal: Strong positive move
 - Review priority: high
 
 ### 2. Paraguay
@@ -188,7 +188,7 @@ Trends dashboard:
 - Volume change: +14.76M
 - Current volume: $89.1M
 - Previous volume: $74.3M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 3. Mexico
@@ -197,7 +197,7 @@ Trends dashboard:
 - Volume change: +7.23M
 - Current volume: $105.9M
 - Previous volume: $98.7M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 4. Croatia
@@ -206,7 +206,7 @@ Trends dashboard:
 - Volume change: +6.34M
 - Current volume: $94.2M
 - Previous volume: $87.9M
-- Signal: flat_no_signal
+- Signal: Flat / no clear signal
 - Review priority: medium
 
 ### 5. Brazil
@@ -215,7 +215,7 @@ Trends dashboard:
 - Volume change: +4.74M
 - Current volume: $67.9M
 - Previous volume: $63.1M
-- Signal: moderate_positive_move
+- Signal: Moderate positive move
 - Review priority: medium
 
 
@@ -226,47 +226,31 @@ Trends dashboard:
 ### 1. France
 
 - Review priority: high
-- Net signal score: n/a
+- Manual review reason: Strong positive market movement
 - Positive signals: 1
-- Negative signals: 0
-- Catalyst matches: 0
-- Notes: No notes available.
 
 ### 2. Morocco
 
 - Review priority: high
-- Net signal score: n/a
+- Manual review reason: Strong positive market movement
 - Positive signals: 1
-- Negative signals: 0
-- Catalyst matches: 0
-- Notes: No notes available.
 
 ### 3. Netherlands
 
 - Review priority: high
-- Net signal score: n/a
-- Positive signals: 0
+- Manual review reason: Strong negative market movement
 - Negative signals: 1
-- Catalyst matches: 0
-- Notes: No notes available.
 
 ### 4. Algeria
 
 - Review priority: medium
-- Net signal score: n/a
-- Positive signals: 0
-- Negative signals: 0
-- Catalyst matches: 0
-- Notes: No notes available.
+- Manual review reason: Flat market — no strong directional signal
 
 ### 5. Argentina
 
 - Review priority: medium
-- Net signal score: n/a
-- Positive signals: 0
+- Manual review reason: Moderate negative market movement
 - Negative signals: 1
-- Catalyst matches: 0
-- Notes: No notes available.
 
 
 ---
@@ -277,36 +261,31 @@ Trends dashboard:
 
 - Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Netherlands win the 2026 FIFA World Cup?
-- Matched signal: strong_negative_move
-- Review priority: n/a
+- Matched signal: Strong negative move
 
 ### 2. France
 
 - Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will France win the 2026 FIFA World Cup?
-- Matched signal: strong_positive_move
-- Review priority: n/a
+- Matched signal: Strong positive move
 
 ### 3. Morocco
 
 - Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Morocco win the 2026 FIFA World Cup?
-- Matched signal: strong_positive_move
-- Review priority: n/a
+- Matched signal: Strong positive move
 
 ### 4. Brazil
 
 - Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Brazil win the 2026 FIFA World Cup?
-- Matched signal: moderate_positive_move
-- Review priority: n/a
+- Matched signal: Moderate positive move
 
 ### 5. Argentina
 
 - Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Argentina win the 2026 FIFA World Cup?
-- Matched signal: moderate_negative_move
-- Review priority: n/a
+- Matched signal: Moderate negative move
 
 
 ---
@@ -343,31 +322,23 @@ No recommended snapshot windows are currently scheduled.
 
 ## 8. Signal summary (all markets)
 
-- flat_no_signal: 24
-- strong_positive_move: 2
-- strong_negative_move: 1
-- moderate_positive_move: 1
-- moderate_negative_move: 1
+- Flat / no clear signal: 24
+- Strong positive move: 2
+- Strong negative move: 1
+- Moderate positive move: 1
+- Moderate negative move: 1
 
 ---
 
 ## 9. Data freshness status
 
-- Metadata generated at: 2026-06-30T14:55:20Z
-- Stale threshold hours: 72.0
-- Trends data status: fresh
-- Freshness summary: partial freshness warning — trends data fresh, auxiliary pages stale
-- Auxiliary pages stale: landing_page
-- Public dashboard status: stale
-- Generated outputs available: n/a
-- Missing outputs: none
-- Stale outputs: none
+- Main trends data: fresh
 
 ---
 
 ## 10. Warnings and limitations
 
-- Stale dashboard HTML files: landing_page
+- No major generator warnings. Manual review is still required before interpretation.
 
 Important limitations:
 

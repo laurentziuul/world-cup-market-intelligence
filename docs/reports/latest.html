@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup Market Intelligence Daily Brief — 30 June 2026</title>
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f4f6f9;
+      color: #1a1d23;
+      line-height: 1.6;
+    }
+
+    /* ─── Page wrapper ─────────────────────────────────────────────── */
+    .page { max-width: 900px; margin: 0 auto; padding: 0 0 60px; }
+
+    /* ─── COVER ────────────────────────────────────────────────────── */
+    .cover {
+      background: linear-gradient(135deg, #0a1628 0%, #112244 60%, #1a3a6e 100%);
+      color: #fff;
+      padding: 64px 48px 56px;
+      border-radius: 0 0 24px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.04);
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+    }
+    .cover-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #a8c4f0;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .cover h1 {
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .cover h1 span { color: #5b9cf6; }
+    .cover-meta {
+      font-size: 0.9rem;
+      color: #8aabda;
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    .cover-meta strong { color: #c8dcf8; }
+    .cover-divider {
+      width: 48px; height: 3px;
+      background: #5b9cf6;
+      border-radius: 2px;
+      margin: 22px 0;
+    }
+    .cover-disclaimer {
+      background: rgba(255,255,255,0.07);
+      border-left: 3px solid #5b9cf6;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 18px;
+      font-size: 0.82rem;
+      color: #a8c4f0;
+      max-width: 560px;
+      margin-top: 8px;
+    }
+
+    /* ─── Section layout ───────────────────────────────────────────── */
+    .section { padding: 40px 48px 0; }
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5b9cf6;
+      margin-bottom: 6px;
+    }
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #0a1628;
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+    .section-intro {
+      font-size: 0.92rem;
+      color: #4a5568;
+      margin-bottom: 22px;
+      max-width: 700px;
+    }
+
+    /* ─── Card grid ────────────────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .card-grid-2 {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    /* ─── Snapshot cards ───────────────────────────────────────────── */
+    .snap-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px 20px 18px;
+      box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+      border-top: 4px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .snap-card.up   { border-top-color: #22c55e; }
+    .snap-card.down { border-top-color: #ef4444; }
+    .snap-card.vol  { border-top-color: #f59e0b; }
+    .snap-card.liq  { border-top-color: #8b5cf6; }
+    .snap-card.rev  { border-top-color: #64748b; }
+    .snap-card-icon { font-size: 1.5rem; margin-bottom: 4px; }
+    .snap-card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+    .snap-card-team {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0a1628;
+    }
+    .snap-card-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .snap-card-value.up   { color: #16a34a; }
+    .snap-card-value.down { color: #dc2626; }
+    .snap-card-value.neutral { color: #64748b; }
+    .snap-card-note {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    /* ─── Mover rows ───────────────────────────────────────────────── */
+    .mover-list { display: flex; flex-direction: column; gap: 12px; }
+    .mover-row {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+      display: grid;
+      grid-template-columns: 32px 1fr auto auto;
+      align-items: center;
+      gap: 14px;
+    }
+    .mover-rank {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #64748b;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mover-team { font-size: 1rem; font-weight: 700; color: #0a1628; }
+    .mover-market { font-size: 0.78rem; color: #94a3b8; margin-top: 1px; }
+    .mover-probs {
+      text-align: right;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+    .mover-probs span { display: block; }
+    .mover-probs .current { font-size: 1rem; font-weight: 700; color: #0a1628; }
+    .mover-change {
+      min-width: 72px;
+      text-align: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .mover-change.up   { background: #dcfce7; color: #15803d; }
+    .mover-change.down { background: #fee2e2; color: #b91c1c; }
+    .signal-pill {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-top: 4px;
+    }
+    .signal-pill.strong-pos  { background: #dcfce7; color: #15803d; }
+    .signal-pill.strong-neg  { background: #fee2e2; color: #b91c1c; }
+    .signal-pill.mod-pos     { background: #d1fae5; color: #065f46; }
+    .signal-pill.mod-neg     { background: #fef3c7; color: #92400e; }
+    .signal-pill.flat        { background: #f1f5f9; color: #64748b; }
+
+    /* ─── Volume / Liquidity cards ─────────────────────────────────── */
+    .vol-list { display: flex; flex-direction: column; gap: 10px; }
+    .vol-row {
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+      display: grid;
+      grid-template-columns: 32px 1fr auto auto;
+      align-items: center;
+      gap: 14px;
+    }
+    .vol-team { font-size: 0.95rem; font-weight: 700; color: #0a1628; }
+    .vol-sub  { font-size: 0.75rem; color: #94a3b8; }
+    .vol-bar-wrap {
+      width: 100px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      height: 7px;
+      overflow: hidden;
+    }
+    .vol-bar { height: 100%; border-radius: 6px; }
+    .vol-bar.up   { background: #22c55e; }
+    .vol-bar.down { background: #ef4444; }
+    .vol-change {
+      min-width: 80px;
+      text-align: right;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .vol-change.up   { color: #16a34a; }
+    .vol-change.down { color: #dc2626; }
+    .vol-current { font-size: 0.8rem; color: #64748b; text-align: right; }
+
+    /* ─── Review cards ─────────────────────────────────────────────── */
+    .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 14px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 18px 14px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+      border-left: 4px solid #e2e8f0;
+    }
+    .review-card.high   { border-left-color: #ef4444; }
+    .review-card.medium { border-left-color: #f59e0b; }
+    .review-card-team { font-size: 1rem; font-weight: 800; color: #0a1628; margin-bottom: 6px; }
+    .review-card-priority {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .review-card-priority.high   { background: #fee2e2; color: #b91c1c; }
+    .review-card-priority.medium { background: #fef3c7; color: #92400e; }
+    .review-card-signals {
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .review-card-signals span { display: flex; align-items: center; gap: 4px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .dot.pos { background: #22c55e; }
+    .dot.neg { background: #ef4444; }
+    .dot.neu { background: #94a3b8; }
+
+    /* ─── Catalyst cards ───────────────────────────────────────────── */
+    .catalyst-list { display: flex; flex-direction: column; gap: 12px; }
+    .catalyst-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: start;
+    }
+    .catalyst-team { font-size: 0.95rem; font-weight: 800; color: #0a1628; margin-bottom: 4px; }
+    .catalyst-note {
+      font-size: 0.82rem;
+      color: #64748b;
+      font-style: italic;
+    }
+    .catalyst-signal { text-align: right; }
+
+    /* ─── Freshness ────────────────────────────────────────────────── */
+    .freshness-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .fresh-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+    }
+    .fresh-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; margin-bottom: 6px; }
+    .fresh-value { font-size: 0.92rem; font-weight: 700; }
+    .fresh-value.ok    { color: #16a34a; }
+    .fresh-value.warn  { color: #d97706; }
+    .fresh-value.stale { color: #dc2626; }
+    .fresh-note { font-size: 0.78rem; color: #94a3b8; margin-top: 4px; }
+
+    .warning-box {
+      background: #fffbeb;
+      border: 1px solid #fcd34d;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 0.85rem;
+      color: #78350f;
+      margin-bottom: 16px;
+    }
+    .warning-box strong { color: #92400e; }
+
+    /* ─── Signal summary bar ───────────────────────────────────────── */
+    .signal-summary {
+      background: #fff;
+      border-radius: 14px;
+      padding: 22px 24px;
+      box-shadow: 0 1px 8px rgba(10,22,40,0.06);
+      margin-bottom: 8px;
+    }
+    .signal-summary-title { font-size: 0.82rem; font-weight: 700; color: #64748b; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .signal-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .signal-name { font-size: 0.82rem; font-weight: 600; color: #374151; min-width: 180px; }
+    .signal-bar-wrap { flex: 1; background: #f1f5f9; border-radius: 6px; height: 10px; overflow: hidden; }
+    .signal-bar-fill { height: 100%; border-radius: 6px; }
+    .signal-count { font-size: 0.82rem; font-weight: 700; color: #374151; min-width: 28px; text-align: right; }
+
+    /* ─── Disclaimer ───────────────────────────────────────────────── */
+    .disclaimer {
+      background: #0a1628;
+      color: #8aabda;
+      border-radius: 16px;
+      padding: 32px 40px;
+      margin: 40px 48px 0;
+    }
+    .disclaimer h2 { font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.01em; }
+    .disclaimer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .disclaimer-item {
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #a8c4f0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .disclaimer-item::before { content: '✕'; color: #ef4444; font-weight: 700; flex-shrink: 0; }
+    .disclaimer-footer { font-size: 0.78rem; color: #5b7fa8; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; }
+
+    /* ─── Footer ───────────────────────────────────────────────────── */
+    .footer {
+      text-align: center;
+      padding: 28px 48px 0;
+      font-size: 0.78rem;
+      color: #94a3b8;
+    }
+    .footer strong { color: #64748b; }
+
+    /* ─── Divider ──────────────────────────────────────────────────── */
+    .divider { height: 1px; background: #e2e8f0; margin: 32px 48px 0; }
+
+    /* ─── Explainer box ────────────────────────────────────────────── */
+    .explainer {
+      background: #f0f7ff;
+      border-left: 3px solid #5b9cf6;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 18px;
+      font-size: 0.84rem;
+      color: #1e3a5f;
+      margin-bottom: 20px;
+    }
+    .explainer strong { color: #1a3a6e; }
+
+    /* ─── Print / PDF ──────────────────────────────────────────────── */
+    @media print {
+      body { background: #fff; }
+      .cover { border-radius: 0; }
+      .section { padding: 28px 40px 0; }
+      .disclaimer { margin: 32px 40px 0; }
+      .footer { padding: 20px 40px 0; }
+      .divider { margin: 24px 40px 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  COVER                                                          -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <div class="cover-badge">Market Intelligence</div>
+    <h1>World Cup<br><span>Daily Brief</span></h1>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <span><strong>Date:</strong> 30 June 2026</span>
+      <span><strong>Generated:</strong> 14:55 UTC</span>
+      <span><strong>Powered by:</strong> Mayior Capital</span>
+    </div>
+    <div class="cover-disclaimer">
+      <strong>Research-only.</strong> This report is for market-intelligence and educational purposes only. It is not betting advice, investment advice, or financial advice. It does not predict outcomes.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 2 — EXECUTIVE SNAPSHOT                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 1</div>
+    <div class="section-title">Executive Snapshot</div>
+    <p class="section-intro">
+      A quick overview of the most notable market movements observed in today's brief. These are observations of how prediction-market probabilities, trading volumes, and available liquidity shifted — not recommendations of any kind.
+    </p>
+
+    <div class="card-grid">
+
+      <div class="snap-card down">
+        <div class="snap-card-label">Biggest Probability Drop</div>
+        <div class="snap-card-team">Netherlands</div>
+        <div class="snap-card-value down">&#9660; &minus;5.00 percentage points</div>
+        <div class="snap-card-note">Moved from 5.05% → 0.05%</div>
+      </div>
+
+      <div class="snap-card up">
+        <div class="snap-card-label">Biggest Probability Rise</div>
+        <div class="snap-card-team">France</div>
+        <div class="snap-card-value up">&#9650; +4.30 percentage points</div>
+        <div class="snap-card-note">Moved from 22.95% → 27.25%</div>
+      </div>
+
+      <div class="snap-card vol">
+        <div class="snap-card-label">Biggest Volume Increase</div>
+        <div class="snap-card-team">Morocco</div>
+        <div class="snap-card-value up">&#9650; +$14.78M traded</div>
+        <div class="snap-card-note">Total volume now $98.1M</div>
+      </div>
+
+      <div class="snap-card liq">
+        <div class="snap-card-label">Biggest Liquidity Drop</div>
+        <div class="snap-card-team">Paraguay</div>
+        <div class="snap-card-value down">&#9660; &minus;$4.89M</div>
+        <div class="snap-card-note">Liquidity fell from $17.6M → $12.7M</div>
+      </div>
+
+      <div class="snap-card rev">
+        <div class="snap-card-label">Teams for Manual Review</div>
+        <div class="snap-card-team">5 Teams</div>
+        <div class="snap-card-value neutral">France, Morocco, Netherlands,<br>Algeria, Argentina</div>
+        <div class="snap-card-note">Worth a closer look — not a recommendation</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 3 — PROBABILITY MOVERS                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 2</div>
+    <div class="section-title">What Changed in the Market?</div>
+    <div class="explainer">
+      <strong>What is a prediction market probability?</strong> On platforms like Polymarket, people trade contracts that pay out if a specific outcome happens. The price of those contracts reflects the collective market view — expressed as a percentage. When more people buy "Yes", the probability goes up. When more sell, it goes down. These numbers are <em>not</em> official odds or forecasts.
+    </div>
+
+    <div class="mover-list">
+
+      <!-- Netherlands -->
+      <div class="mover-row">
+        <div class="mover-rank">1</div>
+        <div>
+          <div class="mover-team">Netherlands</div>
+          <div class="mover-market">Will Netherlands win the 2026 FIFA World Cup?</div>
+          <span class="signal-pill strong-neg">Strong Negative Move</span>
+        </div>
+        <div class="mover-probs">
+          <span class="current">0.05%</span>
+          <span>was 5.05%</span>
+        </div>
+        <div class="mover-change down">&#9660; &minus;5.00 pp</div>
+      </div>
+
+      <!-- France -->
+      <div class="mover-row">
+        <div class="mover-rank">2</div>
+        <div>
+          <div class="mover-team">France</div>
+          <div class="mover-market">Will France win the 2026 FIFA World Cup?</div>
+          <span class="signal-pill strong-pos">Strong Positive Move</span>
+        </div>
+        <div class="mover-probs">
+          <span class="current">27.25%</span>
+          <span>was 22.95%</span>
+        </div>
+        <div class="mover-change up">&#9650; +4.30 pp</div>
+      </div>
+
+      <!-- Morocco -->
+      <div class="mover-row">
+        <div class="mover-rank">3</div>
+        <div>
+          <div class="mover-team">Morocco</div>
+          <div class="mover-market">Will Morocco win the 2026 FIFA World Cup?</div>
+          <span class="signal-pill strong-pos">Strong Positive Move</span>
+        </div>
+        <div class="mover-probs">
+          <span class="current">4.05%</span>
+          <span>was 1.35%</span>
+        </div>
+        <div class="mover-change up">&#9650; +2.70 pp</div>
+      </div>
+
+      <!-- Brazil -->
+      <div class="mover-row">
+        <div class="mover-rank">4</div>
+        <div>
+          <div class="mover-team">Brazil</div>
+          <div class="mover-market">Will Brazil win the 2026 FIFA World Cup?</div>
+          <span class="signal-pill mod-pos">Moderate Positive Move</span>
+        </div>
+        <div class="mover-probs">
+          <span class="current">7.05%</span>
+          <span>was 5.75%</span>
+        </div>
+        <div class="mover-change up">&#9650; +1.30 pp</div>
+      </div>
+
+      <!-- Argentina -->
+      <div class="mover-row">
+        <div class="mover-rank">5</div>
+        <div>
+          <div class="mover-team">Argentina</div>
+          <div class="mover-market">Will Argentina win the 2026 FIFA World Cup?</div>
+          <span class="signal-pill mod-neg">Moderate Negative Move</span>
+        </div>
+        <div class="mover-probs">
+          <span class="current">19.50%</span>
+          <span>was 20.75%</span>
+        </div>
+        <div class="mover-change down">&#9660; &minus;1.25 pp</div>
+      </div>
+
+    </div>
+
+    <!-- Signal distribution -->
+    <div style="margin-top: 22px;">
+      <div class="signal-summary">
+        <div class="signal-summary-title">Signal Distribution Across All Markets (29 total)</div>
+        <div class="signal-row">
+          <div class="signal-name">No significant movement</div>
+          <div class="signal-bar-wrap"><div class="signal-bar-fill" style="width:82.8%; background:#e2e8f0;"></div></div>
+          <div class="signal-count">24</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Strong positive move</div>
+          <div class="signal-bar-wrap"><div class="signal-bar-fill" style="width:6.9%; background:#22c55e;"></div></div>
+          <div class="signal-count">2</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Strong negative move</div>
+          <div class="signal-bar-wrap"><div class="signal-bar-fill" style="width:3.4%; background:#ef4444;"></div></div>
+          <div class="signal-count">1</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Moderate positive move</div>
+          <div class="signal-bar-wrap"><div class="signal-bar-fill" style="width:3.4%; background:#86efac;"></div></div>
+          <div class="signal-count">1</div>
+        </div>
+        <div class="signal-row">
+          <div class="signal-name">Moderate negative move</div>
+          <div class="signal-bar-wrap"><div class="signal-bar-fill" style="width:3.4%; background:#fca5a5;"></div></div>
+          <div class="signal-count">1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 4 — VOLUME & LIQUIDITY                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 3</div>
+    <div class="section-title">Volume &amp; Liquidity</div>
+    <div class="explainer">
+      <strong>Volume</strong> is the total amount of money that has been traded on a market. A rising volume means more people are actively participating — buying or selling contracts. <strong>Liquidity</strong> is the amount of money available to be traded right now. High liquidity means it is easier to enter or exit a position. Neither figure is a signal of who will win.
+    </div>
+
+    <!-- Volume movers -->
+    <div style="margin-bottom: 10px;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#f59e0b; margin-bottom:10px;">Top Volume Movers</div>
+      <div class="vol-list">
+
+        <div class="vol-row">
+          <div class="mover-rank">1</div>
+          <div>
+            <div class="vol-team">Morocco</div>
+            <div class="vol-sub">Current: $98.1M &nbsp;|&nbsp; Previous: $83.4M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:100%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$14.78M</div>
+            <div class="vol-current">&#9650; Volume up</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">2</div>
+          <div>
+            <div class="vol-team">Paraguay</div>
+            <div class="vol-sub">Current: $89.1M &nbsp;|&nbsp; Previous: $74.3M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:100%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$14.76M</div>
+            <div class="vol-current">&#9650; Volume up</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">3</div>
+          <div>
+            <div class="vol-team">Mexico</div>
+            <div class="vol-sub">Current: $105.9M &nbsp;|&nbsp; Previous: $98.7M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:49%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$7.23M</div>
+            <div class="vol-current">&#9650; Volume up</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">4</div>
+          <div>
+            <div class="vol-team">Croatia</div>
+            <div class="vol-sub">Current: $94.2M &nbsp;|&nbsp; Previous: $87.9M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:43%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$6.34M</div>
+            <div class="vol-current">&#9650; Volume up</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">5</div>
+          <div>
+            <div class="vol-team">Brazil</div>
+            <div class="vol-sub">Current: $67.9M &nbsp;|&nbsp; Previous: $63.1M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:32%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$4.74M</div>
+            <div class="vol-current">&#9650; Volume up</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Liquidity movers -->
+    <div style="margin-top: 26px;">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#8b5cf6; margin-bottom:10px;">Top Liquidity Movers</div>
+      <div class="vol-list">
+
+        <div class="vol-row">
+          <div class="mover-rank">1</div>
+          <div>
+            <div class="vol-team">Paraguay</div>
+            <div class="vol-sub">Current: $12.7M &nbsp;|&nbsp; Previous: $17.6M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar down" style="width:100%;"></div>
+          </div>
+          <div>
+            <div class="vol-change down">&minus;$4.89M</div>
+            <div class="vol-current">&#9660; Liquidity down</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">2</div>
+          <div>
+            <div class="vol-team">Mexico</div>
+            <div class="vol-sub">Current: $2.0M &nbsp;|&nbsp; Previous: $5.6M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar down" style="width:74%;"></div>
+          </div>
+          <div>
+            <div class="vol-change down">&minus;$3.62M</div>
+            <div class="vol-current">&#9660; Liquidity down</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">3</div>
+          <div>
+            <div class="vol-team">Ghana</div>
+            <div class="vol-sub">Current: $18.8M &nbsp;|&nbsp; Previous: $15.6M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar up" style="width:64%;"></div>
+          </div>
+          <div>
+            <div class="vol-change up">+$3.13M</div>
+            <div class="vol-current">&#9650; Liquidity up</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">4</div>
+          <div>
+            <div class="vol-team">Sweden</div>
+            <div class="vol-sub">Current: $10.5M &nbsp;|&nbsp; Previous: $13.5M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar down" style="width:63%;"></div>
+          </div>
+          <div>
+            <div class="vol-change down">&minus;$3.07M</div>
+            <div class="vol-current">&#9660; Liquidity down</div>
+          </div>
+        </div>
+
+        <div class="vol-row">
+          <div class="mover-rank">5</div>
+          <div>
+            <div class="vol-team">Croatia</div>
+            <div class="vol-sub">Current: $5.0M &nbsp;|&nbsp; Previous: $8.0M</div>
+          </div>
+          <div class="vol-bar-wrap" style="width:120px;">
+            <div class="vol-bar down" style="width:63%;"></div>
+          </div>
+          <div>
+            <div class="vol-change down">&minus;$3.06M</div>
+            <div class="vol-current">&#9660; Liquidity down</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 5 — TEAMS TO REVIEW                                    -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 4</div>
+    <div class="section-title">Teams to Review Manually</div>
+    <div class="explainer">
+      <strong>What does "manual review" mean?</strong> It simply means these teams showed enough market activity to be worth a closer look. It is <em>not</em> a recommendation to bet on them, trade them, or take any action. Think of it as a flag that says: "something moved here — worth paying attention to."
+    </div>
+
+    <div class="review-grid">
+
+      <div class="review-card high">
+        <div class="review-card-team">France</div>
+        <span class="review-card-priority high">High Priority</span>
+        <div class="review-card-signals">
+          <span><span class="dot pos"></span> 1 positive signal</span>
+          <span><span class="dot neg"></span> 0 negative signals</span>
+        </div>
+      </div>
+
+      <div class="review-card high">
+        <div class="review-card-team">Morocco</div>
+        <span class="review-card-priority high">High Priority</span>
+        <div class="review-card-signals">
+          <span><span class="dot pos"></span> 1 positive signal</span>
+          <span><span class="dot neg"></span> 0 negative signals</span>
+        </div>
+      </div>
+
+      <div class="review-card high">
+        <div class="review-card-team">Netherlands</div>
+        <span class="review-card-priority high">High Priority</span>
+        <div class="review-card-signals">
+          <span><span class="dot pos"></span> 0 positive signals</span>
+          <span><span class="dot neg"></span> 1 negative signal</span>
+        </div>
+      </div>
+
+      <div class="review-card medium">
+        <div class="review-card-team">Algeria</div>
+        <span class="review-card-priority medium">Medium Priority</span>
+        <div class="review-card-signals">
+          <span><span class="dot neu"></span> 0 signals detected</span>
+        </div>
+      </div>
+
+      <div class="review-card medium">
+        <div class="review-card-team">Argentina</div>
+        <span class="review-card-priority medium">Medium Priority</span>
+        <div class="review-card-signals">
+          <span><span class="dot pos"></span> 0 positive signals</span>
+          <span><span class="dot neg"></span> 1 negative signal</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 6 — CATALYST WATCHLIST                                 -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 5</div>
+    <div class="section-title">Catalyst Watchlist</div>
+    <div class="explainer">
+      A <strong>catalyst</strong> is a known event or news item that might explain why a market moved — for example, a key player injury, a squad announcement, or a match result. When no catalyst has been confirmed, the movement is noted but left unexplained. Catalyst notes describe <em>possible</em> context only; they do not prove causality.
+    </div>
+
+    <div class="catalyst-list">
+
+      <div class="catalyst-card">
+        <div>
+          <div class="catalyst-team">Netherlands</div>
+          <div class="catalyst-note">Market movement detected, but no confirmed explanation has been attached yet.</div>
+        </div>
+        <div class="catalyst-signal">
+          <span class="signal-pill strong-neg">Strong Negative Move</span>
+        </div>
+      </div>
+
+      <div class="catalyst-card">
+        <div>
+          <div class="catalyst-team">France</div>
+          <div class="catalyst-note">Market movement detected, but no confirmed explanation has been attached yet.</div>
+        </div>
+        <div class="catalyst-signal">
+          <span class="signal-pill strong-pos">Strong Positive Move</span>
+        </div>
+      </div>
+
+      <div class="catalyst-card">
+        <div>
+          <div class="catalyst-team">Morocco</div>
+          <div class="catalyst-note">Market movement detected, but no confirmed explanation has been attached yet.</div>
+        </div>
+        <div class="catalyst-signal">
+          <span class="signal-pill strong-pos">Strong Positive Move</span>
+        </div>
+      </div>
+
+      <div class="catalyst-card">
+        <div>
+          <div class="catalyst-team">Brazil</div>
+          <div class="catalyst-note">Market movement detected, but no confirmed explanation has been attached yet.</div>
+        </div>
+        <div class="catalyst-signal">
+          <span class="signal-pill mod-pos">Moderate Positive Move</span>
+        </div>
+      </div>
+
+      <div class="catalyst-card">
+        <div>
+          <div class="catalyst-team">Argentina</div>
+          <div class="catalyst-note">Market movement detected, but no confirmed explanation has been attached yet.</div>
+        </div>
+        <div class="catalyst-signal">
+          <span class="signal-pill mod-neg">Moderate Negative Move</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 7 — DATA FRESHNESS                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-label">Section 6</div>
+    <div class="section-title">Data Freshness &amp; Limitations</div>
+    <div class="explainer">
+      <strong>Why does data freshness matter?</strong> Prediction markets move continuously. Data that is even a few hours old may no longer reflect the current market state. Fresh data is better than stale data — but fresh data does <em>not</em> mean correct data, and it certainly does not mean predictive data.
+    </div>
+
+    <div class="warning-box">
+      <strong>Partial Freshness Warning:</strong> Trends data is fresh and up to date. However, some auxiliary pages (specifically the public landing page) are currently stale and may not reflect the latest information. Always verify data directly from the source dashboard before drawing any conclusions.
+    </div>
+
+    <div class="freshness-grid">
+
+      <div class="fresh-card">
+        <div class="fresh-label">Report Generated</div>
+        <div class="fresh-value ok">30 Jun 2026, 14:55 UTC</div>
+        <div class="fresh-note">Metadata timestamp</div>
+      </div>
+
+      <div class="fresh-card">
+        <div class="fresh-label">Trends Data</div>
+        <div class="fresh-value ok">Fresh</div>
+        <div class="fresh-note">Within the 72-hour freshness threshold</div>
+      </div>
+
+      <div class="fresh-card">
+        <div class="fresh-label">Public Landing Page</div>
+        <div class="fresh-value warn">Stale</div>
+        <div class="fresh-note">Auxiliary page not yet updated</div>
+      </div>
+
+      <div class="fresh-card">
+        <div class="fresh-label">Missing Outputs</div>
+        <div class="fresh-value ok">None</div>
+        <div class="fresh-note">All expected outputs present</div>
+      </div>
+
+    </div>
+
+    <div style="background:#fff; border-radius:12px; padding:18px 22px; box-shadow:0 1px 8px rgba(10,22,40,0.06); font-size:0.84rem; color:#4a5568; margin-top:4px;">
+      <strong style="color:#0a1628; display:block; margin-bottom:8px;">Important limitations to keep in mind:</strong>
+      Fresh data does not mean correct data. Fresh data does not mean predictive data. Signal labels describe market movement, not future outcomes. Catalyst notes do not prove causality. Manual review is always required before drawing any interpretation from this report.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  SECTION 8 — FINAL DISCLAIMER                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="disclaimer">
+    <h2>Final Research-Only Disclaimer</h2>
+    <div class="disclaimer-grid">
+      <div class="disclaimer-item">Not betting advice</div>
+      <div class="disclaimer-item">Not investment advice</div>
+      <div class="disclaimer-item">Not financial advice</div>
+      <div class="disclaimer-item">Not a prediction engine</div>
+      <div class="disclaimer-item">No guarantee of outcomes</div>
+      <div class="disclaimer-item">No guarantee of profit</div>
+      <div class="disclaimer-item">No guarantee of market edge</div>
+      <div class="disclaimer-item">Signal labels describe movement only</div>
+    </div>
+    <div class="disclaimer-footer">
+      This report is produced by the World Cup Market Intelligence research pipeline and is intended solely for market-intelligence research and educational purposes. All data is sourced from publicly available prediction markets. No action — financial, betting, or otherwise — should be taken based on this report alone. Powered by <strong style="color:#8aabda;">Mayior Capital</strong>.
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!--  FOOTER                                                         -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="footer">
+    <p><strong>World Cup Market Intelligence Daily Brief</strong> &nbsp;·&nbsp; 30 June 2026 &nbsp;·&nbsp; Powered by Mayior Capital</p>
+    <p style="margin-top:6px;">Research-only. Not betting advice. Not investment advice. Not financial advice.</p>
+  </div>
+
+</div>
+</body>
+</html>

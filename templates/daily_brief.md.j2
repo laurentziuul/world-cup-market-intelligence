@@ -143,8 +143,12 @@ No team review priorities available for this run.
 {% for item in catalyst_watchlist %}
 ### {{ loop.index }}. {{ item.team | default("Unknown team") }}
 
+{% if item.catalyst_type in ("n/a", "", none) and item.catalyst_note in ("n/a", "", none) %}
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
+{% else %}
 - Catalyst type: {{ item.catalyst_type | default("n/a") }}
 - Catalyst note: {{ item.catalyst_note | default("n/a") }}
+{% endif %}
 - Related market: {{ item.market_title | default("n/a") }}
 - Matched signal: {{ item.signal_label | default("n/a") }}
 - Review priority: {{ item.review_priority | default("n/a") }}
@@ -226,7 +230,7 @@ No automated trading or betting decision is implied.
 
 {% endfor %}
 {% else %}
-No snapshot plan generated yet. Run `scripts/generate_snapshot_plan.py` first.
+No recommended snapshot windows are currently scheduled.
 
 {% endif %}
 
@@ -249,8 +253,10 @@ No signal summary available for this run.
 {% if data_freshness %}
 - Metadata generated at: {{ data_freshness.generated_at | default("n/a") }}
 - Stale threshold hours: {{ data_freshness.stale_threshold_hours | default("n/a") }}
+- Trends data status: {{ data_freshness.trends_data_status | default("n/a") }}
+- Freshness summary: {{ data_freshness.freshness_summary | default("n/a") }}
+- Auxiliary pages stale: {{ data_freshness.auxiliary_pages_stale | default("none") }}
 - Public dashboard status: {{ data_freshness.public_dashboard_status | default("n/a") }}
-- Dashboards available: {{ data_freshness.dashboards_available | default("n/a") }}
 - Generated outputs available: {{ data_freshness.generated_outputs_available | default("n/a") }}
 - Missing outputs: {{ data_freshness.missing_outputs | default("n/a") }}
 - Stale outputs: {{ data_freshness.stale_outputs | default("n/a") }}

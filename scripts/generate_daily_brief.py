@@ -443,12 +443,31 @@ def summarize_metadata(metadata: dict[str, Any]) -> dict[str, str]:
     if not metadata:
         return {}
 
+    public_status = str(
+        metadata.get("public_dashboard_status", metadata.get("status", "n/a"))
+    )
+    trends_data_status = str(metadata.get("trends_data_status", "n/a"))
+    aux_stale = metadata.get("auxiliary_pages_stale", [])
+
+    # Freshness summary: distinguish trends-data freshness from auxiliary HTML staleness
+    if trends_data_status == "fresh" and aux_stale:
+        freshness_summary = (
+            "partial freshness warning — trends data fresh, auxiliary pages stale"
+        )
+    elif trends_data_status == "fresh":
+        freshness_summary = "fresh"
+    elif trends_data_status in ("stale", "missing"):
+        freshness_summary = trends_data_status
+    else:
+        freshness_summary = public_status
+
     return {
         "generated_at": str(metadata.get("generated_at", "n/a")),
         "stale_threshold_hours": str(metadata.get("stale_threshold_hours", "n/a")),
-        "public_dashboard_status": str(
-            metadata.get("public_dashboard_status", metadata.get("status", "n/a"))
-        ),
+        "public_dashboard_status": public_status,
+        "trends_data_status": trends_data_status,
+        "freshness_summary": freshness_summary,
+        "auxiliary_pages_stale": format_list(aux_stale) if aux_stale else "none",
         "dashboards_available": format_list(
             metadata.get(
                 "dashboards_available",
@@ -523,7 +542,7 @@ def build_executive_summary(
 
     if data_freshness:
         lines.append(
-            f"Dashboard trust status: {data_freshness.get('public_dashboard_status', 'n/a')}."
+            f"Dashboard trust status: {data_freshness.get('freshness_summary', data_freshness.get('public_dashboard_status', 'n/a'))}."
         )
     else:
         lines.append("Dashboard trust metadata was not available for this run.")
@@ -641,6 +660,21 @@ def _fmt_volume(value: str) -> str:
         if v >= 1_000:
             return f"${v / 1_000:.0f}K"
         return f"${v:.0f}"
+    except (ValueError, TypeError):
+        return str(value)
+
+
+def _fmt_vol_signed(value: str) -> str:
+    """Format a volume/liquidity delta as a signed K/M/B string (e.g. +14.78M, -4.89M)."""
+    try:
+        v = float(value)
+        sign = "+" if v >= 0 else "-"
+        av = abs(v)
+        if av >= 1_000_000:
+            return f"{sign}{av / 1_000_000:.2f}M"
+        if av >= 1_000:
+            return f"{sign}{av / 1_000:.1f}K"
+        return f"{sign}{av:.0f}"
     except (ValueError, TypeError):
         return str(value)
 
@@ -782,8 +816,18 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
             missing_files.append(probability_deltas_path)
 
     normalized_movers = [normalize_market_row(row) for row in mover_source_rows]
+
+    # Aggregate signal labels by count instead of passing raw per-market rows
+    _MISSING_VALS = {"n/a", "", "none", "null"}
+    _raw_signal_rows = read_csv_rows(signal_summary_path)
+    _label_counts: dict[str, int] = {}
+    for _raw in _raw_signal_rows:
+        _lbl = str(_raw.get("signal_label", "")).strip()
+        if _lbl and _lbl.lower() not in _MISSING_VALS:
+            _label_counts[_lbl] = _label_counts.get(_lbl, 0) + 1
     normalized_signals = [
-        normalize_signal_row(row) for row in read_csv_rows(signal_summary_path)
+        {"signal_label": label, "count": str(count)}
+        for label, count in sorted(_label_counts.items(), key=lambda x: x[1], reverse=True)
     ]
     normalized_catalysts = [
         normalize_catalyst_row(row) for row in read_csv_rows(catalyst_matches_path)
@@ -835,6 +879,28 @@ def generate_brief(args: argparse.Namespace) -> tuple[Path, Path]:
         "volume_delta",
         args.limit,
     )
+
+    # Format probabilities and volume/liquidity AFTER sorting so parse_number()
+    # operates on raw floats, not on formatted strings like "+14.78M".
+    _MISSING_VALS = {"n/a", "", "none", "null"}
+
+    def _fmt_mover(m: dict) -> dict:
+        out = dict(m)
+        for _pf in ("current_probability", "previous_probability"):
+            if str(out.get(_pf, "n/a")).lower().strip() not in _MISSING_VALS:
+                out[_pf] = _fmt_prob(out[_pf])
+        for _vf in ("current_volume", "previous_volume", "current_liquidity", "previous_liquidity"):
+            if str(out.get(_vf, "n/a")).lower().strip() not in _MISSING_VALS:
+                out[_vf] = _fmt_volume(out[_vf])
+        for _df in ("volume_delta", "liquidity_delta"):
+            if str(out.get(_df, "n/a")).lower().strip() not in _MISSING_VALS:
+                out[_df] = _fmt_vol_signed(out[_df])
+        return out
+
+    top_probability_movers = [_fmt_mover(m) for m in top_probability_movers]
+    top_liquidity_movers = [_fmt_mover(m) for m in top_liquidity_movers]
+    top_volume_movers = [_fmt_mover(m) for m in top_volume_movers]
+
     team_review_priorities = sort_team_priorities(normalized_teams, args.limit)
     catalyst_watchlist = normalized_catalysts[: args.limit]
 

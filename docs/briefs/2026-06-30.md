@@ -2,7 +2,7 @@
 
 Report date: 2026-06-30
 
-Generated at: 2026-06-30T05:45:12+00:00
+Generated at: 2026-06-30T14:55:20+00:00
 
 Product: World Cup Market Intelligence Daily Brief
 
@@ -32,15 +32,15 @@ This brief summarizes the latest World Cup market-intelligence outputs generated
 
 Top probability movement to review: Netherlands with change -5.00 pp.
 
-Top liquidity movement to review: Paraguay with change -4890170.73711.
+Top liquidity movement to review: Paraguay with change -4.89M.
 
-Top volume movement to review: Morocco with change 14776871.746646255.
+Top volume movement to review: Morocco with change +14.78M.
 
 5 teams are listed for manual review priority.
 
 5 catalyst matches are included in the watchlist.
 
-Dashboard trust status: stale.
+Dashboard trust status: partial freshness warning — trends data fresh, auxiliary pages stale.
 
 All interpretation is research-only and should not be treated as betting, investment or financial advice.
 
@@ -72,8 +72,8 @@ Trends dashboard:
 
 - Market: Will Netherlands win the 2026 FIFA World Cup?
 - Outcome: Yes
-- Current probability: 0.0005
-- Previous probability: 0.0505
+- Current probability: 0.05%
+- Previous probability: 5.05%
 - Probability change: -5.00 pp
 - Signal: strong_negative_move
 - Review priority: high
@@ -82,8 +82,8 @@ Trends dashboard:
 
 - Market: Will France win the 2026 FIFA World Cup?
 - Outcome: Yes
-- Current probability: 0.2725
-- Previous probability: 0.2295
+- Current probability: 27.25%
+- Previous probability: 22.95%
 - Probability change: +4.30 pp
 - Signal: strong_positive_move
 - Review priority: high
@@ -92,8 +92,8 @@ Trends dashboard:
 
 - Market: Will Morocco win the 2026 FIFA World Cup?
 - Outcome: Yes
-- Current probability: 0.0405
-- Previous probability: 0.0135
+- Current probability: 4.05%
+- Previous probability: 1.35%
 - Probability change: +2.70 pp
 - Signal: strong_positive_move
 - Review priority: high
@@ -102,8 +102,8 @@ Trends dashboard:
 
 - Market: Will Brazil win the 2026 FIFA World Cup?
 - Outcome: Yes
-- Current probability: 0.0705
-- Previous probability: 0.0575
+- Current probability: 7.05%
+- Previous probability: 5.75%
 - Probability change: +1.30 pp
 - Signal: moderate_positive_move
 - Review priority: medium
@@ -112,8 +112,8 @@ Trends dashboard:
 
 - Market: Will Argentina win the 2026 FIFA World Cup?
 - Outcome: Yes
-- Current probability: 0.195
-- Previous probability: 0.2075
+- Current probability: 19.50%
+- Previous probability: 20.75%
 - Probability change: -1.25 pp
 - Signal: moderate_negative_move
 - Review priority: medium
@@ -126,45 +126,45 @@ Trends dashboard:
 ### 1. Paraguay
 
 - Market: Will Paraguay win the 2026 FIFA World Cup?
-- Liquidity change: -4890170.73711
-- Current liquidity: 12730650.00057
-- Previous liquidity: 17620820.73768
+- Liquidity change: -4.89M
+- Current liquidity: $12.7M
+- Previous liquidity: $17.6M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 2. Mexico
 
 - Market: Will Mexico win the 2026 FIFA World Cup?
-- Liquidity change: -3621864.77731
-- Current liquidity: 1969620.67455
-- Previous liquidity: 5591485.45186
+- Liquidity change: -3.62M
+- Current liquidity: $2.0M
+- Previous liquidity: $5.6M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 3. Ghana
 
 - Market: Will Ghana win the 2026 FIFA World Cup?
-- Liquidity change: 3130467.23559
-- Current liquidity: 18754841.6127
-- Previous liquidity: 15624374.37711
+- Liquidity change: +3.13M
+- Current liquidity: $18.8M
+- Previous liquidity: $15.6M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 4. Sweden
 
 - Market: Will Sweden win the 2026 FIFA World Cup?
-- Liquidity change: -3065891.294219998
-- Current liquidity: 10466271.64127
-- Previous liquidity: 13532162.93549
+- Liquidity change: -3.07M
+- Current liquidity: $10.5M
+- Previous liquidity: $13.5M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 5. Croatia
 
 - Market: Will Croatia win the 2026 FIFA World Cup?
-- Liquidity change: -3063851.897089999
-- Current liquidity: 4955225.31402
-- Previous liquidity: 8019077.21111
+- Liquidity change: -3.06M
+- Current liquidity: $5.0M
+- Previous liquidity: $8.0M
 - Signal: flat_no_signal
 - Review priority: medium
 
@@ -176,45 +176,45 @@ Trends dashboard:
 ### 1. Morocco
 
 - Market: Will Morocco win the 2026 FIFA World Cup?
-- Volume change: 14776871.746646255
-- Current volume: 98138992.85416518
-- Previous volume: 83362121.10751893
+- Volume change: +14.78M
+- Current volume: $98.1M
+- Previous volume: $83.4M
 - Signal: strong_positive_move
 - Review priority: high
 
 ### 2. Paraguay
 
 - Market: Will Paraguay win the 2026 FIFA World Cup?
-- Volume change: 14762654.36447309
-- Current volume: 89056186.45493837
-- Previous volume: 74293532.09046528
+- Volume change: +14.76M
+- Current volume: $89.1M
+- Previous volume: $74.3M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 3. Mexico
 
 - Market: Will Mexico win the 2026 FIFA World Cup?
-- Volume change: 7228423.98571983
-- Current volume: 105924200.10427655
-- Previous volume: 98695776.11855672
+- Volume change: +7.23M
+- Current volume: $105.9M
+- Previous volume: $98.7M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 4. Croatia
 
 - Market: Will Croatia win the 2026 FIFA World Cup?
-- Volume change: 6341783.283329099
-- Current volume: 94231254.32544547
-- Previous volume: 87889471.04211637
+- Volume change: +6.34M
+- Current volume: $94.2M
+- Previous volume: $87.9M
 - Signal: flat_no_signal
 - Review priority: medium
 
 ### 5. Brazil
 
 - Market: Will Brazil win the 2026 FIFA World Cup?
-- Volume change: 4739943.259672418
-- Current volume: 67859936.78711143
-- Previous volume: 63119993.52743901
+- Volume change: +4.74M
+- Current volume: $67.9M
+- Previous volume: $63.1M
 - Signal: moderate_positive_move
 - Review priority: medium
 
@@ -275,40 +275,35 @@ Trends dashboard:
 
 ### 1. Netherlands
 
-- Catalyst type: n/a
-- Catalyst note: n/a
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Netherlands win the 2026 FIFA World Cup?
 - Matched signal: strong_negative_move
 - Review priority: n/a
 
 ### 2. France
 
-- Catalyst type: n/a
-- Catalyst note: n/a
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will France win the 2026 FIFA World Cup?
 - Matched signal: strong_positive_move
 - Review priority: n/a
 
 ### 3. Morocco
 
-- Catalyst type: n/a
-- Catalyst note: n/a
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Morocco win the 2026 FIFA World Cup?
 - Matched signal: strong_positive_move
 - Review priority: n/a
 
 ### 4. Brazil
 
-- Catalyst type: n/a
-- Catalyst note: n/a
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Brazil win the 2026 FIFA World Cup?
 - Matched signal: moderate_positive_move
 - Review priority: n/a
 
 ### 5. Argentina
 
-- Catalyst type: n/a
-- Catalyst note: n/a
+- Catalyst note: No catalyst note matched yet. Market movement detected, but no confirmed explanation has been attached.
 - Related market: Will Argentina win the 2026 FIFA World Cup?
 - Matched signal: moderate_negative_move
 - Review priority: n/a
@@ -341,51 +336,29 @@ Snapshot timing helps observe market repricing around match windows.
 
 No automated trading or betting decision is implied.
 
-No snapshot plan generated yet. Run `scripts/generate_snapshot_plan.py` first.
+No recommended snapshot windows are currently scheduled.
 
 
 ---
 
 ## 8. Signal summary (all markets)
 
-- strong_negative_move: n/a
-- strong_positive_move: n/a
-- strong_positive_move: n/a
-- moderate_positive_move: n/a
-- moderate_negative_move: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
-- flat_no_signal: n/a
+- flat_no_signal: 24
+- strong_positive_move: 2
+- strong_negative_move: 1
+- moderate_positive_move: 1
+- moderate_negative_move: 1
 
 ---
 
 ## 9. Data freshness status
 
-- Metadata generated at: 2026-06-30T05:45:11Z
+- Metadata generated at: 2026-06-30T14:55:20Z
 - Stale threshold hours: 72.0
+- Trends data status: fresh
+- Freshness summary: partial freshness warning — trends data fresh, auxiliary pages stale
+- Auxiliary pages stale: landing_page
 - Public dashboard status: stale
-- Dashboards available: landing_page: {'age_hours': 261.75, 'available': True, 'modified_at': '2026-06-19T08:00:00Z', 'path': 'docs/index.html', 'size_bytes': 18193, 'status': 'stale'}, polymarket_dashboard: {'age_hours': 24.74, 'available': True, 'modified_at': '2026-06-29T05:00:45Z', 'path': 'docs/polymarket-dashboard/index.html', 'size_bytes': 35438, 'status': 'fresh'}, stable_dashboard: {'age_hours': 166.33, 'available': True, 'modified_at': '2026-06-23T07:25:16Z', 'path': 'docs/dashboard/index.html', 'size_bytes': 115620, 'status': 'stale'}, trends_dashboard: {'age_hours': 0.0, 'available': True, 'modified_at': '2026-06-30T05:45:10Z', 'path': 'docs/trends-dashboard/index.html', 'size_bytes': 77983, 'status': 'fresh'}
 - Generated outputs available: n/a
 - Missing outputs: none
 - Stale outputs: none
@@ -394,7 +367,7 @@ No snapshot plan generated yet. Run `scripts/generate_snapshot_plan.py` first.
 
 ## 10. Warnings and limitations
 
-- Stale dashboard HTML files: landing_page, stable_dashboard
+- Stale dashboard HTML files: landing_page
 
 Important limitations:
 

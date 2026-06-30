@@ -277,9 +277,9 @@
       <div class="eyebrow">World Cup Market Intelligence &mdash; Stable Baseline / Developer View</div>
       <h1>Stable Baseline / Developer View</h1>
       <p class="subtitle">
-        Reproducible manual CSV dashboard. This is the stable baseline layer &mdash; no live API access required.
+        This is a developer-oriented reproducibility view. It may show generated snapshot data,
+        but it is not the main intelligence dashboard.
         Use it for reproducibility checks, provider comparison and developer debugging.
-        It is not the main product dashboard.
       </p>
       <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;">
         <a href="../trends-dashboard/"
@@ -294,10 +294,9 @@
     </header>
 
     <div class="notice" style="border-color:#f59e0b;background:rgba(245,158,11,0.07);">
-      <strong>Baseline view.</strong>
-      This page uses manual CSV data for reproducibility.
-      It is not the live intelligence dashboard &mdash; volume and liquidity are zero because this provider does not carry live market data.
-      For signals, catalyst matches and live probability movement, use the
+      <strong>Developer view.</strong>
+      This is a developer-oriented reproducibility view. It may show generated snapshot data, but it is not the main intelligence dashboard.
+      For the primary public experience, use the
       <a href="../trends-dashboard/" style="color:#38bdf8;font-weight:700;">Historical Trends Dashboard</a>.
     </div>
 
@@ -315,21 +314,21 @@
 
       <div class="card">
         <div class="card-label">Rows</div>
-        <div class="card-value">90</div>
+        <div class="card-value">58</div>
       </div>
 
       <div class="card">
         <div class="card-label">Total Volume</div>
-        <div class="card-value">5,653,143,446</div>
+        <div class="card-value">4,858,995,035</div>
       </div>
 
       <div class="card">
         <div class="card-label">Total Liquidity</div>
-        <div class="card-value">1,113,130,664</div>
+        <div class="card-value">452,073,542</div>
       </div>
     </section>
     <p style="color:#9ca3af;font-size:13px;margin:-10px 0 20px;">
-      Volume and liquidity are zero because this baseline uses manual CSV data, not the live provider.
+      If volume or liquidity are zero, this usually means the page is using baseline/manual data rather than live-provider depth.
       For live volume and liquidity, see the
       <a href="../polymarket-dashboard/" style="color:#38bdf8;">Polymarket live ranking</a>.
     </p>
@@ -343,22 +342,22 @@
       <section class="grid">
         <div class="card">
           <div class="card-label">Biggest Up Move</div>
-          <div class="card-value">No +0.5 pp</div>
+          <div class="card-value">No +5.0 pp</div>
         </div>
 
         <div class="card">
           <div class="card-label">Biggest Down Move</div>
-          <div class="card-value">Yes -0.5 pp</div>
+          <div class="card-value">Yes -5.0 pp</div>
         </div>
 
         <div class="card">
           <div class="card-label">Active Movers</div>
-          <div class="card-value">6</div>
+          <div class="card-value">26</div>
         </div>
 
         <div class="card">
           <div class="card-label">Static Markets</div>
-          <div class="card-value">84</div>
+          <div class="card-value">32</div>
         </div>
       </section>
     </section>
@@ -386,8 +385,28 @@
             <tbody>
               <tr>
                 <td>No</td>
-                <td class="price">95.2%</td>
-                <td class="move-up">+0.5 pp</td>
+                <td class="price">100.0%</td>
+                <td class="move-up">+5.0 pp</td>
+                <td>
+                  <span class="badge badge-structural">
+                    Structural
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Yes</td>
+                <td class="price">27.3%</td>
+                <td class="move-up">+3.1 pp</td>
+                <td>
+                  <span class="badge badge-structural">
+                    Structural
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Yes</td>
+                <td class="price">4.0%</td>
+                <td class="move-up">+2.8 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -395,9 +414,9 @@
                 </td>
               </tr>
               <tr>
-                <td>No</td>
-                <td class="price">98.0%</td>
-                <td class="move-up">+0.1 pp</td>
+                <td>Yes</td>
+                <td class="price">2.8%</td>
+                <td class="move-up">+0.4 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -405,9 +424,9 @@
                 </td>
               </tr>
               <tr>
-                <td>No</td>
-                <td class="price">85.9%</td>
-                <td class="move-up">+0.1 pp</td>
+                <td>Yes</td>
+                <td class="price">1.6%</td>
+                <td class="move-up">+0.3 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -434,8 +453,28 @@
             <tbody>
               <tr>
                 <td>Yes</td>
-                <td class="price">4.9%</td>
-                <td class="move-down">-0.5 pp</td>
+                <td class="price">0.1%</td>
+                <td class="move-down">-5.0 pp</td>
+                <td>
+                  <span class="badge badge-structural">
+                    Structural
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>No</td>
+                <td class="price">72.8%</td>
+                <td class="move-down">-3.1 pp</td>
+                <td>
+                  <span class="badge badge-structural">
+                    Structural
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>No</td>
+                <td class="price">96.0%</td>
+                <td class="move-down">-2.8 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -443,9 +482,9 @@
                 </td>
               </tr>
               <tr>
-                <td>Yes</td>
-                <td class="price">14.1%</td>
-                <td class="move-down">-0.1 pp</td>
+                <td>No</td>
+                <td class="price">97.2%</td>
+                <td class="move-down">-0.4 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -453,9 +492,9 @@
                 </td>
               </tr>
               <tr>
-                <td>Yes</td>
-                <td class="price">1.9%</td>
-                <td class="move-down">-0.1 pp</td>
+                <td>No</td>
+                <td class="price">97.2%</td>
+                <td class="move-down">-0.3 pp</td>
                 <td>
                   <span class="badge badge-tactical">
                     Tactical
@@ -2266,29 +2305,14 @@
 
         <tbody>
           <tr>
-            <td>Will Algeria win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>70,328,278</td>
-            <td>7,815,282</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
             <td>Will Cape Verde win the 2026 FIFA World Cup?</td>
             <td>No</td>
             <td class="price">100.0%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>73,935,883</td>
-            <td>3,647,427</td>
+            <td>88,936,348</td>
+            <td>5,716,924</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2296,89 +2320,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will South Africa win the 2026 FIFA World Cup?</td>
+            <td>Will Congo DR win the 2026 FIFA World Cup?</td>
             <td>No</td>
             <td class="price">100.0%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>39,389,295</td>
-            <td>25,901,344</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Jordan win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>33,082,576</td>
-            <td>30,419,727</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Panama win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>20,048,160</td>
-            <td>31,382,613</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Iraq win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>30,428,822</td>
-            <td>31,374,758</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Qatar win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>45,084,300</td>
-            <td>29,268,441</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Curaçao win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>43,964,923</td>
-            <td>29,046,933</td>
+            <td>89,651,946</td>
+            <td>22,467,952</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2392,8 +2341,8 @@
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>47,028,157</td>
-            <td>13,583,177</td>
+            <td>62,086,287</td>
+            <td>13,701,877</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2401,164 +2350,29 @@
             </td>
           </tr>
           <tr>
-            <td>Will Uzbekistan win the 2026 FIFA World Cup?</td>
+            <td>Will Netherlands win the 2026 FIFA World Cup?</td>
             <td>No</td>
             <td class="price">100.0%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+5.0 pp</td>
 
-            <td>61,455,433</td>
-            <td>26,612,679</td>
+            <td>77,725,004</td>
+            <td>1,353,768</td>
             <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Iran win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>60,433,923</td>
-            <td>11,622,457</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Czechia win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>57,432,710</td>
-            <td>18,356,463</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Saudi Arabia win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>57,151,286</td>
-            <td>18,387,035</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will New Zealand win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">100.0%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>47,463,472</td>
-            <td>30,015,798</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Paraguay win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.9%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>67,870,237</td>
-            <td>12,056,080</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Scotland win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.9%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>65,491,518</td>
-            <td>16,037,522</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Ecuador win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.9%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>69,760,808</td>
-            <td>7,099,880</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
+              <span class="badge badge-structural">
+                Structural
               </span>
             </td>
           </tr>
           <tr>
             <td>Will Ghana win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">99.9%</td>
+            <td class="price">100.0%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>60,287,881</td>
-            <td>18,152,324</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Congo DR win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.9%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>80,424,095</td>
-            <td>23,444,933</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Uruguay win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.9%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>72,593,927</td>
-            <td>8,460,444</td>
+            <td>73,573,626</td>
+            <td>18,754,842</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2568,12 +2382,12 @@
           <tr>
             <td>Will Egypt win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">99.8%</td>
+            <td class="price">99.9%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>77,979,728</td>
-            <td>10,492,262</td>
+            <td>92,273,880</td>
+            <td>17,914,990</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2581,59 +2395,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Australia win the 2026 FIFA World Cup?</td>
+            <td>Will Algeria win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">99.8%</td>
+            <td class="price">99.9%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>72,530,688</td>
-            <td>21,603,781</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will South Korea win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.8%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>91,633,884</td>
-            <td>9,097,644</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Senegal win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.8%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>60,729,694</td>
-            <td>5,804,087</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Sweden win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.8%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>56,277,839</td>
-            <td>12,826,521</td>
+            <td>81,607,948</td>
+            <td>11,523,478</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2643,12 +2412,72 @@
           <tr>
             <td>Will Austria win the 2026 FIFA World Cup?</td>
             <td>No</td>
+            <td class="price">99.9%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>78,356,437</td>
+            <td>6,484,433</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Australia win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">99.9%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>78,564,809</td>
+            <td>12,442,922</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Sweden win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">99.9%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>70,143,229</td>
+            <td>10,466,272</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Paraguay win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">99.8%</td>
+
+            <td class="move-down">-0.1 pp</td>
+
+            <td>89,056,186</td>
+            <td>12,730,650</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Canada win the 2026 FIFA World Cup?</td>
+            <td>No</td>
             <td class="price">99.8%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>66,567,979</td>
-            <td>5,032,453</td>
+            <td>90,204,347</td>
+            <td>9,757,767</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2660,25 +2489,10 @@
             <td>No</td>
             <td class="price">99.7%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-0.1 pp</td>
 
-            <td>87,415,782</td>
-            <td>9,058,656</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Canada win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">99.7%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>66,737,668</td>
-            <td>10,761,110</td>
+            <td>106,297,012</td>
+            <td>6,478,863</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2687,13 +2501,43 @@
           </tr>
           <tr>
             <td>Will Croatia win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">99.7%</td>
+
+            <td class="move-up">+0.1 pp</td>
+
+            <td>94,231,254</td>
+            <td>4,955,225</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Senegal win the 2026 FIFA World Cup?</td>
             <td>No</td>
             <td class="price">99.6%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>72,809,538</td>
-            <td>6,004,127</td>
+            <td>71,505,313</td>
+            <td>6,331,343</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Ecuador win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">99.5%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>92,569,366</td>
+            <td>5,406,384</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2703,12 +2547,12 @@
           <tr>
             <td>Will Switzerland win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">99.4%</td>
+            <td class="price">99.2%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>62,400,320</td>
-            <td>5,823,386</td>
+            <td>78,154,830</td>
+            <td>6,005,439</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2718,12 +2562,12 @@
           <tr>
             <td>Will Belgium win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">98.9%</td>
+            <td class="price">98.7%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>70,463,138</td>
-            <td>5,808,447</td>
+            <td>84,075,343</td>
+            <td>6,362,787</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2733,57 +2577,12 @@
           <tr>
             <td>Will Mexico win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">98.8%</td>
+            <td class="price">98.5%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-0.3 pp</td>
 
-            <td>82,592,855</td>
-            <td>9,869,163</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Colombia win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">98.6%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>66,951,559</td>
-            <td>2,364,277</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Japan win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">98.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>72,661,708</td>
-            <td>2,157,605</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Morocco win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">98.0%</td>
-
-            <td class="move-up">+0.1 pp</td>
-
-            <td>67,267,786</td>
-            <td>3,270,901</td>
+            <td>105,924,200</td>
+            <td>1,969,621</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2793,12 +2592,12 @@
           <tr>
             <td>Will Norway win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">97.4%</td>
+            <td class="price">97.9%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>64,688,204</td>
-            <td>2,643,623</td>
+            <td>79,120,206</td>
+            <td>1,775,415</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2808,12 +2607,12 @@
           <tr>
             <td>Will USA win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">96.5%</td>
+            <td class="price">97.2%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-0.4 pp</td>
 
-            <td>94,970,259</td>
-            <td>5,136,779</td>
+            <td>113,136,662</td>
+            <td>3,248,030</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2821,14 +2620,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Netherlands win the 2026 FIFA World Cup?</td>
+            <td>Will Colombia win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">95.2%</td>
+            <td class="price">97.2%</td>
 
-            <td class="move-up">+0.5 pp</td>
+            <td class="move-down">-0.3 pp</td>
 
-            <td>62,293,820</td>
-            <td>1,888,036</td>
+            <td>82,084,925</td>
+            <td>2,359,880</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2836,29 +2635,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Brazil win the 2026 FIFA World Cup?</td>
+            <td>Will Morocco win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">95.0%</td>
+            <td class="price">96.0%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-2.8 pp</td>
 
-            <td>50,231,398</td>
-            <td>3,372,901</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Germany win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">94.3%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>62,296,355</td>
-            <td>3,650,916</td>
+            <td>98,138,993</td>
+            <td>1,302,525</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2868,12 +2652,27 @@
           <tr>
             <td>Will Portugal win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">93.2%</td>
+            <td class="price">93.9%</td>
+
+            <td class="move-up">+0.2 pp</td>
+
+            <td>81,992,641</td>
+            <td>3,200,134</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Brazil win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">93.0%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>62,734,534</td>
-            <td>3,157,315</td>
+            <td>67,859,937</td>
+            <td>3,187,401</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2883,42 +2682,42 @@
           <tr>
             <td>Will England win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">87.6%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>53,816,080</td>
-            <td>4,590,750</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Spain win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">86.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>61,006,465</td>
-            <td>6,482,133</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Argentina win the 2026 FIFA World Cup?</td>
-            <td>No</td>
-            <td class="price">85.9%</td>
+            <td class="price">89.8%</td>
 
             <td class="move-up">+0.1 pp</td>
 
-            <td>68,096,311</td>
-            <td>7,101,507</td>
+            <td>64,717,718</td>
+            <td>7,397,922</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Spain win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">88.8%</td>
+
+            <td class="move-down">-0.1 pp</td>
+
+            <td>71,407,436</td>
+            <td>9,231,977</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Argentina win the 2026 FIFA World Cup?</td>
+            <td>No</td>
+            <td class="price">80.5%</td>
+
+            <td class="move-down">-0.1 pp</td>
+
+            <td>84,851,873</td>
+            <td>8,917,011</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2928,42 +2727,42 @@
           <tr>
             <td>Will France win the 2026 FIFA World Cup?</td>
             <td>No</td>
-            <td class="price">80.2%</td>
+            <td class="price">72.8%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-3.1 pp</td>
 
-            <td>67,762,448</td>
-            <td>5,881,636</td>
+            <td>81,249,762</td>
+            <td>4,590,940</td>
             <td>
-              <span class="badge badge-tactical">
-                Tactical
+              <span class="badge badge-structural">
+                Structural
               </span>
             </td>
           </tr>
           <tr>
             <td>Will France win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">19.8%</td>
+            <td class="price">27.3%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+3.1 pp</td>
 
-            <td>67,762,448</td>
-            <td>5,881,636</td>
+            <td>81,249,762</td>
+            <td>4,590,940</td>
             <td>
-              <span class="badge badge-tactical">
-                Tactical
+              <span class="badge badge-structural">
+                Structural
               </span>
             </td>
           </tr>
           <tr>
             <td>Will Argentina win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">14.1%</td>
+            <td class="price">19.5%</td>
 
-            <td class="move-down">-0.1 pp</td>
+            <td class="move-up">+0.1 pp</td>
 
-            <td>68,096,311</td>
-            <td>7,101,507</td>
+            <td>84,851,873</td>
+            <td>8,917,011</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2973,12 +2772,12 @@
           <tr>
             <td>Will Spain win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">13.9%</td>
+            <td class="price">11.2%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+0.1 pp</td>
 
-            <td>61,006,465</td>
-            <td>6,482,133</td>
+            <td>71,407,436</td>
+            <td>9,231,977</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -2988,42 +2787,12 @@
           <tr>
             <td>Will England win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">12.3%</td>
+            <td class="price">10.2%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-0.1 pp</td>
 
-            <td>53,816,080</td>
-            <td>4,590,750</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Portugal win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">6.8%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>62,734,534</td>
-            <td>3,157,315</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Germany win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">5.7%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>62,296,355</td>
-            <td>3,650,916</td>
+            <td>64,717,718</td>
+            <td>7,397,922</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3033,12 +2802,12 @@
           <tr>
             <td>Will Brazil win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">5.1%</td>
+            <td class="price">7.0%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>50,231,398</td>
-            <td>3,372,901</td>
+            <td>67,859,937</td>
+            <td>3,187,401</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3046,44 +2815,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Netherlands win the 2026 FIFA World Cup?</td>
+            <td>Will Portugal win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">4.9%</td>
+            <td class="price">6.1%</td>
 
-            <td class="move-down">-0.5 pp</td>
+            <td class="move-down">-0.2 pp</td>
 
-            <td>62,293,820</td>
-            <td>1,888,036</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will USA win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">3.5%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>94,970,259</td>
-            <td>5,136,779</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Norway win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">2.6%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>64,688,204</td>
-            <td>2,643,623</td>
+            <td>81,992,641</td>
+            <td>3,200,134</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3093,12 +2832,12 @@
           <tr>
             <td>Will Morocco win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">1.9%</td>
+            <td class="price">4.0%</td>
 
-            <td class="move-down">-0.1 pp</td>
+            <td class="move-up">+2.8 pp</td>
 
-            <td>67,267,786</td>
-            <td>3,270,901</td>
+            <td>98,138,993</td>
+            <td>1,302,525</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3106,14 +2845,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Japan win the 2026 FIFA World Cup?</td>
+            <td>Will USA win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">1.8%</td>
+            <td class="price">2.8%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+0.4 pp</td>
 
-            <td>72,661,708</td>
-            <td>2,157,605</td>
+            <td>113,136,662</td>
+            <td>3,248,030</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3123,12 +2862,27 @@
           <tr>
             <td>Will Colombia win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">1.5%</td>
+            <td class="price">2.8%</td>
+
+            <td class="move-up">+0.3 pp</td>
+
+            <td>82,084,925</td>
+            <td>2,359,880</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Norway win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">2.1%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>66,951,559</td>
-            <td>2,364,277</td>
+            <td>79,120,206</td>
+            <td>1,775,415</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3138,12 +2892,12 @@
           <tr>
             <td>Will Mexico win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">1.2%</td>
+            <td class="price">1.6%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+0.3 pp</td>
 
-            <td>82,592,855</td>
-            <td>9,869,163</td>
+            <td>105,924,200</td>
+            <td>1,969,621</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3153,12 +2907,12 @@
           <tr>
             <td>Will Belgium win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">1.1%</td>
+            <td class="price">1.4%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>70,463,138</td>
-            <td>5,808,447</td>
+            <td>84,075,343</td>
+            <td>6,362,787</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3168,12 +2922,12 @@
           <tr>
             <td>Will Switzerland win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">0.7%</td>
+            <td class="price">0.9%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>62,400,320</td>
-            <td>5,823,386</td>
+            <td>78,154,830</td>
+            <td>6,005,439</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3181,14 +2935,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Croatia win the 2026 FIFA World Cup?</td>
+            <td>Will Ecuador win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">0.4%</td>
+            <td class="price">0.5%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>72,809,538</td>
-            <td>6,004,127</td>
+            <td>92,569,366</td>
+            <td>5,406,384</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3196,14 +2950,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Canada win the 2026 FIFA World Cup?</td>
+            <td>Will Senegal win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
             <td class="price">0.4%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>66,737,668</td>
-            <td>10,761,110</td>
+            <td>71,505,313</td>
+            <td>6,331,343</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3215,10 +2969,10 @@
             <td>Yes</td>
             <td class="price">0.4%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+0.1 pp</td>
 
-            <td>87,415,782</td>
-            <td>9,058,656</td>
+            <td>106,297,012</td>
+            <td>6,478,863</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3226,149 +2980,29 @@
             </td>
           </tr>
           <tr>
-            <td>Will South Korea win the 2026 FIFA World Cup?</td>
+            <td>Will Croatia win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">0.4%</td>
+
+            <td class="move-down">-0.1 pp</td>
+
+            <td>94,231,254</td>
+            <td>4,955,225</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Canada win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
             <td class="price">0.2%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>91,633,884</td>
-            <td>9,097,644</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Australia win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>72,530,688</td>
-            <td>21,603,781</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Egypt win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>77,979,728</td>
-            <td>10,492,262</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Austria win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>66,567,979</td>
-            <td>5,032,453</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Senegal win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>60,729,694</td>
-            <td>5,804,087</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Sweden win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.2%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>56,277,839</td>
-            <td>12,826,521</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Ghana win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>60,287,881</td>
-            <td>18,152,324</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Scotland win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>65,491,518</td>
-            <td>16,037,522</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Uruguay win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>72,593,927</td>
-            <td>8,460,444</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Congo DR win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>80,424,095</td>
-            <td>23,444,933</td>
+            <td>90,204,347</td>
+            <td>9,757,767</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3378,12 +3012,12 @@
           <tr>
             <td>Will Paraguay win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
-            <td class="price">0.1%</td>
+            <td class="price">0.2%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-up">+0.1 pp</td>
 
-            <td>67,870,237</td>
-            <td>12,056,080</td>
+            <td>89,056,186</td>
+            <td>12,730,650</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3391,14 +3025,59 @@
             </td>
           </tr>
           <tr>
-            <td>Will Ecuador win the 2026 FIFA World Cup?</td>
+            <td>Will Egypt win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
             <td class="price">0.1%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>69,760,808</td>
-            <td>7,099,880</td>
+            <td>92,273,880</td>
+            <td>17,914,990</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Austria win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">0.1%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>78,356,437</td>
+            <td>6,484,433</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Sweden win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">0.1%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>70,143,229</td>
+            <td>10,466,272</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Australia win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">0.1%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>78,564,809</td>
+            <td>12,442,922</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3412,8 +3091,23 @@
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>70,328,278</td>
-            <td>7,815,282</td>
+            <td>81,607,948</td>
+            <td>11,523,478</td>
+            <td>
+              <span class="badge badge-tactical">
+                Tactical
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>Will Congo DR win the 2026 FIFA World Cup?</td>
+            <td>Yes</td>
+            <td class="price">0.1%</td>
+
+            <td class="move-flat">+0.0 pp</td>
+
+            <td>89,651,946</td>
+            <td>22,467,952</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3427,8 +3121,8 @@
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>73,935,883</td>
-            <td>3,647,427</td>
+            <td>88,936,348</td>
+            <td>5,716,924</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3436,14 +3130,14 @@
             </td>
           </tr>
           <tr>
-            <td>Will Uzbekistan win the 2026 FIFA World Cup?</td>
+            <td>Will Ghana win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
             <td class="price">0.1%</td>
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>61,455,433</td>
-            <td>26,612,679</td>
+            <td>73,573,626</td>
+            <td>18,754,842</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3451,92 +3145,17 @@
             </td>
           </tr>
           <tr>
-            <td>Will Saudi Arabia win the 2026 FIFA World Cup?</td>
+            <td>Will Netherlands win the 2026 FIFA World Cup?</td>
             <td>Yes</td>
             <td class="price">0.1%</td>
 
-            <td class="move-flat">+0.0 pp</td>
+            <td class="move-down">-5.0 pp</td>
 
-            <td>57,151,286</td>
-            <td>18,387,035</td>
+            <td>77,725,004</td>
+            <td>1,353,768</td>
             <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Iran win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>60,433,923</td>
-            <td>11,622,457</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Czechia win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>57,432,710</td>
-            <td>18,356,463</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Curaçao win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>43,964,923</td>
-            <td>29,046,933</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Qatar win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>45,084,300</td>
-            <td>29,268,441</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will New Zealand win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>47,463,472</td>
-            <td>30,015,798</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
+              <span class="badge badge-structural">
+                Structural
               </span>
             </td>
           </tr>
@@ -3547,68 +3166,8 @@
 
             <td class="move-flat">+0.0 pp</td>
 
-            <td>47,028,157</td>
-            <td>13,583,177</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Jordan win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>33,082,576</td>
-            <td>30,419,727</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will South Africa win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>39,389,295</td>
-            <td>25,901,344</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Iraq win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>30,428,822</td>
-            <td>31,374,758</td>
-            <td>
-              <span class="badge badge-tactical">
-                Tactical
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td>Will Panama win the 2026 FIFA World Cup?</td>
-            <td>Yes</td>
-            <td class="price">0.1%</td>
-
-            <td class="move-flat">+0.0 pp</td>
-
-            <td>20,048,160</td>
-            <td>31,382,613</td>
+            <td>62,086,287</td>
+            <td>13,701,877</td>
             <td>
               <span class="badge badge-tactical">
                 Tactical
@@ -3806,198 +3365,6 @@
           </tr>
           <tr>
             <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>No</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
-            <td>World Cup market</td>
-            <td>FIFA World Cup 2026</td>
-            <td>Experimental Polymarket Gamma API provider.</td>
-          </tr>
-          <tr>
-            <td>Yes</td>
             <td>World Cup market</td>
             <td>FIFA World Cup 2026</td>
             <td>Experimental Polymarket Gamma API provider.</td>
@@ -4227,7 +3594,7 @@
 
     <footer class="footer">
   <p>
-    Generated at 2026-06-23T07:25:16.912051+00:00 from <code>data\processed\snapshot_latest.csv</code>.<br>
+    Generated at 2026-06-30T14:27:44.692163+00:00 from <code>data/processed/snapshot_latest.csv</code>.<br>
     Stable baseline view &mdash; manual CSV provider &mdash; World Cup Market Intelligence.
   </p>
   <p>

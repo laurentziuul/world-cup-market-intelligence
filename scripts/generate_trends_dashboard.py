@@ -92,6 +92,10 @@ def render_freshness_panel(metadata: dict[str, object]) -> str:
         """
 
     public_status = str(metadata.get("public_dashboard_status", "unknown"))
+    trends_data_status = str(metadata.get("trends_data_status", "unknown"))
+    auxiliary_pages_stale = metadata.get("auxiliary_pages_stale", [])
+    if not isinstance(auxiliary_pages_stale, list):
+        auxiliary_pages_stale = []
     generated_at = str(metadata.get("generated_at", ""))
     stale_threshold = str(metadata.get("stale_threshold_hours", ""))
     dashboard_available = str(metadata.get("dashboard_available_count", ""))
@@ -117,6 +121,20 @@ def render_freshness_panel(metadata: dict[str, object]) -> str:
         )
     else:
         warning_items = "<li>No metadata warnings.</li>"
+
+    # Partial freshness note: trends data is fresh but some auxiliary pages are stale.
+    if public_status == "stale" and trends_data_status == "fresh" and auxiliary_pages_stale:
+        auxiliary_note = f"""
+            <div class="notice warning-box" style="margin-top:12px;">
+                <strong>Partial freshness warning.</strong>
+                The intelligence data on this page is fresh.
+                The following auxiliary pages may be stale (older HTML files, not data):
+                {html.escape(", ".join(auxiliary_pages_stale))}.
+                This does not affect the signals, movers or catalyst matches shown above.
+            </div>
+        """
+    else:
+        auxiliary_note = ""
 
     return f"""
         <section>
@@ -157,6 +175,8 @@ def render_freshness_panel(metadata: dict[str, object]) -> str:
                     <div class="trust-value">research-only</div>
                 </div>
             </div>
+
+            {auxiliary_note}
 
             <div class="notice">
                 <strong>Warnings:</strong>
@@ -288,8 +308,10 @@ def render_summary_cards(
         elif "team" in team_intelligence.columns:
             top_priority_team = str(team_intelligence.iloc[0]["team"])
 
-    freshness = str(metadata.get("public_dashboard_status", "unknown")) if metadata else "unknown"
-    freshness_class = "status-ok" if freshness == "ok" else ("status-warning" if freshness == "stale" else "status-missing")
+    # Use trends_data_status (freshness of generated CSV outputs) rather than
+    # public_dashboard_status (which becomes "stale" when auxiliary HTML pages are old).
+    freshness = str(metadata.get("trends_data_status", "unknown")) if metadata else "unknown"
+    freshness_class = "status-ok" if freshness == "fresh" else ("status-warning" if freshness == "stale" else "status-missing")
 
     pos_change_html = (
         f' <span style="color:#86efac;font-size:13px;">{html.escape(top_positive_change)}</span>'

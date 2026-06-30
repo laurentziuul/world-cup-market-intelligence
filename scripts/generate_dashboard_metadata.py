@@ -195,6 +195,34 @@ def build_metadata(stale_hours: float) -> dict[str, object]:
     elif stale_items(dashboards):
         public_dashboard_status = "stale"
 
+    # Trends data freshness — reflects only generated CSV outputs, not HTML page ages.
+    # Used by the trends dashboard summary card to avoid showing "stale" when only
+    # auxiliary HTML pages (landing page, stable dashboard) are old.
+    trend_output_statuses = [
+        generated_outputs[key]["status"]
+        for key in trend_output_keys
+        if bool(generated_outputs[key]["available"])
+    ]
+    missing_trend_outputs = [
+        key for key in trend_output_keys
+        if not bool(generated_outputs[key]["available"])
+    ]
+    if missing_trend_outputs:
+        trends_data_status = "missing"
+    elif all(s == "fresh" for s in trend_output_statuses):
+        trends_data_status = "fresh"
+    elif any(s == "stale" for s in trend_output_statuses):
+        trends_data_status = "stale"
+    else:
+        trends_data_status = "unknown"
+
+    # Auxiliary pages stale — dashboard HTML files excluding trends_dashboard itself.
+    auxiliary_dashboard_keys = [k for k in DASHBOARDS if k != "trends_dashboard"]
+    auxiliary_pages_stale = [
+        k for k in auxiliary_dashboard_keys
+        if dashboards[k]["status"] in ("stale", "missing")
+    ]
+
     return {
         "generated_at": isoformat_utc(utc_now()),
         "stale_threshold_hours": stale_hours,
@@ -211,6 +239,8 @@ def build_metadata(stale_hours: float) -> dict[str, object]:
         "generated_output_available_count": available_count(generated_outputs),
         "manual_input_count": len(manual_inputs),
         "manual_input_available_count": available_count(manual_inputs),
+        "trends_data_status": trends_data_status,
+        "auxiliary_pages_stale": auxiliary_pages_stale,
         "stale_dashboards": stale_items(dashboards),
         "missing_dashboards": missing_items(dashboards),
         "stale_outputs": stale_items(generated_outputs),
